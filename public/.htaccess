@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^/icon(.*) /assets/img$1
+
+RewriteRule ^/(.*) /assets/img$1
