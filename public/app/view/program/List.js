@@ -125,7 +125,7 @@ Ext.define("Mehr.view.program.Grid", {
 
 });
 
-Ext.define("Mehr.view.program.Window", {
+Ext.define("Mehr.view.program.List", {
     extend: "Ahura.window.Grid",
     alias: "widget.programs",
     title: 'برنامه‌ها',

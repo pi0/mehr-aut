@@ -145,7 +145,7 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
 });
 
 
-Ext.define("Mehr.view.program.EnrollersWindow", {
+Ext.define("Mehr.view.program.Enrollers", {
     rtl: true,
     extend: "Ext.window.Window",
     alias: "widget.enrollers",
