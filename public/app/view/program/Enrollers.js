@@ -44,13 +44,14 @@ var columns = [
     },
 
     {
-        sortable: true,
+
+        flex: 1,
         header: "نام خانوادگی",
         dataIndex: "last_name"
     },
 
     {
-        sortable: true,
+
         header: "جنسیت",
         dataIndex: "sex",
         width: 50,
@@ -59,14 +60,14 @@ var columns = [
         }
     },
     {
-        sortable: true,
+
         header: "رشته",
         dataIndex: "discipline_title"
     }
     ,
 
     {
-        sortable: true,
+
         header: "مقطع",
         dataIndex: "degree_title",
         width: 150
@@ -74,7 +75,7 @@ var columns = [
     ,
 
     {
-        sortable: true,
+
         header: "دوره",
         dataIndex: "course_title",
         width: 70
@@ -83,26 +84,20 @@ var columns = [
 
 ];
 Ext.define("Mehr.view.program.EnrollersGrid", {
-    extend: "Ext.grid.Panel",
+    extend: "Ahura.grid.Base",
     alias: "widget.enrollersGrid",
+    store: [
+        []
+    ],
     columns: columns,
-    loadMask: true,
-//    view: new Ext.grid.GroupingView(),
-    frame: false,
-    width: 900,
-    height: 400,
-//    store: Mehr.store.Enrollers,
-    defaults: {
-        sortable: true
-    },
     tbar: [
         'افزودن (شماره دانشجویی): ', ' ',
         {
-            xtype:'combo',
+            xtype: 'combo',
 //            id:"user_combobox_field",
-            forceSelection:true,
-            width:200,
-            displayField:'full_name',
+            forceSelection: true,
+            width: 200,
+            displayField: 'full_name',
 //            valueField:'user_id',
 //            store:{
 //                url:'/admin/json-Users-Combo',
@@ -134,23 +129,20 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
         }
     ],
 
-    bbar: new Ext.PagingToolbar({
-        pageSize: 50,
-        displayInfo: true,
-        displayMsg: 'نمایش موارد {0} - {1} از {2}',
-        emptyMsg: "موردی یافت نشد.",
-        store: Mehr.store.Enrollers
-    })
+//    bbar: new Ext.PagingToolbar({
+//        pageSize: 50,
+//        displayInfo: true,
+//        displayMsg: 'نمایش موارد {0} - {1} از {2}',
+//        emptyMsg: "موردی یافت نشد.",
+//        store: Mehr.store.Enrollers
+//    })
 
 });
 
 
 Ext.define("Mehr.view.program.Enrollers", {
-    rtl: true,
-    extend: "Ext.window.Window",
+    extend: "Ahura.window.Grid",
     alias: "widget.enrollers",
-    height: 400,
-    width: 800,
     title: 'نام نوشتگان',
 //    title:'نام نوشتگان)برنامه:'+Mehr.v.program_id+"(",
     items: [

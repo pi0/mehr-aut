@@ -3,6 +3,7 @@ Ext.require('Ahura.form.combo.MaritalStatus');
 Ext.define('Mehr.view.user.Edit',
     {
         extend: 'Ahura.window.Base',
+        requires:'Ahura.form.combo.SID',
         title: 'ویرایش کاربر',
         width: 600,
         items: {
@@ -19,13 +20,13 @@ Ext.define('Mehr.view.user.Edit',
                             border: false,
                             items: [
                                 {
-                                    name: 'user_id',
+                                    name: 'id',
                                     xtype: 'hidden'
                                 },
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'نام**',
-                                    name: 'first_name',
+                                    name: 'firstName',
                                     allowBlank: false,
                                     anchor: '90%'
                                 },
@@ -59,12 +60,11 @@ Ext.define('Mehr.view.user.Edit',
                                     xtype: 'textfield',
                                     fieldLabel: 'نام خانوادگي**',
                                     allowBlank: false,
-                                    name: 'last_name',
+                                    name: 'lastName',
                                     anchor: '90%'
                                 },
                                 {
-                                    xtype: 'sid-combo',
-
+                                    xtype: 'sid-combo'
                                 }
                             ]
                         }
@@ -96,12 +96,12 @@ Ext.define('Mehr.view.user.Edit',
                                 },
                                 {
                                     fieldLabel: 'نام پدر',
-                                    name: 'father_name'
+                                    name: 'fatherName'
                                 }
                                 ,
                                 {
                                     fieldLabel: 'تاریخ تولد**',
-                                    name: 'birthday_ts',
+                                    name: 'birthdayDate',
                                     emptyText: "مثلا: 24-6-1365"
                                 },
                                 {
@@ -117,11 +117,7 @@ Ext.define('Mehr.view.user.Edit',
                                 {
                                     xtype: 'marital-status-combo'
                                 }
-                                ,
-                                {
-                                    xtype: 'marital-status-combo'
-                                }
-                            ]
+                                                            ]
                         },
                         {
                             layout: 'form',
@@ -137,7 +133,7 @@ Ext.define('Mehr.view.user.Edit',
                                     minChars: 0,
                                     anchor: '90%',
                                     fieldLabel: 'رشته',
-                                    name: 'discipline_id',
+                                    name: 'disciplined',
                                     displayField: 'title',
                                     forceSelection: true,
                                     width: 450,
@@ -159,7 +155,7 @@ Ext.define('Mehr.view.user.Edit',
                                     forceSelection: true,
                                     typeAhead: true,
                                     store: Ahura.store.Terms,
-                                    name: 'start_term',
+                                    name: 'startTerm',
                                     fieldLabel: 'ترم ورود**',
                                     value: ''
                                 }
@@ -172,7 +168,7 @@ Ext.define('Mehr.view.user.Edit',
                                     forceSelection: true,
                                     typeAhead: true,
                                     store: Ahura.store.Terms,
-                                    name: 'end_term',
+                                    name: 'endTerm',
                                     fieldLabel: 'ترم خروج',
                                     value: ''
                                 }

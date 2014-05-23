@@ -8,6 +8,10 @@ var columns = [
                 icon: icon('pencil'),                // Use a URL in the icon config
                 tooltip: 'ویرایش برنامه',
                 handler: function (grid, rowIndex, colIndex) {
+                    var id = grid.getStore().getAt(rowIndex).data.id;
+                    var panel = Ext.create('Mehr.view.program.Edit');
+                    panel.down('form').getForm().load({params: {id: id}});
+//                    Ext.create('Mehr.view.program.Edit').down('form').getForm().load({params: {'id': id}});
 //                    var rec = Mehr.store.Programs.getAt(rowIndex);
 //                    Mehr.v.program_id = rec.get('program_id');
 //                    Mehr.formPanel.ProgramEdit.load({
@@ -23,9 +27,10 @@ var columns = [
                 }
             },
             {
-                icon: icon('group_add'),                // Use a URL in the icon config
+                icon: icon('groupAdd'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نام نوشتگان',
                 handler: function (grid, rowIndex, colIndex) {
+                    Ext.create('Mehr.view.program.Enrollers');
 //                    var rec = Mehr.store.Programs.getAt(rowIndex);
 //                    Mehr.v.program_id = rec.get('program_id');
 //                    Mehr.store.Enrollers.load({params: {program_id: Mehr.v.program_id}
@@ -37,26 +42,21 @@ var columns = [
 
     },
     {
+        flex: 1,
         header: "عنوان",
-        dataIndex: "title",
+        dataIndex: "name",
         sortable: true
     },
     {
-        header: "شمار نام‌نوشته‌گان",
-        dataIndex: "enrolled_count",
-        sortable: true
-    }
-    ,
-    {
         header: "شمار نام‌نوشتگاه قطعی",
-        dataIndex: "confirmed_count",
+        dataIndex: "confirmedCount",
         hidden: true,
         sortable: true
     }
     ,
     {
         header: "نوع",
-        dataIndex: "program_type_txt",
+        dataIndex: "typeTxt",
         sortable: true
     }
     ,
@@ -71,11 +71,11 @@ var columns = [
         dataIndex: "enrollment_status_txt",
         sortable: true,
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            if (0 == record.get('enrollment_status'))
+            if (0 == record.get('enrollmentStatus'))
                 return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
-            if (-1 == record.get('enrollment_status'))
+            if (-1 == record.get('enrollmentStatus'))
                 return  '<span style="font-weight:bold;color:blue;">' + value + '</span>';
-            if (1 == record.get('enrollment_status'))
+            if (1 == record.get('enrollmentStatus'))
                 return  '<span style="color:green;">' + value + '</span>';
             return value;
 
@@ -87,16 +87,22 @@ var columns = [
         dataIndex: "execution_status_txt",
         sortable: true,
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            if (0 == record.get('execution_status'))
+            if (0 == record.get('executionStatus'))
                 return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
-            if (-1 == record.get('execution_status'))
+            if (-1 == record.get('executionStatus'))
                 return  '<span style="font-weight:bold;color:blue;">' + value + '</span>';
-            if (1 == record.get('execution_status'))
+            if (1 == record.get('executionStatus'))
                 return  '<span style="color:green;">' + value + '</span>';
             return value;
 
         }
+    },
+    {
+        header: "شمار نام‌نوشته‌گان",
+        dataIndex: "enrolledCount",
+        sortable: true
     }
+
 ];
 Ext.define("Mehr.view.program.Grid", {
     extend: "Ahura.grid.Base",
@@ -115,16 +121,16 @@ Ext.define("Mehr.view.program.Grid", {
     //            }
     //        }
     //    }),
-//    store: 'Mehr.store.Programs',
-    store:[
-        [1,2,3.4,4,5,6,7]
-    ],
-
+    reader: {
+        type: 'json',
+        root: 'data',
+        totalProperty: 'total'
+    },
+    store: 'Program'
 //    view: new Ext.grid.GroupingView(),
 
 
 });
-
 Ext.define("Mehr.view.program.List", {
     extend: "Ahura.window.Grid",
     alias: "widget.programs",

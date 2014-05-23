@@ -6,7 +6,14 @@
 //    'password'=>'1111'
 //]);
 //$di->set('db',$db);
+require_once __DIR__ . '/../config/services.php';
 
-class Program extends Phalcon\Mvc\Model{
+
+class User extends Phalcon\Mvc\Model
+{
 
 }
+
+
+//$u=new User;
+//var_dump($u->findFirst()->toArray());;

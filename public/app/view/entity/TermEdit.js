@@ -27,17 +27,8 @@ var termColumns = [
             displayField: 'text',
             valueField: 'value',
             allowBlank: false,
-            store: Ext.create('Ext.data.ArrayStore', {
-                fields: ['value', 'text'],
-                storeId: 'foo',
-                data: [
-
-                    ['1', 'عضو اصلی'],
-                    ['2', 'عضو علی‌البدل'],
-                    ['3', 'دبیر']
-                ]
-
-            })        }
+            store: Ahura.store.MembershipType
+        }
     }
 ];
 var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
@@ -107,6 +98,7 @@ Ext.define('Mehr.view.entity.Council', {
 
 Ext.define('Mehr.view.entity.TermEdit', {
     extend: 'Ahura.window.Base',
+    requires:'Ahura.combo.SID',
     title: 'ویرایش/ایجاد دوره',
     height: 500,
     width: 500,

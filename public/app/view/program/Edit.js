@@ -31,177 +31,183 @@ Ext.define('Mehr.grid.ProgramSchedule', {
     ]
 });
 
-Ext.define("Mehr.view.program.Edit", {
-    extend: "Ahura.window.Base",
-    requires:['Ahura.form.combo.ProgramSubject'],
-    title: 'ویرایش برنامه',
-    width: 800,
-    height: 400,
-    items: {
-        xtype: 'form',
-        baseParams:{
-          'bar':3
-        },
-        api: {
-            load:   RPC.ProgramApi.read,
-            submit: RPC.ProgramApi.write
-        },
-        items: [
-            {
-                xtype: 'tabpanel',
-                items: [
-                    {
-                        title: 'مشخصات اولیه',
-                        layout: 'form',
-                        bodyPadding: 10,
-                        items: [
-                            {
-                                name: 'id',
-                                xtype: 'hidden'
-                            },
-                            {
-                                xtype: 'textfield',
-                                fieldLabel: 'عنوان',
-                                name: 'name',
-                                allowBlank: false,
-                                anchor: '90%'
-                            },
-                            {
-                                xtype: 'program-subject-combo'
+Ext.define("Mehr.view.program.Edit",
+    {
+        extend: "Ahura.window.Base",
+        requires: ['Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term'],
+        title: 'ویرایش برنامه',
+        width: 800,
+        height: 400,
+        items: {
+            xtype: 'form',
+            api: {
+                load: RPC.ProgramApi.read,
+                submit: RPC.ProgramApi.write
+            },
+            paramsAsHash: true,
+            items: [
+                {
+                    xtype: 'tabpanel',
+                    items: [
+                        {
+                            title: 'مشخصات اولیه',
+                            layout: 'form',
+                            bodyPadding: 10,
+                            items: [
+                                {
+                                    name: 'id',
+                                    xtype: 'hidden'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'عنوان',
+                                    name: 'name',
+                                    allowBlank: false,
+                                    anchor: '90%'
+                                },
+                                {
+                                    xtype: 'program-subject-combo'
 
-                            },
-                            Ext.create('Ahura.form.combo.ProgramType'),
-                            Ext.create('Ahura.form.combo.ProgramLevel')
-                        ]
+                                },
+                                Ext.create('Ahura.form.combo.ProgramType'),
+                                Ext.create('Ahura.form.combo.ProgramLevel')
+                            ]
 
-                    },
-                    {
-                        title: 'نام نویسی',
-                        layout: 'form',
-                        bodyPadding: 10,
-                        defaults: {
-                            labelWidth: 180
                         },
-                        defaultType: 'textfield',
-                        labelWidth: 350,
-                        items: [
-                            {
-                                fieldLabel: 'کمینه شمار شرکت کننده ها',
-                                name: 'micCapacity',
-                                xtype: 'numberfield',
-                                allowDesimal: false,
-                                allowNegative: false
+                        {
+                            title: 'نام نویسی',
+                            layout: 'form',
+                            bodyPadding: 10,
+                            defaults: {
+                                labelWidth: 180
                             },
-                            {
-                                fieldLabel: 'بیشینه شمار شرکت کننده ها',
-                                name: 'maxCapacity',
-                                xtype: 'numberfield',
-                                allowDesimal: false,
-                                allowNegative: false
-                            },
-                            {
-                                fieldLabel: 'زمان آغاز نام نویسی',
-                                emptyText: "",
-                                name: 'enrollmentFromDate',
-                                xtype: 'jalali'
-                            },
-                            {
-                                fieldLabel: 'زمان پایان نام نویسی',
-                                emptyText: "",
-                                name: 'enrollmentEndDate',
-                                xtype: 'jalali'
-                            } ,
-                            {
-                                fieldLabel: 'شیوه نام نویسی',
-                                xtype: 'radiogroup',
-                                width: 300,
-                                labelAlign: 'right',
-                                columns: 'auto',
-                                items: [
-                                    {
-                                        boxLabel: "به وسیله سامانه مهر",
-                                        inputValue: 'auto',
-                                        checked: true,
-                                        name: 'enrollmentMethod',
+                            defaultType: 'textfield',
+                            labelWidth: 350,
+                            items: [
+                                {
+                                    fieldLabel: 'کمینه شمار شرکت کننده ها',
+                                    name: 'minCapacity',
+                                    xtype: 'numberfield',
+                                    allowDesimal: false,
+                                    allowNegative: false
+                                },
+                                {
+                                    fieldLabel: 'بیشینه شمار شرکت کننده ها',
+                                    name: 'maxCapacity',
+                                    xtype: 'numberfield',
+                                    allowDesimal: false,
+                                    allowNegative: false
+                                },
+                                {
+                                    fieldLabel: 'زمان آغاز نام نویسی',
+                                    emptyText: "",
+                                    name: 'enrollmentStartDate',
+                                    xtype: 'jalali'
+                                },
+                                {
+                                    fieldLabel: 'زمان پایان نام نویسی',
+                                    emptyText: "",
+                                    name: 'enrollmentEndDate',
+                                    xtype: 'jalali'
+                                } ,
+                                {
+                                    fieldLabel: 'شیوه نام نویسی',
+                                    xtype: 'radiogroup',
+                                    width: 300,
+                                    labelAlign: 'right',
+                                    columns: 'auto',
+                                    items: [
+                                        {
+                                            fieldLabel: "به وسیله سامانه مهر",
+                                            inputValue: 'auto',
+                                            checked: true,
+                                            name: 'enrollmentMethod',
 
-                                    },
-                                    {
-                                        boxLabel: "دستی",
-                                        inputValue: 'manual',
-                                        checked: false,
-                                        name: 'enrollmentMethod',
-                                    }
-                                ]
-                            }
-
-                        ]
-                    },
-                    {
-                        title: 'هزینه',
-                        layout: 'form',
-                        bodyPadding: 10,
-                        defaults: {
-                            width: 230
-                        },
-                        defaultType: 'textfield',
-                        items: [
-                            {
-                                fieldLabel: "هزینه شرکت در برنامه(تومان)",
-                                id: 'costInput',
-                                xtype: 'numberfield',
-                                name: 'cost',
-                                labelWidth: 200,
-                                allowDesimal: false,
-                                allowNegative: false,
-                                width: 200,
-                                listeners: {
-                                    'show': function (t, v) {
-                                        if (Number(v) > 0) {
-                                            Ext.getCmp("paymentMethodRadio").enable();
-                                        } else Ext.getCmp("paymentMethodRadio").disable();
-                                    },
-                                    'change': function (t, v) {
-                                        if (Number(v) > 0) {
-                                            Ext.getCmp("paymentMethodRadio").enable();
-                                        } else Ext.getCmp("paymentMethodRadio").disable();
-                                    }
+                                        },
+                                        {
+                                            fieldLabel: "دستی",
+                                            inputValue: 'manual',
+                                            checked: false,
+                                            name: 'enrollmentMethod',
+                                        }
+                                    ]
                                 }
+
+                            ]
+                        },
+                        {
+                            title: 'هزینه',
+                            layout: 'form',
+                            bodyPadding: 10,
+                            defaults: {
+                                width: 230
                             },
-                            {
-                                fieldLabel: 'نحوه پرداخت هزیته',
-                                name: 'paymentMethod',
-                                xtype: 'radiogroup',
-                                id: 'paymentMethodRadio',
-                                width: 300,
-                                labelAlign: 'right',
-                                disabled: true,
-                                columns: 'auto',
-                                items: [
-                                    {
-                                        boxLabel: "نقدی",
-                                        inputValue: 'cash',
-                                        checked: true,
-                                        name: 'paymentMethod'
-                                    },
-
-                                    {
-                                        boxLabel: "اینترنتی",
-                                        inputValue: 'internet',
-                                        checked: false,
-                                        name: 'paymentMethod'
+                            defaultType: 'textfield',
+                            items: [
+                                {
+                                    fieldLabel: "هزینه شرکت در برنامه(تومان)",
+                                    xtype: 'numberfield',
+                                    name: 'cost',
+                                    labelWidth: 200,
+                                    allowDecimal: false,
+                                    allowNegative: false,
+                                    width: 200,
+                                    listeners: {
+//                                        'show': function (t, v) {
+//                                            if (Number(v) > 0) {
+//                                                Ext.getCmp("paymentMethodRadio").enable();
+//                                            }
+//                                            else Ext.getCmp("paymentMethodRadio").disable();
+//                                        },
+                                        'change': function (el, v) {
+//                                            var radio = el.up('panel').down('radiogroup');
+//                                            console.log(radio);
+//
+//                                            if (Number(v) > 0) {
+//                                                radio.enable();
+//                                            } else radio.disable();
+////                                            radio.forEach(function (e) {
+////                                                console.log(e);
+////                                            });
+////                                                Ext.getCmp("paymentMethodRadio").enable();
+                                        }
                                     }
-                                    ,
-                                    {
-                                        boxLabel: "فیش بانکی",
-                                        inputValue: 'bank',
-                                        checked: false,
-                                        name: 'paymentMethod'
-                                    }
-                                ]
-                            }
+                                },
+                                {
+                                    fieldLabel: 'نحوه پرداخت هزیته',
+                                    xtype: 'radiogroup',
+//                                id: 'paymentMethodRadio',
+                                    width: 300,
+                                    labelAlign: 'right',
+                                    disabled: true,
+                                    columns: 'auto',
+                                    name: 'paymentMethod',
+                                    items: [
+                                        {
+                                            boxLabel: "نقدی",
+                                            inputValue: 'c',
+                                            checked: true,
+//                                            name: 'paymentMethod'
+                                        },
 
-                        ]
-                    },
+                                        {
+                                            boxLabel: "اینترنتی",
+                                            inputValue: 'i',
+                                            checked: false
+//                                            name: 'paymentMethod'
+                                        }
+                                        ,
+                                        {
+                                            boxLabel: "فیش بانکی",
+                                            inputValue: 'b',
+                                            checked: false,
+//                                            name: 'paymentMethod'
+                                        }
+                                    ]
+                                }
+
+                            ]
+                        },
 //                {
 //                    title: 'کلیات',
 //                    autoScroll: true,
@@ -225,7 +231,7 @@ Ext.define("Mehr.view.program.Edit", {
 //
 //                    ]
 //                },
-                    //            new Mehr.panel.ProgramEditTab(
+                        //            new Mehr.panel.ProgramEditTab(
 //                {
 //                    layout: 'form',
 //                    bodyStyle: 'padding:0px',
@@ -241,111 +247,42 @@ Ext.define("Mehr.view.program.Edit", {
 //                    ]
 //
 //                },
-                    {
-                        title: 'مخاطبان',
-                        icon: icon('group'),
-                        layout: 'fit',
-                        items: {
-                            xtype: 'audience-panel'
+                        {
+                            title: 'مخاطبان',
+                            icon: icon('group'),
+                            layout: 'fit',
+                            items: {
+                                xtype: 'audience-panel'
+                            }
+                        },
+                        {
+                            title: 'جزئیات',
+                            xtype: 'htmleditor',
+                            name: "details",
+                            value: '',
+                            frame: false,
+                            fontFamilies: ['Tahoma', 'B Zar', 'B Titr'],
+                            layout: 'fit'
                         }
-                    },
-                    {
-                        title: 'جزئیات',
-                        xtype: 'htmleditor',
-                        id: 'programDetails',
-                        name: "details",
-                        frame: false,
-                        fontFamilies: ['Tahoma', 'B Zar', 'B Titr'],
-                        layout: 'fit'
-                    }
 
-                ]
-            }
+                    ]
+                }
 
-        ],
-        layout: 'fit'
-    },
-    buttons: [
-        {
-            text: 'ذخیره و بستن',
-            icon: icon('save'),
-            handler: function () {
-//                Mehr.handler.SaveUser('close');
-
-            }
+            ],
+            layout: 'fit'
         },
-        {
-            text: 'ذخیره و جدید',
-            icon: icon('save'),
-            handler: function () {
-//                Mehr.handler.SaveUser('new');
-
-            }
-        },
-        {
-            text: 'ذخیره',
-            icon: icon('save'),
-            handler: function () {
-                var form = this.up('window').down('form').getForm();
-                console.log(form.getFieldValues());
-                form.submit();
-
-//                if (form.isValid()) {
-//                    // Submit the Ajax request and handle the response
-//                    form.submit({
-//                        success: function (form, action) {
-////                            Ext.Msg.alert('Success', action.result.message);
-//                            Ext.Msg.alert('Success', 'OK');
-//                        },
-//                        failure: function (form, action) {
-////                            Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
-//                            Ext.Msg.alert('Failed', 'NOK');
-//                        }
-//                    });
-//                }
-            }
-        },
-        {
-            text: 'انصراف',
-            icon: icon('cancel'),
-            handler: function () {
-                $('[text=ذخیره]')[0].up('window').down('form').load();
-//                Mehr.window.ProgramEdit.hide();
-            }
-        },
-//        {
-//            text: 'مخاطبان',
-//            id: 'audiencesBtn',
-//            icon: icon('group'),
-//            handler: function () {
-//                Ext.create("Mehr.view.audience.Window");
-////                id = Mehr.formPanel.ProgramEdit.getForm().findField('program_id').getValue();
-////                Mehr.formPanel.Audiences.load({
-////                    url: '/program/json-Get-Programe-audiences',
-////                    params: {
-////                        program_id: id
-////                        //                            program_id: Mehr.formPanel.ProgramEdit.find('name','program_id').getValue()
-////                    },
-////                    failure: function (form, action) {
-////                        Ext.Msg.alert("Load failed", action.result.errorMessage);
-////                    }
-////                });
-////                Mehr.window.Audiences.show('audiencesBtn');
-//            }
-//        },
-        {
-            text: 'مدیریت نام نوشتگان',
+        buttons: Ahura.saveCancelBtn.concat({
+                text: 'مدیریت نام نوشتگان',
 //        disabled:true,
-            id: 'enrollersBtn',
-            icon: icon('groupEdit'),
+//            id: 'enrollersBtn',
+                icon: icon('groupEdit'),
 
-            handler: function (button) {
+                handler: function (button) {
 //                Mehr.store.Enrollers.load({params: {program_id: Mehr.v.program_id}
 //                });
 //                Mehr.window.Enrollers.show("enrollersBtn");
-                (Ext.create("Mehr.view.program.Enrollers")).show()
-
+                    (Ext.create("Mehr.view.program.Enrollers")).show()
+                }
             }
-        }
-    ]
-});
+        )
+    });

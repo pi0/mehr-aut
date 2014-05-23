@@ -37,10 +37,10 @@ Ext.define('Mehr.view.entity.Edit', {
                                     minChars: 0,
                                     anchor: '90%',
                                     fieldLabel: 'نوع',
-                                    name: 'religion',
+                                    name: 'type',
                                     displayField: 'title',
                                     forceSelection: true,
-                                    store: ['انجمن علمی', 'کانون فرهنگی', 'شورای صنفی', 'تشکل اسلامی', 'انجمن ورزشی', 'تیم ورزشی', 'بسیج دانشجویی', 'دیگر']
+                                    store: Ahura.store.EntityType
                                 }
                                 ,
                                 {

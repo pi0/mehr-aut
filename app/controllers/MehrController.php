@@ -22,15 +22,30 @@ class MehrController extends ControllerBase
         ExtDirect::$debug=true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
         ExtDirect::$form_handlers = array( 'ProgramApi::write' );
-        ExtDirect::provide(['ProgramApi']);
+        ExtDirect::provide(['ProgramApi','UserApi']);
     }
     public function jsAction(){
         $db=$this->getDI()->get('db');
 
-        $programType=toJsArray($db->query('select * from programType')->fetchAll());
+        $degrees=toJsArray($db->query('select id,name from degree where `level` is not null order by id')->fetchAll());
+        $this->view->degree=$degrees;
+
+        $programType=toJsArray($db->query('select `value`,text from constant where category="programType"')->fetchAll());
         $this->view->programType=$programType;
 
-        $degrees=toJsArray($db->query('select id,name from degree where `level` is not null')->fetchAll());
-        $this->view->degree=$degrees;
+        $religion=toJsArray($db->query('select `value`,text from constant where category="religion"')->fetchAll());
+        $this->view->religion=$religion;
+
+        $entityType=toJsArray($db->query('select `value`,text from constant where category="entityType"')->fetchAll());
+        $this->view->entityType=$entityType;
+
+        $subject=toJsArray($db->query('select `value`,text from constant where category="subject"')->fetchAll());
+        $this->view->subject=$subject;
+
+        $audienceLevel=toJsArray($db->query('select `value`,text from constant where category="audienceLevel"')->fetchAll());
+        $this->view->audienceLevel=$audienceLevel;
+
+        $membership=toJsArray($db->query('select `value`,text from constant where category="membership"')->fetchAll());
+        $this->view->membership=$membership;
     }
 }

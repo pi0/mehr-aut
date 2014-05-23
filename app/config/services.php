@@ -4,6 +4,12 @@
  */
 $di = new \Phalcon\DI\FactoryDefault();
 
+//Read the configuration
+$configFile=(php_uname('s')=='Windows NT')? 'dev.php':'pro.php';
+
+$config = new Phalcon\Config(include_once __DIR__ . '/'.$configFile);
+$loader = new \Phalcon\Loader();
+
 /**
  * We register the events manager
  */

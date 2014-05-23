@@ -1,4 +1,4 @@
-Ext.Loader.loadScript('ahura/utility.js');
+//Ext.Loader.loadScript('ahura/utility.js');
 //Ext.ns(
 //    "Mehr.v", // Global variables
 //    "Mehr.combo",
@@ -17,7 +17,6 @@ Ext.Loader.loadScript('ahura/utility.js');
 //    "Mehr.tabPanel",
 //    "Mehr.window"
 //);
-Ext.ns('Ahura.store');
 
 
 Ext.Loader.setConfig({
@@ -26,22 +25,22 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Mehr',
-    paths: {
-        'Ahura': 'ahura/',
-        'Ext.ux': 'vendor/ext-ux/'
-    },
-    appFolder: 'app',
+    appFolder: BASE+'app',
+    stores: ['Program','User'],
+    models: ['User'],
     autoCreateViewport: true,
+    paths: {
+        'Ahura': 'http://localhost/aut/ahura',
+        'Ext.ux':'http://localhost/aut/vendor/ext-ux'
+    },
     controllers: [
 //        'Users',
 //        'Audiences'
     ],
     launch: function () {
-
         Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider', {
             expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)) //7 days from now
         }));
-
         Ext.apply('Ext.form.field.VTypes', {
             password: function (val, field) {
                 if (field.initialPassField) {
@@ -52,26 +51,14 @@ Ext.application({
             },
             passwordText: 'مقدار وارد شده با با مقدار گذرواژه یکسان نیست.'
         });
-
-        // turn on validation errors beside the field globally
-        //        Ext.form.Field.prototype.msgTarget = 'side';
-
     }
 
 });
 Ext.onReady(function () {
-    Ext.create('Mehr.view.program.Edit');
-//    Ext.create('Mehr.view.user.Edit');
-//    Ext.create('Ext.window.Window', {width:200,height:300,layout: 'fit', autoShow: true, items: [Ext.create('Mehr.view.audience.Panel')]});
+    Ext.create('Mehr.view.user.List');
+    Ext.grid.RowEditor.prototype.cancelBtnText = "لغو";
+    Ext.grid.RowEditor.prototype.saveBtnText = "بهنگام‌سازی";
 
-//    Ext.create('Ext.window.Window', {
-////        rtl: true,
-//        autoShow: true,
-//        height: 400,
-//        width: 1000,
-//        layout: 'fit',
-//        items: Ext.create('Mehr.view.audience.Panel')
-//    });
 });
 
 
@@ -83,12 +70,129 @@ Ext.require([
     'Ext.ux.Jalali',
     'Ext.ux.JalaliDate',
     'Ext.ux.JalaliDatePlugin',
-    'Ext.ux.JalaliDatePlugin-fa_IR'
+    'Ext.ux.JalaliDatePlugin-fa_IR',
+    'Ext.grid.RowEditor'
 ]);
 
-Ext.grid.RowEditor.prototype.cancelBtnText = "لغو";
-Ext.grid.RowEditor.prototype.saveBtnText = "بهنگام‌سازی";
 
-$=function(q){
+$$ = function (q) {
     return Ext.ComponentQuery.query(q)
 }
+
+Ahura.saveCancelBtn = [
+//    {
+//        text: 'ذخیره و بستن',
+//        icon: icon('save'),
+//        handler: function () {
+//            this.up('window').down('button#saveBtn').handler();
+//            this.up('window').down('button#cancelBtn').handler();
+//
+//        }
+//    },
+//    {
+//        text: 'ذخیره و جدید',
+//        icon: icon('save'),
+//
+//        handler: function () {
+//
+//        }
+//    },
+    {
+        itemId: 'saveBtn',
+        on: {
+            click: function () {
+                alert(3);
+            }
+        },
+        text: 'ذخیره',
+        icon: icon('save'),
+        handler: function () {
+            var c = [], d = [];
+            var form = this.up('window').down('form').getForm();
+            var win = this.up('window');
+            win.down('treepanel').getChecked().forEach(function (v) {
+                if (v.get('type') == 'college') {
+                    c.push(v.get('id'));
+                } else if (v.get('type') == 'department') {
+                    d.push(v.get('id'));
+                }
+
+            });
+
+            if (form.isValid()) {
+                // Submit the Ajax request and handle the response
+                form.submit({
+                    params: {
+                        'audience[departments]': d,
+                        'audience[colleges]': c
+                    },
+                    success: function (form, action) {
+//                            Ext.Msg.alert('Success', action.result.message);
+                        Ext.MessageBox.show({
+                            scope: win,
+                            rtl: true,
+                            title: 'موفقیت',
+                            msg: 'دستور شما به درستی اجرا شد.',
+//                            msg: 'اطلاعات به شکل موفقیت آمیز ذخیره شد.',
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.INFO,
+                            fn: function () {
+                                this.close();
+                            }
+                        })
+                    },
+                    failure: function (form, action) {
+//                            Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
+                        Ext.MessageBox.show({
+                            rtl: true,
+                            title: 'خطا',
+                            msg: (action.result.message) ? 'در داده‌های وارد شده خطا وجود دارد.' : 'ارتباط با سرور برقرار نشد.',
+//                            msg: 'خطایی در داده‌ها وجود دارد.',
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                        });
+                    }
+                });
+            } else {
+                Ext.MessageBox.show({
+                    rtl: true,
+                    title: 'خطا',
+                    msg: 'در داده‌های وارد شده خطا وجود دارد.',
+                    buttons: Ext.MessageBox.OK,
+                    icon: Ext.MessageBox.ERROR
+                });
+
+            }
+        }
+    },
+    {
+        text: 'انصراف',
+        itemId: 'cancelBtn',
+        icon: icon('cancel'),
+        handler: function () {
+            this.up('window').close();
+//                $('[text=ذخیره]')[0].up('window').down('form').load();
+//                Mehr.window.ProgramEdit.hide();
+        }
+    },
+//        {
+//            text: 'مخاطبان',
+//            id: 'audiencesBtn',
+//            icon: icon('group'),
+//            handler: function () {
+//                Ext.create("Mehr.view.audience.Window");
+////                id = Mehr.formPanel.ProgramEdit.getForm().findField('program_id').getValue();
+////                Mehr.formPanel.Audiences.load({
+////                    url: '/program/json-Get-Programe-audiences',
+////                    params: {
+////                        program_id: id
+////                        //                            program_id: Mehr.formPanel.ProgramEdit.find('name','program_id').getValue()
+////                    },
+////                    failure: function (form, action) {
+////                        Ext.Msg.alert("Load failed", action.result.errorMessage);
+////                    }
+////                });
+////                Mehr.window.Audiences.show('audiencesBtn');
+//            }
+//        },
+]

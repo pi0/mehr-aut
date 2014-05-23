@@ -1,6 +1,12 @@
+Ext.ns('Ahura.store');
 Ahura.store.ProgramTypes=<?=$programType ?>;
 Ahura.store.Degrees=<?=$degree ?>;
-
+Ahura.store.Religion=<?=$religion ?>;
+Ahura.store.EntityType=<?=$entityType ?>;
+Ahura.store.ProgramSubjects=<?=$subject ?>;
+Ahura.store.ProgramLevels=<?=$audienceLevel ?>;
+Ahura.store.MembershipType=<?=$membership ?>;
+/*
 Ahura.store.ProgramSubjects = [
 [20, "اجتماعی"],
 [26, "ادبی"],
@@ -17,6 +23,7 @@ Ahura.store.ProgramSubjects = [
 [25, "ورزشی"],
 [23, "هنری"]
 ];
+
 Ahura.store.ProgramLevels = [
 [12, "استان"],
 [15, "بین الملل"],
@@ -30,6 +37,7 @@ Ahura.store.ProgramLevels = [
 [6, "گروه آموزشی"],
 [13, "منطقه کشوری"]
 ];
+*/
 
 Ahura.store.Colleges = [
 [3, "ادبیات و علوم انسانی"],
@@ -87,7 +95,7 @@ Ahura.store.Disciplines = [
 
 Ahura.store.Terms =[];
 for(var i=moment().jYear()-10;i<=moment().jYear()+1;i++){
-Ahura.store.Terms.push([i+'03']);
-Ahura.store.Terms.push([i+'06']);
-Ahura.store.Terms.push([i+'11']);
+Ahura.store.Terms.push(i+'03');
+Ahura.store.Terms.push(i+'06');
+Ahura.store.Terms.push(i+'11');
 }

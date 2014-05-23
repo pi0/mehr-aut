@@ -6,114 +6,128 @@ Ext.require('Ahura.form.combo.Religion');
 Ext.require('Ahura.form.combo.Course');
 Ext.require('Ahura.form.combo.Nationality');
 Ext.define('Mehr.view.audience.Panel', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.tab.Panel',
     xtype: 'audience-panel',
-    layout: 'border',
     items: [
         {
+            activeTab: 3,
             rtl: true,
-            region: 'north',
             layout: 'form',
-            bodyPadding: 10,
+            bodyPadding: 15,
+            title: 'دامنه',
+            defaults: {
+                labelWidth: 50
+            },
             items: [
                 {
-
-                    xtype: 'fieldcontainer',
-                    layout: 'hbox',
-                    items: [
-                        {
-//                            bodyStyle:'border:solid gray thin',
-                            rtl: true,
-                            fieldLabel: 'جنسیت',
-                            layout: 'hbox',
-                            xtype: 'radiogroup',
-                            labelWidth: 50,
-                            items: [
-                                {
-                                    name: 'sex',
-                                    inputValue: "",
-                                    boxLabel: "مهم نیست",
-                                    checked: true,
-                                    labelAlign: 'right'
-                                },
-                                {
-                                    name: 'sex',
-                                    inputValue: "f",
-                                    boxLabel: "مونث"
-                                },
-                                {
-                                    name: 'sex',
-                                    inputValue: "m",
-                                    boxLabel: "مذکر"
-                                }
-                            ]
-
-                        },
-                        {
-                            xtype: 'marital-status-combo',
-                            multiSelect: true, typeAhead: false},
-                        {
-                            xtype: 'nationality-combo',
-                            multiSelect: true, typeAhead: false
-                        },
-                        {
-                            xtype: 'religion-combo',
-                            flex:1,
-                            multiSelect: true, typeAhead: false
-                        }
+                    fieldLabel: 'نوع کاربر',
+                    xtype: 'local-combo',
+                    name: 'audience[userType]',
+                    multiSelect: true,
+                    typeAhead: false,
+                    value: 's',
+                    store: [
+                        ['s', 'دانشجو'],
+                        ['g', 'دانش‌آموخته/پایان تحصیل'],
+                        ['p', 'استاد'],
+                        ['e', 'کارمند'],
+                        ['a', 'همه']
                     ]
                 },
                 {
-                    fieldDefaults: {
-                        labelWidth: 50
-                    },
-                    xtype: 'fieldcontainer',
+//                            bodyStyle:'border:solid gray thin',
+                    border: 0,
+                    rtl: true,
+                    fieldLabel: 'جنسیت',
                     layout: 'hbox',
+                    xtype: 'radiogroup',
+                    labelWidth: 50,
                     items: [
-
                         {
-//                            xtype: 'terms-combo',
-                            name: "from_term",
-                            fieldLabel: "از ورودی"
-
+                            name: 'audience[sex]',
+                            inputValue: "",
+                            boxLabel: "مهم نیست",
+                            checked: true,
+                            labelAlign: 'right'
                         },
                         {
-                            name: "to_term",
-//                            xtype: 'terms-combo',
-                            fieldLabel: 'تا ورودی'
+                            name: 'audience[sex]',
+                            inputValue: "f",
+                            boxLabel: "مونث"
                         },
                         {
-                            fieldLabel: "دوره",
-                            xtype: 'course-combo',
-                            valueField: "college_id",
-                            name: 'courses[]',
-                            displayField: 'title',
-                            multiSelect: true,
-                            typeAhead: false,
-                            flex: 1
+                            name: 'audience[sex]',
+                            inputValue: "m",
+                            boxLabel: "مذکر"
                         }
-                        ,
-                        {
-                            xtype: 'degrees-combo',
-                            valueField: "college_id",
-                            name: 'degrees[]',
-                            flex: 1,
-                            multiSelect: true,
-                            typeAhead: false
-                        }
-//                          ,
+                    ]
+
+                },
+
+                {
+                    xtype: 'terms-combo',
+                    name: "audience[fromTerm]",
+                    fieldLabel: "از ورودی"
+
+                },
+                {
+                    name: "audience[toTerm]",
+                    xtype: 'terms-combo',
+                    fieldLabel: 'تا ورودی'
+                },
+                {
+                    fieldLabel: "دوره",
+                    xtype: 'course-combo',
+                    valueField: "college_id",
+                    name: 'audience[courses][]',
+                    displayField: 'title',
+                    multiSelect: true,
+                    typeAhead: false,
+                    flex: 1
+                }
+                ,
+                {
+                    xtype: 'degrees-combo',
+                    valueField: "college_id",
+                    name: 'audience[degrees][]',
+                    flex: 1,
+                    multiSelect: true,
+                    typeAhead: false
+                }
+                ,
 //                        Ext.create('Ahura.form.combo.Colleges'),
 //                    Ext.create('Ahura.form.combo.Departments'),
 //                    Ext.create('Ahura.form.combo.Disciplines')
-                    ]
+
+                {
+                    xtype: 'religion-combo',
+                    name: 'audience[religion][]',
+                    flex: 1,
+                    multiSelect: true, typeAhead: false
+                },
+//                'اعمال محدودیت روی رشته/دانشکده',
+                {
+                    xtype: 'checkbox',
+                    labelAlign: 'left',
+                    labelWidth: 180,
+                    fieldLabel: 'اعمال محدودیت روی رشته/دانشکده',
+                    listeners: {
+                        'change': function (t, value) {
+                            if (value) {
+                                this.up('window').down('#treeTab').enable();
+                            } else {
+                                this.up('window').down('#treeTab').disable();
+                            }
+                        }}
                 }
             ]
         },
         {
-            region: 'west',
+            itemId: 'treeTab',
             collapsible: true,
             layout: 'fit',
             title: 'دانشکده‌ها و رشته‌ها',
+            disabled: true,
             width: 200,
             split: true,
             items: [
@@ -122,20 +136,23 @@ Ext.define('Mehr.view.audience.Panel', {
                     xtype: 'treepanel',
                     rootVisible: false,
                     store: Ext.create('Ext.data.TreeStore', {
+                        fields: ['text', 'id', 'type'],
                         root: {
                             expanded: true,
                             checked: true,
                             children: [
-                                { text: "دانشکده کامپیوتر", "checked": true, children: [
-                                    { text: "نرم‌افزار", leaf: true, "checked": true },
-                                    { text: "فناوری اطلاعات", leaf: true, "checked": true}
+
+                                { text: "دانشکده کامپیوتر", "checked": true, id: '1', children: [
+                                    { text: "نرم‌افزار", leaf: true, "checked": true, id: 3, type: 'department'},
+                                    { text: "فناوری اطلاعات", leaf: true, "checked": true, id: 33, type: 'college'}
                                 ]},
                                 { text: "دانشکده ریاضی",
                                     "checked": true,
                                     children: [
-                                        { text: "علوم کامپیوتر", leaf: true, "checked": true },
-                                        { text: "ریاضی کاربردی", leaf: true, "checked": true}
+                                        { text: "علوم کامپیوتر", leaf: true, "checked": true, type: 'department', id: 44 },
+                                        { text: "ریاضی کاربردی", leaf: true, "checked": true, type: 'department', id: 434}
                                     ] }
+
                             ]
                         }
                     })
@@ -143,8 +160,8 @@ Ext.define('Mehr.view.audience.Panel', {
             ]
         },
         {
-            region: 'center',
-            layout:'fit',
+            title: 'پیش‌نمای مخاطبان',
+            layout: 'fit',
             items: [
 
                 {
@@ -152,7 +169,5 @@ Ext.define('Mehr.view.audience.Panel', {
                 }
             ]
         }
-//
     ]
-
-})
+});

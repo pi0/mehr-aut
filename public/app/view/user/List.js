@@ -6,7 +6,7 @@ var columns = [
         width: 20,
         items: [
             {
-                icon: icon('user_edit'),                // Use a URL in the icon config
+                icon: icon('userEdit'),                // Use a URL in the icon config
                 tooltip: 'ویرایش کاربر',
                 handler: function (grid, rowIndex, colIndex) {
 //            var rec = users.getAt(rowIndex);
@@ -29,21 +29,21 @@ var columns = [
     ,
     {
         header: "# دانشجوی",
-        dataIndex: "student_id",
+        dataIndex: "sid",
         sortable: true
     },
 
 
     {
         header: "نام",
-        dataIndex: "first_name",
+        dataIndex: "firstName",
         sortable: true
     },
 
     {
         sortable: true,
         header: "نام خانوادگی",
-        dataIndex: "last_name"
+        dataIndex: "lastName"
     },
 
     {
@@ -74,14 +74,14 @@ var columns = [
         sortable: true,
         header: "رشته",
         flex: 1,
-        dataIndex: "discipline_title"
+        dataIndex: "disciplineTitle"
     }
     ,
 
     {
         sortable: true,
         header: "مقطع",
-        dataIndex: "degree_title",
+        dataIndex: "degreeTitle",
         width: 150
     }
     ,
@@ -89,7 +89,7 @@ var columns = [
     {
         sortable: true,
         header: "دوره",
-        dataIndex: "course_title",
+        dataIndex: "courseTitle",
         width: 50
     }
 ];
@@ -97,8 +97,8 @@ var columns = [
 Ext.define("Mehr.view.user.Grid", {
     extend: "Ahura.grid.Users",
     alias: "widget.usersGrid",
-    columns: columns,
-//    store: "Users",
+//    columns: columns,
+    store: "User",
     tbar: [
         {
             width: 400,
@@ -138,7 +138,7 @@ Ext.define("Mehr.view.user.Grid", {
 });
 
 
-Ext.define("Mehr.view.user.Window",{
+Ext.define("Mehr.view.user.List",{
     extend:"Ahura.window.Grid",
     alias:"widget.usersW",
     title:'کاربران',

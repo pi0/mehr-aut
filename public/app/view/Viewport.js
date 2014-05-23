@@ -1,4 +1,4 @@
-Ext.require("Mehr.view.user.Window");
+Ext.require("Mehr.view.user.List");
 var menu = Ext.create('Ext.menu.Menu', {
     plain: true,
     items: {
@@ -17,7 +17,7 @@ var menu = Ext.create('Ext.menu.Menu', {
                 text: 'دانشجویان',
                 icon: 'assets/img/32p/users.gif',
                 handler: function () {
-                    Ext.create("Mehr.view.user.Window").show();
+                    Ext.create("Mehr.view.user.List").show();
 //                    var w = Ext.widget("usersW");
 //                    w.show();
                 }

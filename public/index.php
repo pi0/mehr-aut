@@ -5,17 +5,13 @@ error_reporting(E_ALL);
 //require_once 'FB/fb.php';
 //require_once 'firelogger.php';
 require_once '../vendor/jdf.php';
+require_once '../vendor/jdatetime.class.php';
 require_once 'ux/Ux.php';
 require_once '../app/util.php';
 
 try {
 
-    //Read the configuration
-    $configFile=(php_uname('s')=='Windows NT')? 'dev.php':'pro.php';
 
-    $config = new Phalcon\Config(include_once __DIR__ . '/../app/config/'.$configFile);
-
-    $loader = new \Phalcon\Loader();
 
     /**
      * We're a registering a set of directories taken from the configuration file
@@ -35,7 +31,7 @@ try {
 //    ));
 
 
-    require __DIR__ . "/../app/config/services.php";
+//    require __DIR__ . "/../app/config/services.php";
 
     $application = new \Phalcon\Mvc\Application();
     $application->setDI($di);
@@ -47,3 +43,6 @@ try {
     echo $e->getMessage();
 }
 
+
+
+//print_r( (new ProgramApi())->read());

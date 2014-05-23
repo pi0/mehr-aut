@@ -4,6 +4,6 @@ Ext.define("Ahura.form.combo.Religion",{
     name:"level",
     fieldLabel: 'دین',
     labelWidth:50,
-    store: ['مسلمان (مذهب نامشخص)','مسلمان (اهل تشیع)', 'مسلمان (اهل تسنن)', 'ارمنی/مسیحی', 'کلیمی/یهودی', 'زرتشتی', 'دیگر','نامشخص']
+    store: Ahura.store.Religion
 
 });
