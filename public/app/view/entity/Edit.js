@@ -5,15 +5,19 @@ Ext.define('Mehr.view.entity.Edit', {
     title: 'ویرایش نهاد',
     height: 500,
     width: 1000,
-    maximizable:true,
-    minimizable:true,
+
     items: [
         {
             xtype: 'form',
+            paramsAsHash: true,
+            api: {
+                load: RPC.EntityApi.read,
+                submit: RPC.EntityApi.write
+            },
             layout:'fit',
             fieldDefaults: {
-                labelAlign: 'top',
-                labelWidth: 300,
+//                labelAlign: 'top',
+                labelWidth: 150,
                 labelStyle: 'margin-bottom:3px'
             },
             items: [
@@ -37,6 +41,7 @@ Ext.define('Mehr.view.entity.Edit', {
                                     minChars: 0,
                                     anchor: '90%',
                                     fieldLabel: 'نوع',
+                                    allowBlank: false,
                                     name: 'type',
                                     displayField: 'title',
                                     forceSelection: true,
@@ -45,16 +50,16 @@ Ext.define('Mehr.view.entity.Edit', {
                                 ,
                                 {
                                     fieldLabel: 'عنوان',
-                                    name: 'father_name',
-                                    emptyText: 'تنها عنوان: مثلا  «دانشکده کامپیوتر» و نه «انجمن علمی دانشکده کامپیوتر»',
-                                    width: 200
+                                    allowBlank: false,
+                                    name: 'name',
+                                    emptyText: 'تنها عنوان: مثلا  «دانشکده کامپیوتر» و نه «انجمن علمی دانشکده کامپیوتر»'
                                 }
                                 ,
                                 {
                                     fieldLabel: 'شمار اعضای شورای مرکزی',
                                     emptyText: "تنها شماره وارد نمایید.",
                                     name: 'nid',
-                                    xtype: 'numberfield'
+                                    xtype: 'integer'
                                     //                    maxLength:10,
                                     //                    minLength:10
                                 },
@@ -62,14 +67,13 @@ Ext.define('Mehr.view.entity.Edit', {
                                     fieldLabel: 'شمار اعضای علی‌البدل شورای مرکزی',
                                     emptyText: "تنها شماره وارد نمایید.",
                                     name: 'nid',
-                                    xtype: 'numberfield',
-                                    labelWidth: 300
-                                    //                    maxLength:10,
+                                    xtype: 'integer'                                    //                    maxLength:10,
                                     //                    minLength:10
                                 },
                                 {
                                     fieldLabel: 'امکان عضویت',
-                                    name: '',
+                                    name: 'membership',
+                                    value:1,
                                     xtype: 'checkbox'
                                 }
                             ]
@@ -96,35 +100,7 @@ Ext.define('Mehr.view.entity.Edit', {
                     ]
                 }
             ],
-            fbar: [
-                {
-                    icon: icon('save'),
-                    text: 'ذخیره و بستن',
-                    handler: function () {
-//            Mehr.handler.SaveUser('close');
-
-                    }
-                },
-                {
-                    icon: icon('save'),
-                    text: 'ذخیره و جدید',
-                    handler: function () {
-//        Mehr.handler.SaveUser('new');
-
-                    }
-                },
-                {
-                    icon: icon('save'),
-                    text: 'ذخیره'
-//    handler:Mehr.handler.Save('/account/json-edit-user', null,Mehr.window.UserEdit)
-                },
-                {
-                   xtype:'cancel-button',
-                    handler: function () {
-                        Mehr.window.UserEdit.hide();
-                    }
-                }
-            ]
+            fbar: [Ahura.button.SaveForm,Ahura.button.CancelForm]
         }
     ]
 });

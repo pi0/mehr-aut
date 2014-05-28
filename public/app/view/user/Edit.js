@@ -3,11 +3,19 @@ Ext.require('Ahura.form.combo.MaritalStatus');
 Ext.define('Mehr.view.user.Edit',
     {
         extend: 'Ahura.window.Base',
-        requires:'Ahura.form.combo.SID',
+        requires: 'Ahura.form.combo.SID',
         title: 'ویرایش کاربر',
         width: 600,
         items: {
             xtype: 'form',
+            fieldDefaults: {
+                msgTarget: 'under'
+            },
+            paramsAsHash: true,
+            api: {
+                load: RPC.UserApi.read,
+                submit: RPC.UserApi.write
+            },
             items: [
                 {
                     bodyStyle: 'padding:5px',
@@ -36,6 +44,7 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'جنسیت**',
                                     allowBlank: false,
                                     xtype: 'radiogroup',
+                                    name: 'sex',
                                     items: [
                                         {
                                             name: 'sex',
@@ -64,7 +73,9 @@ Ext.define('Mehr.view.user.Edit',
                                     anchor: '90%'
                                 },
                                 {
-                                    xtype: 'sid-combo'
+                                    fieldLabel: 'شماره دانشجویی',
+                                    xtype: 'integer',
+                                    name: 'sid'
                                 }
                             ]
                         }
@@ -72,11 +83,9 @@ Ext.define('Mehr.view.user.Edit',
                 },
                 {
                     xtype: 'tabpanel',
-                    layout:'fit',
+                    layout: 'fit',
                     plain: true,
                     activeTab: 0,
-                    defaults: {
-                    },
                     items: [
                         {
                             title: 'فردی',
@@ -90,9 +99,10 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'شماره ملی',
                                     emptyText: "تنها شماره وارد نمایید.",
                                     name: 'nid',
-                                    xtype: 'numberfield'
-                                    //                    maxLength:10,
-                                    //                    minLength:10
+                                    xtype: 'integer',
+                                    minLength: 10,
+                                    maxLength: 10,
+                                    enforceMaxLength: true,
                                 },
                                 {
                                     fieldLabel: 'نام پدر',
@@ -117,7 +127,7 @@ Ext.define('Mehr.view.user.Edit',
                                 {
                                     xtype: 'marital-status-combo'
                                 }
-                                                            ]
+                            ]
                         },
                         {
                             layout: 'form',
@@ -248,7 +258,7 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'گذرواژه',
                                     inputType: 'password',
                                     //                    emptyText:"گذرواژه جدید را وارد نمایید.",
-                                    id: 'password-cmp',
+                                    itmeId: 'password-cmp',
                                     name: 'password'
                                     //                    minLength:6
                                 }
@@ -271,7 +281,7 @@ Ext.define('Mehr.view.user.Edit',
                                     items: [
                                         {
                                             boxLabel: "فعال",
-                                            inputValue: true,
+                                            inputValue: 1,
                                             checked: true,
                                             xtype: 'radio',
                                             name: 'active'
@@ -280,7 +290,7 @@ Ext.define('Mehr.view.user.Edit',
                                         {
                                             boxLabel: "غیرفعال",
                                             inputValue: false,
-                                            checked: false,
+                                            checked: 0,
                                             xtype: 'radio',
                                             name: 'active'
                                         }
@@ -327,35 +337,6 @@ Ext.define('Mehr.view.user.Edit',
 //                }
             ]
         },
-        fbar: [
-            {
-                icon: icon('save'),
-                text: 'ذخیره و بستن',
-                handler: function () {
-//            Mehr.handler.SaveUser('close');
-
-                }
-            },
-            {
-                icon: icon('save'),
-                text: 'ذخیره و جدید',
-                handler: function () {
-//        Mehr.handler.SaveUser('new');
-
-                }
-            },
-            {
-                icon: icon('save'),
-                text: 'ذخیره'
-//    handler:Mehr.handler.Save('/account/json-edit-user', null,Mehr.window.UserEdit)
-            },
-            {
-                icon: icon('cancel'),
-                text: 'انصراف',
-                handler: function () {
-                    Mehr.window.UserEdit.hide();
-                }
-            }
-        ]
+        fbar: [Ahura.button.CancelForm, Ahura.button.SaveForm]
     });
 

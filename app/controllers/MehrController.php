@@ -21,8 +21,8 @@ class MehrController extends ControllerBase
         ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug=true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
-        ExtDirect::$form_handlers = array( 'ProgramApi::write' );
-        ExtDirect::provide(['ProgramApi','UserApi']);
+        ExtDirect::$form_handlers = array( 'ProgramApi::write','UserApi::write','EntityApi::write' );
+        ExtDirect::provide(['ProgramApi','UserApi','EntityApi']);
     }
     public function jsAction(){
         $db=$this->getDI()->get('db');

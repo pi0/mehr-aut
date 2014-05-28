@@ -1,6 +1,6 @@
 Ext.define('Mehr.controller.Users', {
     extend: 'Ext.app.Controller',
-    stores: ['Users'],
+    stores: ['User'],
     models: ['User'],
     views:['user.Grid',
         'user.Window',

@@ -14,7 +14,7 @@ var menu = Ext.create('Ext.menu.Menu', {
         },
         items: [
             {
-                text: 'دانشجویان',
+                text: 'کاربران',
                 icon: 'assets/img/32p/users.gif',
                 handler: function () {
                     Ext.create("Mehr.view.user.List").show();
@@ -274,6 +274,13 @@ Ext.create("Ext.toolbar.Toolbar", {
 
         },
         '->'
+        ,
+        {
+            icon:icon('arrowInout'),
+            handler:function(){
+                requestFullScreen(document.body);
+            }
+        }
         ,
         {
             text: "خروج",

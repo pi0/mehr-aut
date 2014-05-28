@@ -1,4 +1,4 @@
-Ext.require('Ahura.grid.Users');
+Ext.require('Ahura.grid.User');
 Ext.require('Ahura.form.combo.MaritalStatus');
 Ext.require('Ahura.form.combo.Term');
 Ext.require('Ahura.form.combo.Degree');

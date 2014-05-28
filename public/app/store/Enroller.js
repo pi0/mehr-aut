@@ -3,27 +3,7 @@ Ext.define('Mehr.store.Enroller', {
     autoLoad: 'true',
     fields: [
         "id",
-        "name",
-        "manager",
-        "type",
-        "cDate",
-        "enrollmentStartDate",
-        "enrollmentEndDate",
-        "enrollmentMethod",
-        "minCapacity",
-        "maxCapacity",
-        "cost",
-        "paymentMethod",
-        "level",
-        "details",
-        "subject",
-        "audienceLevel",
-        "audience",
-        "executionFromDate",
-        "executionToDate",
-        "planId",
-        "sessions",
-        "prerequisites"
+        "name"
     ],
     sortInfo: {
         field: 'name'

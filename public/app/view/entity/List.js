@@ -20,7 +20,7 @@ var entityColumns = [
     },
     {
         header: "عنوان",
-        dataIndex: "title",
+        dataIndex: "name",
         flex:1
     },
     {
@@ -35,27 +35,11 @@ Ext.define("Mehr.view.entity.Grid", {
     extend: "Ahura.grid.Base",
     xtype: "entityGrid",
     columns: entityColumns,
-    //    sm:new Ext.grid.RowSelectionModel({
-    //        singleSelect:true,
-    //        listeners:{
-    //            rowselect:{
-    //                fn:function(sm,i,r)
-    //                {
-    //                    //department_id=r.data['college_id'];
-    //                    // if(dormitory_id!='')
-    //                    location.href="/program/program-info?program_id="+r.data['program_id'];
-    //                }
-    //            }
-    //        }
-    //    }),
-//    store: 'Mehr.store.Programs',
-    store: [
-        [1, 2, 3.4, 4, 5, 6, 7]
-    ]
-
-//    view: new Ext.grid.GroupingView(),
-
-
+    initComponent: function () {
+        this.store = 'Entity';
+        this.callParent(arguments);
+        this.down('pagingtoolbar').bindStore(this.store);
+    }
 });
 
 Ext.define("Mehr.view.entity.List", {

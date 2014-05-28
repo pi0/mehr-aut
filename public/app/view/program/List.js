@@ -8,7 +8,7 @@ var columns = [
                 icon: icon('pencil'),                // Use a URL in the icon config
                 tooltip: 'ویرایش برنامه',
                 handler: function (grid, rowIndex, colIndex) {
-                    var id = grid.getStore().getAt(rowIndex).data.id;
+                    var id = grid.getStore().getAt(rowIndex).getId();
                     var panel = Ext.create('Mehr.view.program.Edit');
                     panel.down('form').getForm().load({params: {id: id}});
 //                    Ext.create('Mehr.view.program.Edit').down('form').getForm().load({params: {'id': id}});
@@ -108,29 +108,13 @@ Ext.define("Mehr.view.program.Grid", {
     extend: "Ahura.grid.Base",
     xtype: "programsGrid",
     columns: columns,
-    //    sm:new Ext.grid.RowSelectionModel({
-    //        singleSelect:true,
-    //        listeners:{
-    //            rowselect:{
-    //                fn:function(sm,i,r)
-    //                {
-    //                    //department_id=r.data['college_id'];
-    //                    // if(dormitory_id!='')
-    //                    location.href="/program/program-info?program_id="+r.data['program_id'];
-    //                }
-    //            }
-    //        }
-    //    }),
-    reader: {
-        type: 'json',
-        root: 'data',
-        totalProperty: 'total'
-    },
-    store: 'Program'
-//    view: new Ext.grid.GroupingView(),
-
-
+    initComponent: function () {
+        this.store = 'Program';
+        this.callParent(arguments);
+        this.down('pagingtoolbar').bindStore(this.store);
+    }
 });
+
 Ext.define("Mehr.view.program.List", {
     extend: "Ahura.window.Grid",
     alias: "widget.programs",

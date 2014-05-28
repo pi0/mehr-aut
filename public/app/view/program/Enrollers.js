@@ -11,26 +11,7 @@ var columns = [
             window.open("/account/user-info?user_id=" + rec.get('user_id') + "&type=%s", 'user_info_window');
         }
     },
-    {
-        menuDisabled: true,
-        header: "",
-        xtype: 'actioncolumn',
-        icon: icon('delete'),
-        tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
-        width: 22,
-        handler: function (g, ri, ci) {
-            rec = Mehr.store.Enrollers.getAt(ri);
-            Ext.Ajax.request({
-                    url: '/program/json-unsubscribe-user',
-                    params: {
-                        user_id: rec.get('user_id'),
-                        program_id: Mehr.v.program_id
-                    }
-                }
-            );
-            Mehr.grid.Enrollers.getStore().reload();
-        }
-    },
+    ,
     {
         header: "# دانشجوی",
         dataIndex: "student_id",
@@ -84,12 +65,12 @@ var columns = [
 
 ];
 Ext.define("Mehr.view.program.EnrollersGrid", {
-    extend: "Ahura.grid.Base",
+    extend: "Ahura.grid.User",
     alias: "widget.enrollersGrid",
     store: [
         []
     ],
-    columns: columns,
+//    columns: columns,
     tbar: [
         'افزودن (شماره دانشجویی): ', ' ',
         {
@@ -112,7 +93,7 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
         },
         {
             xtype: 'button',
-            icon: icon('user_add'),
+            icon: icon('userAdd'),
             tooltip: "افزودن کاربر انتخاب شده",
             handler: function () {
                 Ext.Ajax.request({
@@ -128,7 +109,33 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
             }
         }
     ],
-
+    initComponent: function () {
+        var me = this;
+        me.columns=Ext.clone(me.columns);
+        var firstCol=me.columns.shift();
+        me.columns.unshift({
+            menuDisabled: true,
+            header: "",
+            xtype: 'actioncolumn',
+            icon: icon('delete'),
+            tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
+            width: 22,
+            handler: function (g, ri, ci) {
+                rec = Mehr.store.Enrollers.getAt(ri);
+                Ext.Ajax.request({
+                        url: '/program/json-unsubscribe-user',
+                        params: {
+                            user_id: rec.get('user_id'),
+                            program_id: Mehr.v.program_id
+                        }
+                    }
+                );
+                Mehr.grid.Enrollers.getStore().reload();
+            }
+        });
+        me.columns.unshift(firstCol);
+        me.callParent(arguments);
+    }
 //    bbar: new Ext.PagingToolbar({
 //        pageSize: 50,
 //        displayInfo: true,
@@ -149,4 +156,3 @@ Ext.define("Mehr.view.program.Enrollers", {
         Ext.create("Mehr.view.program.EnrollersGrid")
     ]
 })
-

@@ -1,6 +1,6 @@
 Ext.define('Mehr.store.Program', {
     extend: 'Ahura.store.Direct',
-    storeId:'program',
+//    storeId:'program',
     fields: [
         "id",
         "name",
@@ -25,9 +25,8 @@ Ext.define('Mehr.store.Program', {
         "sessions",
         "prerequisites"
     ],
-    constructor:function(){
+    constructor: function () {
         this.callParent(arguments);
-        this.getProxy().api.read=RPC.ProgramApi.read;
+        this.getProxy().api.read = RPC.ProgramApi.read;
     }
-
 });

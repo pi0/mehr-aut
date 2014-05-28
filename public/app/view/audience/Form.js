@@ -161,8 +161,8 @@ Ext.define('Mehr.view.audience.Form', {
             icon: "img/16p/arrow_refresh.png",
 //        icon:icon('arrow_refresh'),
             handler: function () {
-                users.proxy.extraParams = Mehr.formPanel.Audiences.getForm().getValues();
-                users.load();
+//                users.proxy.extraParams = Mehr.formPanel.Audiences.getForm().getValues();
+//                users.load();
 //            Ext.getStore('Users').proxy.extraParams=Mehr.formPanel.Audiences.getForm().getValues();
 //            Ext.getStore('Users').load();
             }

@@ -59,7 +59,46 @@ function fromDB($data)
     return $data;
 }
 
+function formPreProcess(&$data)
+{
+    foreach ($data as $k => $v) {
+        if ($v === '') {
+            $data[$k] = null;
+        }
+        if ($v && preg_match('#Date$#u', $k)) {
+//            $data[$k] = jalaliToIso($v);
+        }
+    }
+}
 
+function extErrors($msgs)
+{
+    $output = [];
+    foreach ($msgs as $msg) {
+        $output[$msg->getField()] = $msg->getMessage();
+    }
+    return $output;
+}
 
+function paginator($query, $params, $type = null)
+{
+    $params = (object)array_merge(['query' => null, 'limit' => 100, 'start' => 0], (array)$params);
+
+    if ($params->query && $type == 'user') {
+        $query
+            ->where('firstName like :q: ')->orWhere('lastName like :q:')
+            ->orWhere('nid like :q:')
+            ->orWhere('sid like :q:')
+            ->bind(['q' => ($params->query) . '%']);
+    }
+
+    $total = $query->execute()->count();
+
+    if (isset($params->sort)) {
+        $query->orderBy($params->sort[0]->property . ' ' . $params->sort[0]->direction);
+    }
+    $data = $query->limit($params->limit, $params->start)->execute();
+    return ['data' => $data->toArray(), 'total' => $total];
+}
 
 //echo(json_encode($data));

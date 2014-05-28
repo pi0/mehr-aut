@@ -1,16 +1,26 @@
 Ext.define('Ahura.store.Direct', {
     extend: 'Ahura.store.Remote',
     paramsAsHash: true,
-    proxy: {
-        reader: {
-            type: 'json',
-            root: 'data',
-            totalProperty: 'total'
-        },
-        type: 'direct',
-        extraParams: {
-        },
-        api: {
+    constructor: function (config) {
+        config = config || {};
+//        config.proxy = config.proxy || {};
+//        config.proxy = {
+//            reader: {
+//                type: 'json',
+//                root: 'data',
+//                totalProperty: 'total'
+//            },
+//            type: 'direct'
+//        }
+        Ext.merge(config, {proxy: {
+            reader: {
+                type: 'json',
+                root: 'data',
+                totalProperty: 'total'
+            },
+            type: 'direct'
         }
+        });
+        this.callParent([config]);
     }
 });
