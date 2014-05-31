@@ -19,7 +19,7 @@ var delCol = {
 //        panel.down('form').getForm().load({params: {id: id}});
     },
     handler1: function (g, ri, ci) {
-        var rec = Mehr.store.Enrollers.getAt(ri);
+        var rec = Mehr.store.Member.getAt(ri);
         Ext.Ajax.request({
                 url: '/program/json-unsubscribe-user',
                 params: {
@@ -28,7 +28,7 @@ var delCol = {
                 }
             }
         );
-        Mehr.grid.Enrollers.getStore().reload();
+        Mehr.grid.Member.getStore().reload();
     }
 };
 columns.splice(1, 0, delCol, statusCol);
@@ -106,9 +106,9 @@ var tbar = [
         }
     }
 ];
-Ext.define("Mehr.view.program.EnrollersGrid", {
+Ext.define("Mehr.view.program.MemberGrid", {
     extend: "Ahura.grid.Base",
-    alias: "widget.enrollersGrid",
+    alias: "widget.memberGrid",
     config: {
         'programId': null
     },
@@ -135,7 +135,7 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
 ////            tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
 ////            width: 22,
 ////            handler: function (g, ri, ci) {
-////                rec = Mehr.store.Enrollers.getAt(ri);
+////                rec = Mehr.store.Member.getAt(ri);
 ////                Ext.Ajax.request({
 ////                        url: '/program/json-unsubscribe-user',
 ////                        params: {
@@ -144,18 +144,18 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
 ////                        }
 ////                    }
 ////                );
-////                Mehr.grid.Enrollers.getStore().reload();
+////                Mehr.grid.Member.getStore().reload();
 ////            }
 ////        });
 ////        me.columns.unshift(firstCol);
     }
 });
-Ext.define("Mehr.view.program.Enrollers", {
+Ext.define("Mehr.view.entity.MemberList", {
     extend: "Ahura.window.Grid",
-    alias: "widget.enrollers",
+    alias: "widget.member",
     title: 'نام نوشتگان',
 //    title:'نام نوشتگان)برنامه:'+Mehr.v.program_id+"(",
     items: [
-        {xtype: 'enrollersGrid'}
+        {xtype: 'memberGrid'}
     ]
 })

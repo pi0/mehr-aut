@@ -3,7 +3,8 @@ Ext.define('Mehr.store.Entity', {
 //    storeId:'program',
     fields: [
         "id",
-        "name"
+        "name",
+        "typeText"
     ],
     constructor: function () {
         this.callParent(arguments);

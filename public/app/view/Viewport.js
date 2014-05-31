@@ -61,7 +61,7 @@ Ext.create("Ext.toolbar.Toolbar", {
         },
         {
             hidden:true,
-            text: "پیام ها",
+            text: "پیام‌ها",
             icon: icon('email'),
             menu: [
                 {
@@ -99,7 +99,7 @@ Ext.create("Ext.toolbar.Toolbar", {
 
         },
         {
-            text: "نهادها و برنامه ها",
+            text: "نهادها و برنامه‌ها",
             icon: icon('microphone'),
             menu: [
                 {
@@ -127,7 +127,7 @@ Ext.create("Ext.toolbar.Toolbar", {
 //                },
 
 //                {
-//                    text: 'نشریه ها',
+//                    text: 'نشریه‌ها',
 //                    icon: icon('newspaper'),
 //                    handler: function () {
 //                        Mehr.window.Issues.show();
@@ -169,21 +169,21 @@ Ext.create("Ext.toolbar.Toolbar", {
             text: "آموزش",
             menu: [
                 {
-                    text: 'رشته ها',
+                    text: 'رشته‌ها',
                     handler: function () {
                         Mehr.window.Disciplines.show();
                     }
                 },
 
                 {
-                    text: 'گروه ها',
+                    text: 'گروه‌ها',
                     handler: function () {
                         Mehr.window.Departments.show();
                     }
                 },
 
                 {
-                    text: 'دانشکده ها',
+                    text: 'دانشکده‌ها',
                     handler: function () {
                         Mehr.window.Colleges.show();
                     }

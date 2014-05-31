@@ -14,10 +14,10 @@ Ext.define('Mehr.view.entity.Edit', {
                 load: RPC.EntityApi.read,
                 submit: RPC.EntityApi.write
             },
-            layout:'fit',
+            layout: 'fit',
             fieldDefaults: {
 //                labelAlign: 'top',
-                labelWidth: 150,
+                labelWidth: 250,
                 labelStyle: 'margin-bottom:3px'
             },
             items: [
@@ -36,6 +36,10 @@ Ext.define('Mehr.view.entity.Edit', {
                             labelAlign: 'right',
                             defaultType: 'textfield',
                             items: [
+                                {
+                                    name: 'id',
+                                    xtype: 'hidden'
+                                },
                                 {
                                     xtype: 'combo',
                                     minChars: 0,
@@ -58,7 +62,7 @@ Ext.define('Mehr.view.entity.Edit', {
                                 {
                                     fieldLabel: 'شمار اعضای شورای مرکزی',
                                     emptyText: "تنها شماره وارد نمایید.",
-                                    name: 'nid',
+                                    name: 'councilMembers',
                                     xtype: 'integer'
                                     //                    maxLength:10,
                                     //                    minLength:10
@@ -66,14 +70,14 @@ Ext.define('Mehr.view.entity.Edit', {
                                 {
                                     fieldLabel: 'شمار اعضای علی‌البدل شورای مرکزی',
                                     emptyText: "تنها شماره وارد نمایید.",
-                                    name: 'nid',
+                                    name: 'understudyConcuilMembers',
                                     xtype: 'integer'                                    //                    maxLength:10,
                                     //                    minLength:10
                                 },
                                 {
                                     fieldLabel: 'امکان عضویت',
-                                    name: 'membership',
-                                    value:1,
+                                    name: 'subscription',
+                                    inputValue: 1,
                                     xtype: 'checkbox'
                                 }
                             ]
@@ -94,13 +98,13 @@ Ext.define('Mehr.view.entity.Edit', {
                         {
                             title: 'مخاطبان',
                             xtype: 'audience-panel',
-                            rtl:true
+                            rtl: true
 //                            layout: 'accordion',
                         }
                     ]
                 }
             ],
-            fbar: [Ahura.button.SaveForm,Ahura.button.CancelForm]
+            fbar: [Ahura.button.SaveForm, Ahura.button.CancelForm]
         }
     ]
 });

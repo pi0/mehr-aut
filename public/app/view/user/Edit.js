@@ -1,6 +1,6 @@
-Ext.require('Ahura.form.combo.Provinces');
-Ext.require('Ahura.form.combo.MaritalStatus');
+Ext.require(['Ahura.form.combo.Provinces','Ahura.form.combo.Nationality','Ahura.form.combo.MaritalStatus']);
 Ext.define('Mehr.view.user.Edit',
+
     {
         extend: 'Ahura.window.Base',
         requires: 'Ahura.form.combo.SID',
@@ -14,7 +14,7 @@ Ext.define('Mehr.view.user.Edit',
             paramsAsHash: true,
             api: {
                 load: RPC.UserApi.read,
-                submit: RPC.UserApi.write
+                submit: RPC.UserApi.create
             },
             items: [
                 {
@@ -120,8 +120,7 @@ Ext.define('Mehr.view.user.Edit',
                                 }
                                 ,
                                 {
-                                    fieldLabel: 'ملیت',
-                                    name: 'nationality'
+                                    xtype: 'nationality-combo'
                                 }
                                 ,
                                 {
@@ -251,26 +250,30 @@ Ext.define('Mehr.view.user.Edit',
                             items: [
                                 {
                                     fieldLabel: 'نام کاربری',
-                                    name: 'username'
+                                    name: 'username',
+                                    allowBlank:false,
+                                    vtype:'alphanumMask'
+
                                 }
                                 ,
                                 {
                                     fieldLabel: 'گذرواژه',
                                     inputType: 'password',
-                                    //                    emptyText:"گذرواژه جدید را وارد نمایید.",
+                                    emptyText: "گذرواژه جدید را وارد نمایید.",
                                     itmeId: 'password-cmp',
-                                    name: 'password'
-                                    //                    minLength:6
+                                    name: 'password',
+                                    allowBlank: true,
+                                    minLength: 6
                                 }
                                 ,
                                 {
                                     fieldLabel: 'تکرار گذرواژه',
                                     inputType: 'password',
+                                    emptyText: "گذرواژه جدید را دوباره وارد نمایید.",
+                                    name: 'passwordVerify',
+                                    initialPassField: 'password',
                                     vtype: 'password',
-                                    initialPassField: 'password-cmp',
-                                    //                    emptyText:"گذرواژه جدید را دوباره وارد نمایید.",
-                                    name: 'passwordVerify'
-                                    //                    minLength:6
+                                    validateBlank: true
                                 },
                                 {
                                     fieldLabel: 'فعال**',

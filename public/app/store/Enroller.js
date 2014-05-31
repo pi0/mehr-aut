@@ -1,29 +1,12 @@
 Ext.define('Mehr.store.Enroller', {
-    extend: 'Ahura.store.Direct',
-    autoLoad: 'true',
-    fields: [
-        "id",
-        "name"
-    ],
-    sortInfo: {
-        field: 'name'
-    },
-    proxy: {
-        type: 'direct',
-        paramsAsHash:true,
-        extraParams:{
-            name:3
-        },
-//        paramOrder: ['id'],
-        api: {
-            read: RPC.ProgramApi.read
-        },
-//        directFn: RPC.ProgramApi.read,
-        reader: {
-            type: 'json',
-            root: 'data',
-            totalProperty: 'total',
-            id: 'id'
-        }
-    }
-});
+        autoLoad: false,
+        extend: 'Ahura.store.Direct',
+//        extend: 'Ext.data.DirectStore',
+        model: 'Mehr.model.Enroller',
+
+        constructor: function () {
+            this.callParent(arguments);
+            this.getProxy().api.read = RPC.EnrollerApi.read;
+            this.getProxy().api.destroy = RPC.EnrollerApi.destroy;
+        }}
+);

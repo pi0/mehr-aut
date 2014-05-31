@@ -29,13 +29,13 @@ var columns = [
             {
                 icon: icon('groupAdd'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نام نوشتگان',
-                handler: function (grid, rowIndex, colIndex) {
-                    Ext.create('Mehr.view.program.Enrollers');
-//                    var rec = Mehr.store.Programs.getAt(rowIndex);
-//                    Mehr.v.program_id = rec.get('program_id');
-//                    Mehr.store.Enrollers.load({params: {program_id: Mehr.v.program_id}
-//                    });
-//                    Mehr.window.Enrollers.show();
+                handler: function (grid, rowIndex, colIndex, item, event, record, row) {
+                    var win = Ext.create('Mehr.view.program.Enrollers');
+                    var grid=win.down('grid');
+                    var programId = record.get('id');
+                    grid.setProgramId(programId);
+                    grid.getStore().getProxy()  .setExtraParam('programId', programId);
+                    grid.getStore().load();
                 }
             }
         ]
@@ -44,32 +44,23 @@ var columns = [
     {
         flex: 1,
         header: "عنوان",
-        dataIndex: "name",
-        sortable: true
-    },
-    {
-        header: "شمار نام‌نوشتگاه قطعی",
-        dataIndex: "confirmedCount",
-        hidden: true,
-        sortable: true
+        dataIndex: "name"
+
     }
     ,
     {
         header: "نوع",
-        dataIndex: "typeTxt",
-        sortable: true
+        dataIndex: "typeText"
     }
     ,
     {
         header: "موضوع",
-        dataIndex: "subject",
-        sortable: true
+        dataIndex: "subjectText"
     }
     ,
     {
         header: "وضعیت نام‌نویسی",
-        dataIndex: "enrollment_status_txt",
-        sortable: true,
+        dataIndex: "enrollmentStatusText",
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
             if (0 == record.get('enrollmentStatus'))
                 return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
@@ -84,8 +75,7 @@ var columns = [
     ,
     {
         header: "وضعیت اجرا",
-        dataIndex: "execution_status_txt",
-        sortable: true,
+        dataIndex: "executionStatusText",
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
             if (0 == record.get('executionStatus'))
                 return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
@@ -99,8 +89,13 @@ var columns = [
     },
     {
         header: "شمار نام‌نوشته‌گان",
-        dataIndex: "enrolledCount",
-        sortable: true
+        dataIndex: "enrollerCount"
+    }
+    ,
+    {
+        header: "شمار نام‌نوشتگاه قطعی",
+        hidden:true,
+        dataIndex: "confirmedCount"
     }
 
 ];

@@ -6,6 +6,7 @@ Ext.define('Mehr.store.Program', {
         "name",
         "manager",
         "type",
+        "typeText",
         "cDate",
         "enrollmentStartDate",
         "enrollmentEndDate",
@@ -17,13 +18,14 @@ Ext.define('Mehr.store.Program', {
         "level",
         "details",
         "subject",
+        "subjectText",
         "audienceLevel",
         "audience",
         "executionFromDate",
         "executionToDate",
         "planId",
         "sessions",
-        "prerequisites"
+        "enrollerCount"
     ],
     constructor: function () {
         this.callParent(arguments);

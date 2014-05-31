@@ -4,6 +4,9 @@ require_once __DIR__.'/../config/services.php';
 
 class EntityApi extends Phalcon\DI\Injectable
 {
+    function __construct(){
+        $this->db = $this->getDI()['db'];
+    }
     function audience()
     {
 
@@ -38,8 +41,10 @@ class EntityApi extends Phalcon\DI\Injectable
             $data['audience'] = unserialize($data['audience']);
             return (['data' => $data, 'success' => true]);
         } else {
-            $p = new Entity();
-            return paginator($p->query(),$params);
+            $p = $this->di->getDb();
+            $data=$this->db->fetchAll('select * from entityList',Phalcon\Db::FETCH_ASSOC);
+            return(['data'=>$data]);
+//            return paginator($p->query(),$params);
         }
     }
 

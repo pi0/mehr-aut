@@ -62,7 +62,7 @@ Ahura.handler.Save = function (url, formPanel, window, postAction) {
         //            //                        if (action.failureType === Ext.form.Action.SERVER_INVALID)
         //            else{
         //                // server responded with success = false
-        //                Mehr.warning('عدم اعتبار', "لطفا خطاهای مشخص شده را تصحیح کنید. تمام زبانه های را برای وجود خطا بررسی کنید.");
+        //                Mehr.warning('عدم اعتبار', "لطفا خطاهای مشخص شده را تصحیح کنید. تمام زبانه‌های را برای وجود خطا بررسی کنید.");
         //                return false;
         //            }
         //        }

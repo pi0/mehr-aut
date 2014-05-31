@@ -26,8 +26,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program','Entity'],
-    models: ['User'],
+    stores: ['User', 'Program', 'Entity', 'Enroller'],
+    models: ['User', 'Enroller'],
     autoCreateViewport: true,
     paths: {
         'Ahura': 'http://localhost/aut/ahura',
@@ -41,21 +41,18 @@ Ext.application({
         Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider', {
             expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)) //7 days from now
         }));
-        Ext.apply('Ext.form.field.VTypes', {
-            password: function (val, field) {
-                if (field.initialPassField) {
-                    var pwd = Ext.getCmp(field.initialPassField);
-                    return (val == pwd.getValue());
-                }
-                return true;
-            },
-            passwordText: 'مقدار وارد شده با با مقدار گذرواژه یکسان نیست.'
-        });
     }
 
 });
 Ext.onReady(function () {
-    Ext.create('Mehr.view.entity.List');
+    var win = Ext.create('Mehr.view.entity.List');
+//    var grid=win.down('grid');
+//    var programId = 58;
+//    grid.setProgramId(programId);
+//    grid.getStore().getProxy().setExtraParam('programId', programId);
+//    grid.getStore().load();
+
+//    Ext.create('Mehr.view.program.List');
 //    Ext.create('Mehr.view.user.List');
     Ext.grid.RowEditor.prototype.cancelBtnText = "لغو";
     Ext.grid.RowEditor.prototype.saveBtnText = "بهنگام‌سازی";
@@ -112,7 +109,7 @@ Ahura.button.SaveForm = {
         if (form.isValid()) {
             // Submit the Ajax request and handle the response
             form.submit({
-                submitEmptyText : false,
+                submitEmptyText: false,
                 params: {
                 },
                 success: function (form, action) {
@@ -135,7 +132,7 @@ Ahura.button.SaveForm = {
                     Ext.MessageBox.show({
                         rtl: true,
                         title: 'خطا',
-                        msg: (action.result.message) ? 'در داده‌های وارد شده خطا وجود دارد.' : 'ارتباط با سرور برقرار نشد.',
+                        msg: (action.result && action.result.message) ? 'در داده‌های وارد شده خطا وجود دارد.' : 'ارتباط با سرور برقرار نشد.',
 //                            msg: 'خطایی در داده‌ها وجود دارد.',
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
@@ -143,14 +140,14 @@ Ahura.button.SaveForm = {
                 }
             });
         } else {
-            var errors=[];
+            var errors = [];
             form.getFields().each(function (field) {
                 errors = errors.concat(Ext.Array.map(field.getErrors(), function (error) {
                     return { field: field.getName(), error: error }
                 }));
             });
             console.log(errors);
-            
+
             Ext.MessageBox.show({
                 rtl: true,
                 title: 'ورودی نامعتبر',
@@ -170,3 +167,41 @@ Ahura.button.CancelForm = {
         this.up('window').close();
     }
 };
+
+
+Ext.apply(Ext.form.field.VTypes, {
+    daterange: function (val, field) {
+        var date = field.parseDate(val);
+
+        if (!date) {
+            return false;
+        }
+        if (field.startDateField && (!this.dateRangeMax || (date.getTime() != this.dateRangeMax.getTime()))) {
+            var start = field.up('form').down('[name=' + field.startDateField + ']');
+            start.setMaxValue(date);
+            start.validate();
+            this.dateRangeMax = date;
+        } else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
+            var end = field.up('form').down('[name=' + field.endDateField + ']');
+            end.setMinValue(date);
+            end.validate();
+            this.dateRangeMin = date;
+        }
+        /*
+         * Always return true since we're only using this vtype to set the
+         * min/max allowed values (these are tested for after the vtype test)
+         */
+        return true;
+    },
+
+    daterangeText: 'Start date must be less than end date',
+
+    password: function (val, field) {
+        if (field.initialPassField) {
+            var pwd = field.up('form').down('[name=' + field.initialPassField + ']');
+            return (val === pwd.getValue());
+        }
+        return true;
+    },
+    passwordText: 'مقدار وارد شده با با مقدار گذرواژه یکسان نیست.'
+});

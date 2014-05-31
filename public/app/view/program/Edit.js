@@ -1,6 +1,6 @@
 Ext.define("Mehr.view.program.Edit", {
     extend: "Ahura.window.Base",
-    requires: ['Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term'],
+    requires: ['Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
     title: 'ویرایش برنامه',
     width: 800,
     height: 400,
@@ -34,15 +34,34 @@ Ext.define("Mehr.view.program.Edit", {
                             },
                             {
                                 xtype: 'program-subject-combo'
-
                             },
-                            Ext.create('Ahura.form.combo.ProgramType'),
-                            Ext.create('Ahura.form.combo.ProgramLevel')
+                            {
+                                xtype: 'program-type-combo'
+                            },
+//                            {
+//                                xtype: 'program-level-combo'
+//                            },
+                            {
+                                fieldLabel: 'تاریخ آغاز برنامه',
+                                emptyText: "",
+                                name: 'executionStartDate',
+                                vtype: 'daterange',
+                                endDateField: 'executionEndDate',
+                                xtype: 'jalali'
+                            },
+                            {
+                                fieldLabel: 'تاریخ پایان برنامه',
+                                emptyText: "",
+                                name: 'executionEndDate',
+                                xtype: 'jalali',
+                                vtype: 'daterange',
+                                startDateField: 'excecutionStartDate'
+                            }
                         ]
 
                     },
                     {
-                        title: 'نام نویسی',
+                        title: 'نام‌نویسی',
                         layout: 'form',
                         bodyPadding: 10,
                         defaults: {
@@ -52,54 +71,57 @@ Ext.define("Mehr.view.program.Edit", {
                         labelWidth: 350,
                         items: [
                             {
-                                fieldLabel: 'کمینه شمار شرکت کننده ها',
+                                fieldLabel: 'کمینه شمار شرکت کننده‌ها',
                                 name: 'minCapacity',
-                                emptyText:'موضوع',
                                 xtype: 'numberfield',
                                 allowDesimal: false,
                                 allowNegative: false
                             },
                             {
-                                fieldLabel: 'بیشینه شمار شرکت کننده ها',
+                                fieldLabel: 'بیشینه شمار شرکت کننده‌ها',
                                 name: 'maxCapacity',
                                 xtype: 'numberfield',
                                 allowDesimal: false,
                                 allowNegative: false
                             },
                             {
-                                fieldLabel: 'زمان آغاز نام نویسی',
+                                fieldLabel: 'زمان آغاز نام‌نویسی',
                                 emptyText: "",
                                 name: 'enrollmentStartDate',
-                                xtype: 'jalali'
+                                xtype: 'jalali',
+                                vtype: 'daterange',
+                                endDateField: 'enrollmentEndDate' // id of the start date field
                             },
                             {
-                                fieldLabel: 'زمان پایان نام نویسی',
+                                fieldLabel: 'زمان پایان نام‌نویسی',
                                 emptyText: "",
                                 name: 'enrollmentEndDate',
-                                xtype: 'jalali'
+                                xtype: 'jalali',
+                                vtype: 'daterange',
+                                startDateField: 'enrollmentStartDate' // id of the start date field
                             } ,
-                            {
-                                fieldLabel: 'شیوه نام نویسی',
-                                xtype: 'radiogroup',
-                                width: 300,
-                                labelAlign: 'right',
-                                columns: 'auto',
-                                items: [
-                                    {
-                                        fieldLabel: "به وسیله سامانه مهر",
-                                        inputValue: 'auto',
-                                        checked: true,
-                                        name: 'enrollmentMethod'
-
-                                    },
-                                    {
-                                        fieldLabel: "دستی",
-                                        inputValue: 'manual',
-                                        checked: false,
-                                        name: 'enrollmentMethod'
-                                    }
-                                ]
-                            }
+//                            {
+//                                fieldLabel: 'شیوه نام‌نویسی',
+//                                xtype: 'radiogroup',
+//                                width: 300,
+//                                labelAlign: 'right',
+//                                columns: 'auto',
+//                                items: [
+//                                    {
+//                                        fieldLabel: "سامانه مهر",
+//                                        inputValue: 'auto',
+//                                        checked: true,
+//                                        name: 'enrollmentMethod'
+//
+//                                    },
+//                                    {
+//                                        fieldLabel: "دستی",
+//                                        inputValue: 'manual',
+//                                        checked: false,
+//                                        name: 'enrollmentMethod'
+//                                    }
+//                                ]
+//                            }
 
                         ]
                     },
@@ -239,7 +261,7 @@ Ext.define("Mehr.view.program.Edit", {
         ],
         layout: 'fit'
     },
-    buttons:[
+    buttons: [
         {
             itemId: 'saveBtn',
             text: 'ذخیره',
@@ -259,7 +281,7 @@ Ext.define("Mehr.view.program.Edit", {
                 if (form.isValid()) {
                     // Submit the Ajax request and handle the response
                     form.submit({
-                        submitEmptyText : false,
+                        submitEmptyText: false,
                         params: {
                             'audience[departments]': d,
                             'audience[colleges]': c
@@ -304,7 +326,8 @@ Ext.define("Mehr.view.program.Edit", {
             }
         },
         Ahura.button.CancelForm
-        ,{
+        ,
+        {
             text: 'مدیریت نام نوشتگان',
             icon: icon('groupEdit'),
             handler: function (button) {

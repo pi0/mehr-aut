@@ -1,6 +1,5 @@
 Ext.define("Ahura.form.combo.SID",{
     extend:"Ahura.form.combo.Remote",
-//    queryMode:'remote',
     xtype:'sid-combo',
     fieldLabel: "# دانشجویی",
     name: 'sid',

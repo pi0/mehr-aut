@@ -89,6 +89,7 @@ function paginator($query, $params, $type = null)
             ->where('firstName like :q: ')->orWhere('lastName like :q:')
             ->orWhere('nid like :q:')
             ->orWhere('sid like :q:')
+            ->columns('id,firstName,lastName,sid,sex')
             ->bind(['q' => ($params->query) . '%']);
     }
 

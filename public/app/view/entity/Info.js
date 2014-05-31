@@ -3,28 +3,20 @@ Ext.require('Mehr.view.audience.Panel');
 
 Ext.define('Mehr.view.entity.Info', {
     extend: 'Ahura.window.Base',
+    xtype:'entity-info',
     title: 'مرکز مدیریت نهاد',
-    height: null,
     width: 600,
-    maximizable: true,
-    minimizable: true,
     layout: 'fit',
     items: [
-        {
-            data: {
-                type: 'انجمن علمی',
-                name: 'دانشکده کامپیوتر و فناوری اطلاعات'
-            },
-            tpl: '<div id="entityManagement"><div class="settingIcon"></div><h3>{type}</h3><h1>{name}</h1></div>',
-            bodyStyle: {
-                padding: 15
-            }
-        }
     ],
     buttons: [
         {
             text: 'ویرایش',
-            icon: icon('pencil')
+            icon: icon('pencil'),
+            handler:function(){
+                var panel = Ext.create('Mehr.view.entity.Edit');
+                panel.down('form').getForm().load({params: {id: this.up('window').entityId}});
+            }
         },
         {
             text: 'اعضاء',

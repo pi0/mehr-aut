@@ -57,11 +57,11 @@ var columns = [
 //            }
 //        }
 //        ,
-    {
-
-        header: "نقش",
-        dataIndex: "userTypeText"
-    },
+//    {
+//
+//        header: "نقش",
+//        dataIndex: "userTypeText"
+//    },
     {
 
         header: "رشته",
@@ -80,16 +80,17 @@ var columns = [
         width: 50
     }
 ];
+Ahura.userColumns = columns;
 var tbar = [
     {
         width: 400,
-//        fieldLabel: 'جستجو',
+        fieldLabel: 'جستجو',
         labelWidth: 50,
         xtype: 'searchfield',
-        emptyText: 'نام، #دانشجوی، #ملی'
+        emptyText: 'نام، #دانشجوی، #ملی',
 //        store:'User'
 
-    },
+    }
 //    {
 //        xtype: 'button',
 ////            text: 'جستجو',
@@ -135,12 +136,9 @@ Ext.define("Ahura.grid.User", {
         me.store = "User";
         me.columns = columns;
         me.tbar = tbar;
-        me.tbar[0].store = 'User';
-//        console.log(me.tbar);
-
+        me.tbar.store = 'User';
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
-//        me.down('searchfield').bindStore('User');
     }
-
 });
+//        me.down('searchfield').bindStore('User');
