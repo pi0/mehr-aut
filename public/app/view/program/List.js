@@ -30,12 +30,12 @@ var columns = [
                 icon: icon('groupAdd'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نام نوشتگان',
                 handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                    var win = Ext.create('Mehr.view.program.Enrollers');
-                    var grid=win.down('grid');
                     var programId = record.get('id');
-                    grid.setProgramId(programId);
-                    grid.getStore().getProxy()  .setExtraParam('programId', programId);
-                    grid.getStore().load();
+                    var win = Ext.create('Mehr.view.program.Enrollers', {info: record, params: {'programId': programId}});
+//                    var grid = win.down('grid');
+//                    grid.setProgramId(programId);
+//                    grid.getStore().getProxy().setExtraParam('programId', programId);
+//                    grid.getStore().load();
                 }
             }
         ]
@@ -94,7 +94,7 @@ var columns = [
     ,
     {
         header: "شمار نام‌نوشتگاه قطعی",
-        hidden:true,
+        hidden: true,
         dataIndex: "confirmedCount"
     }
 

@@ -55,7 +55,7 @@ Ext.define("Mehr.view.program.Edit", {
                                 name: 'executionEndDate',
                                 xtype: 'jalali',
                                 vtype: 'daterange',
-                                startDateField: 'excecutionStartDate'
+                                startDateField: 'executionStartDate'
                             }
                         ]
 
@@ -99,8 +99,8 @@ Ext.define("Mehr.view.program.Edit", {
                                 xtype: 'jalali',
                                 vtype: 'daterange',
                                 startDateField: 'enrollmentStartDate' // id of the start date field
-                            } ,
-//                            {
+                            }
+//                            ,{
 //                                fieldLabel: 'شیوه نام‌نویسی',
 //                                xtype: 'radiogroup',
 //                                width: 300,

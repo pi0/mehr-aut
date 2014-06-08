@@ -202,7 +202,6 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'تلفن همراه',
                                     name: 'mobile',
                                     xtype: 'numberfield',
-                                    xtype: 'numberfield',
                                     emptyText: 'پیش شماره را نیز وارد نمایید.'
                                     //                    maxLength:11,
                                     //                    minLength:7
@@ -251,8 +250,8 @@ Ext.define('Mehr.view.user.Edit',
                                 {
                                     fieldLabel: 'نام کاربری',
                                     name: 'username',
-                                    allowBlank:false,
-                                    vtype:'alphanumMask'
+                                    allowBlank:false
+//                                    vtype:'alphanumMask'
 
                                 }
                                 ,

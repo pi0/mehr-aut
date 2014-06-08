@@ -7,9 +7,10 @@ var entityColumns = [
             {
                 icon: icon('gear'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نهاد',
-                handler: function (grid, rowIndex, colIndex) {
+                handler: function (grid, rowIndex, colIndex, item, event, record, row) {
                     var data = grid.getStore().getAt(rowIndex).getData();
                     var panel = Ext.create('Mehr.view.entity.Info', {
+                        info: record,
                         entityId: data.id,
                         items: {
                             itemId: "info",
@@ -34,6 +35,11 @@ var entityColumns = [
         header: "عنوان",
         dataIndex: "name",
         flex: 1
+    },
+    {
+        header: "دوره‌ها",
+        dataIndex: "councilCount",
+        width:40
     },
     {
         header: "مخاطبان",

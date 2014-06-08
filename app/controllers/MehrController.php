@@ -21,8 +21,8 @@ class MehrController extends ControllerBase
         ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug=true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
-        ExtDirect::$form_handlers = array( 'ProgramApi::write','UserApi::write','EntityApi::write' );
-        ExtDirect::provide(['ProgramApi','UserApi','EntityApi','EnrollerApi']);
+        ExtDirect::$form_handlers = array( 'ProgramApi::write','UserApi::write','EntityApi::write','CouncilApi::create' );
+        ExtDirect::provide(['UserController','ProgramApi','UserApi','EntityApi','EnrollerApi','CouncilMemberApi','MemberApi','CouncilApi']);
     }
     public function jsAction(){
         $db=$this->getDI()->get('db');
@@ -47,6 +47,9 @@ class MehrController extends ControllerBase
 
         $membership=toJsArray($db->query('select `value`,text from constant where category="membership"')->fetchAll());
         $this->view->membership=$membership;
+
+        $councilMembership=toJsArray($db->query('select `value`,text from constant where category="councilMembership"')->fetchAll());
+        $this->view->councilMembership=$councilMembership;
 
         $enrollmentStatus=toJsArray($db->query('select `value`,text from constant where category="enrollmentStatus"')->fetchAll());
         $this->view->enrollmentStatus=$enrollmentStatus;

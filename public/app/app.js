@@ -1,24 +1,3 @@
-//Ext.Loader.loadScript('ahura/utility.js');
-//Ext.ns(
-//    "Mehr.v", // Global variables
-//    "Mehr.combo",
-//    "Mehr.cm",
-//    'Mehr.cols',
-//    'Mehr.column',
-//    "Mehr.form",
-//    "Mehr.formPanel",
-//    "Mehr.grid",
-//    "Mehr.handler",
-//    "Mehr.menu",
-//    "Mehr.renderer",
-//    "Mehr.panel",
-//    "Mehr.proxy",
-//    "Mehr.store",
-//    "Mehr.tabPanel",
-//    "Mehr.window"
-//);
-
-
 Ext.Loader.setConfig({
     enabled: true
 });
@@ -26,44 +5,43 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program', 'Entity', 'Enroller'],
-    models: ['User', 'Enroller'],
+    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council'],
+    models: ['User', 'Enroller', 'CouncilMember', 'Council'],
     autoCreateViewport: true,
     paths: {
-        'Ahura': 'http://localhost/aut/ahura',
-        'Ext.ux': 'http://localhost/aut/vendor/ext-ux'
+        'Ahura': '/aut/ahura',
+        'Ext.ux': '/aut/vendor/ext-ux'
     },
     controllers: [
 //        'Users',
 //        'Audiences'
     ],
     launch: function () {
-        Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider', {
-            expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)) //7 days from now
-        }));
+//        var win = Ext.create('Mehr.view.entity.List');
+        var win = Ext.create('Mehr.view.council.Member', {
+            info: {
+                get: function () {
+                    return 9;
+                }
+            }
+        });
+
+
     }
 
 });
 Ext.onReady(function () {
-    var win = Ext.create('Mehr.view.entity.List');
-//    var grid=win.down('grid');
-//    var programId = 58;
+//    var grid = win.down('grid');
+//    var entityId = 1;
 //    grid.setProgramId(programId);
-//    grid.getStore().getProxy().setExtraParam('programId', programId);
+//    grid.getStore().getProxy().setExtraParam('entityId', entityId);
 //    grid.getStore().load();
 
 //    Ext.create('Mehr.view.program.List');
 //    Ext.create('Mehr.view.user.List');
-    Ext.grid.RowEditor.prototype.cancelBtnText = "لغو";
-    Ext.grid.RowEditor.prototype.saveBtnText = "بهنگام‌سازی";
-
+    init();
 });
 
-
-Ext.require('Ahura.form.button.Save');
-Ext.require('Ahura.form.button.Cancel');
-Ext.require('Mehr.view.program.List');
-Ext.require('Ahura.form.date.Jalali');
 Ext.require([
     'Ext.ux.Jalali',
     'Ext.ux.JalaliDate',
@@ -71,15 +49,13 @@ Ext.require([
     'Ext.ux.JalaliDatePlugin-fa_IR',
     'Ext.grid.RowEditor',
     'Ahura.form.field.Integer',
-    'Ahura.form.Base'
+    'Ahura.form.Base',
+    'Ahura.form.button.Save',
+    'Ahura.form.button.Cancel',
+    'Ahura.form.date.Jalali',
+    'Mehr.view.program.List',
+    'Ext.form.*'
 ]);
-
-
-$$ = function (q) {
-    return Ext.ComponentQuery.query(q)
-}
-
-Ahura.SaveToolbar = [];
 //    {
 //        text: 'ذخیره و بستن',
 //        icon: icon('save'),
@@ -169,39 +145,52 @@ Ahura.button.CancelForm = {
 };
 
 
-Ext.apply(Ext.form.field.VTypes, {
-    daterange: function (val, field) {
-        var date = field.parseDate(val);
+$$ = function (q) {
+    return Ext.ComponentQuery.query(q)
+}
 
-        if (!date) {
-            return false;
-        }
-        if (field.startDateField && (!this.dateRangeMax || (date.getTime() != this.dateRangeMax.getTime()))) {
-            var start = field.up('form').down('[name=' + field.startDateField + ']');
-            start.setMaxValue(date);
-            start.validate();
-            this.dateRangeMax = date;
-        } else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
-            var end = field.up('form').down('[name=' + field.endDateField + ']');
-            end.setMinValue(date);
-            end.validate();
-            this.dateRangeMin = date;
-        }
-        /*
-         * Always return true since we're only using this vtype to set the
-         * min/max allowed values (these are tested for after the vtype test)
-         */
-        return true;
-    },
 
-    daterangeText: 'Start date must be less than end date',
+function init() {
+    Ext.apply(Ext.form.field.VTypes, {
+        daterange: function (val, field) {
+            var date = field.parseDate(val);
 
-    password: function (val, field) {
-        if (field.initialPassField) {
-            var pwd = field.up('form').down('[name=' + field.initialPassField + ']');
-            return (val === pwd.getValue());
-        }
-        return true;
-    },
-    passwordText: 'مقدار وارد شده با با مقدار گذرواژه یکسان نیست.'
-});
+            if (!date) {
+                return false;
+            }
+            if (field.startDateField && (!this.dateRangeMax || (date.getTime() != this.dateRangeMax.getTime()))) {
+                var start = field.up('form').down('[name=' + field.startDateField + ']');
+                start.setMaxValue(date);
+                start.validate();
+                this.dateRangeMax = date;
+            }
+            else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
+                var end = field.up('form').down('[name=' + field.endDateField + ']');
+                end.setMinValue(date);
+                end.validate();
+                this.dateRangeMin = date;
+            }
+            /*
+             * Always return true since we're only using this vtype to set the
+             * min/max allowed values (these are tested for after the vtype test)
+             */
+            return true;
+        },
+
+        daterangeText: 'Start date must be less than end date',
+
+        password: function (val, field) {
+            if (field.initialPassField) {
+                var pwd = field.up('form').down('[name=' + field.initialPassField + ']');
+                return (val === pwd.getValue());
+            }
+            return true;
+        },
+        passwordText: 'مقدار وارد شده با با مقدار گذرواژه یکسان نیست.'
+    });
+    Ext.grid.RowEditor.prototype.cancelBtnText = "لغو";
+    Ext.grid.RowEditor.prototype.saveBtnText = "بهنگام‌سازی";
+    Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider', {
+        expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)) //7 days from now
+    }));
+}

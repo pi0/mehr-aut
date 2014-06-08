@@ -24,36 +24,51 @@ function toJsArray(array $arr)
     return '[' . implode(',', $result) . ']';
 }
 
-function jalaliToIso($date)
+function jalaliToIso($time)
 {
-    $d = preg_split('#[^\d]#', $date);
+    $time = '2003-1-1';
+    $formatter = IntlDateFormatter::create('ir_FA@calendar=Persian', IntlDateFormatter::FULL,
+        IntlDateFormatter::FULL, 'Asia/Tokyo', IntlDateFormatter::TRADITIONAL, 'y/m/d');
+
+//    echo "before: ", $formatter->format($time), "\n";
+
+    /* note that the calendar's locale is not used! */
+    $formatter->setCalendar(IntlCalendar::createInstance(
+        "Asia/Tehran", "en_UST@calendar=gregorian"));
+
+    return $formatter->format($time);
+//    $d = preg_split('#[^\d]+#', $date);
 //    print_r($d);
-    $dd = jalali_to_gregorian($d[0], $d[1], $d[2]);
-    return $dd[0] . '-' . ($dd[1] + 1) . '-' . ($dd[2] + 2) . ' ' . $d[3] . ' ' . $d[4];
+//    $dd = jalali_to_gregorian($d[0], $d[1], $d[2]);
+//    print_r($dd);
+//    return $dd[0] . '-' . ($dd[1]) . '-' . ($dd[2]) . ' ' . @$d[3] . ' ' . @$d[4];
 }
 
-function isoToJalali($date = null)
+function isoToJalali($time = null)
 {
-    $date = new DateTime($date);
-    $d = gregorian_to_jalali($date->format('Y'), $date->format('m'), $date->format('d'));
-    return $d[0] . '/' . str_pad($d[1], 2, '0', STR_PAD_LEFT) . '/' . str_pad($d[2], 2, '0', STR_PAD_LEFT) . ' ' . $date->format('H' . ':' . $date->format('i'));
-}
+    $time=new DateTime($time);
+    $formatter = IntlDateFormatter::create('fa_IR@', IntlDateFormatter::FULL,
+        IntlDateFormatter::FULL, 'Asia/Tokyo',null,'yy-MMMMM-dd');
 
-function toDB($data)
-{
-    foreach ($data as $k => $v) {
-        if (preg_match('#Date$#', $k)) {
-            $data[$k] = jalaliToIso($v);
-        }
-    }
-    return $data;
+//    var_dump($formatter->format(0));
+//    var_dump($formatter->getErrorMessage());
+
+    /* note that the calendar's locale is not used! */
+    $formatter->setCalendar(IntlCalendar::createInstance(
+        "Asia/Tehran", "en_US@calendar=Persian"));
+
+    return $formatter->format($time);
+//    $date = new DateTime($date);
+//    $d = gregorian_to_jalali($date->format('Y'), $date->format('m'), $date->format('d'));
+//    return $d[0] . '/' . str_pad($d[1], 2, '0', STR_PAD_LEFT) . '/' . str_pad($d[2], 2, '0', STR_PAD_LEFT) . ' ' . $date->format('H' . ':' . $date->format('i'));
 }
 
 function fromDB($data)
 {
     foreach ($data as $k => $v) {
-        if (preg_match('#Date$#', $k)) {
-            $data[$k] = isoToJalali($v);
+        if (preg_match('#Date$#', $k) && $v) {
+            $data[$k] = date('m/d/Y', strtotime($v));
+//            $data[$k] = isoToJalali($v);
         }
     }
     return $data;
@@ -67,6 +82,8 @@ function formPreProcess(&$data)
         }
         if ($v && preg_match('#Date$#u', $k)) {
 //            $data[$k] = jalaliToIso($v);
+            //TODO convert time from Solar to Gregorian
+            $data[$k] = null;
         }
     }
 }
@@ -102,4 +119,5 @@ function paginator($query, $params, $type = null)
     return ['data' => $data->toArray(), 'total' => $total];
 }
 
-//echo(json_encode($data));
+echo isoToJalali('1393/3/15');
+//echo jalaliToIso('1393/3/15');

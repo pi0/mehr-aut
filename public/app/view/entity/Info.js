@@ -3,7 +3,7 @@ Ext.require('Mehr.view.audience.Panel');
 
 Ext.define('Mehr.view.entity.Info', {
     extend: 'Ahura.window.Base',
-    xtype:'entity-info',
+    xtype: 'entity-info',
     title: 'مرکز مدیریت نهاد',
     width: 600,
     layout: 'fit',
@@ -13,14 +13,17 @@ Ext.define('Mehr.view.entity.Info', {
         {
             text: 'ویرایش',
             icon: icon('pencil'),
-            handler:function(){
+            handler: function () {
                 var panel = Ext.create('Mehr.view.entity.Edit');
                 panel.down('form').getForm().load({params: {id: this.up('window').entityId}});
             }
         },
         {
             text: 'اعضاء',
-            icon: icon('member')
+            icon: icon('member'),
+            handler:function(){
+                Ext.create('Mehr.view.entity.MemberList',{info: this.up('window').info});
+            }
         },
         {
             text: 'مخاطبان',
@@ -32,13 +35,13 @@ Ext.define('Mehr.view.entity.Info', {
             xtype: 'splitbutton',
             'text': 'دوره‌ها',
             handler: function () {
-                Ext.create('Mehr.view.entity.TermsList')
+                Ext.create('Mehr.view.council.List', {info: this.up('window').info})
             },
             menu: [
                 {
                     text: 'دوره‌ جدید',
-                    handler:function(){
-                        Ext.create('Mehr.view.entity.TermEdit');
+                    handler: function () {
+                        Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
                     }
                 }
             ]}

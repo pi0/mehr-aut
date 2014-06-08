@@ -37,7 +37,13 @@ var tbar = [
     {
         xtype: 'user-combo',
         fieldLabel: ''
-
+    },
+    'وضعیت نام‌نویسی:',
+    {
+        xtype: 'combo',
+        name: 'status',
+        value: 'final',
+        store: Ahura.store.EnrollmentStatus
     },
     {
         xtype: 'button',
@@ -65,25 +71,20 @@ var tbar = [
             }
         }
     },
-    'وضعیت نام‌نویسی:',
-    {
-        xtype: 'combo',
-        name: 'status',
-        value:'final',
-        store: Ahura.store.EnrollmentStatus
-    },
+    '-',
     {
         xtype: 'button',
 //        icon: icon('userAdd'),
-        text: "اعمال وضعیت",
+        text: "تغییر وضعیت",
+//        tooltip:'برای تغییر وضعیت، یک یا چند کاربر را از جدول برگزینید و پس از تعیین وضعیت از منوی کناری، روی این دکمه کلیک کنید.',
         handler: function (button, event) {
             var status = this.up().down('[name=status]').getValue();
 
             if (status) {
                 var grid = button.up('grid');
                 var selection = grid.getSelectionModel().getSelection();
-                selection.forEach(function(e){
-                    e.set('status',status);
+                selection.forEach(function (e) {
+                    e.set('status', status);
                     e.save();
                     grid.getStore().load();
 
@@ -118,36 +119,10 @@ Ext.define("Mehr.view.program.EnrollersGrid", {
     columns: columns,
     tbar: tbar,
     initComponent: function () {
-
         var me = this;
         me.store = 'Enroller'
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
-//        me.store.getProxy().setExtraParam('programId', 3);
-////        me.tbar = tbar;
-////        me.columns = Ext.clone(me.columns);
-////        var firstCol = me.columns.shift();
-////        me.columns.unshift({
-////            menuDisabled: true,
-////            header: "",
-////            xtype: 'actioncolumn',
-////            icon: icon('delete'),
-////            tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
-////            width: 22,
-////            handler: function (g, ri, ci) {
-////                rec = Mehr.store.Enrollers.getAt(ri);
-////                Ext.Ajax.request({
-////                        url: '/program/json-unsubscribe-user',
-////                        params: {
-////                            user_id: rec.get('user_id'),
-////                            program_id: Mehr.v.program_id
-////                        }
-////                    }
-////                );
-////                Mehr.grid.Enrollers.getStore().reload();
-////            }
-////        });
-////        me.columns.unshift(firstCol);
     }
 });
 Ext.define("Mehr.view.program.Enrollers", {
@@ -157,5 +132,12 @@ Ext.define("Mehr.view.program.Enrollers", {
 //    title:'نام نوشتگان)برنامه:'+Mehr.v.program_id+"(",
     items: [
         {xtype: 'enrollersGrid'}
-    ]
+    ],
+    initComponent: function () {
+        this.title = (this.info) ? 'نام‌نوشتگان در:' + this.info.get('name') : "مدریت نام‌نوشتگان";
+        this.callParent(arguments);
+        var grid = this.down('grid');
+        grid.getStore().getProxy().setExtraParam('programId', (this.info) ? this.info.getId() : this.tid);
+        grid.getStore().load();
+    }
 })

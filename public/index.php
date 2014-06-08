@@ -4,8 +4,8 @@ date_default_timezone_set('Asia/Tehran');
 error_reporting(E_ALL);
 //require_once 'FB/fb.php';
 //require_once 'firelogger.php';
-require_once '../vendor/jdf.php';
-require_once '../vendor/jdatetime.class.php';
+//require_once '../vendor/jdf.php';
+//require_once '../vendor/jdatetime.class.php';
 require_once 'ux/Ux.php';
 require_once '../app/util.php';
 

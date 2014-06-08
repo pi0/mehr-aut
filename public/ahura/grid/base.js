@@ -1,5 +1,6 @@
 Ext.define('Ahura.grid.Base', {
     extend: 'Ext.grid.Panel',
+    xtype:'base-grid',
     frame: false,
     loadMask: true,
     clicksToEdit: 1,

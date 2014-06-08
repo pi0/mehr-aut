@@ -1,3 +1,4 @@
+Ext.require('Ext.toolbar.Toolbar');
 Ext.require("Mehr.view.user.List");
 var menu = Ext.create('Ext.menu.Menu', {
     plain: true,
@@ -47,7 +48,7 @@ var menu = Ext.create('Ext.menu.Menu', {
         ]
     }
 });
-Ext.require('Ext.toolbar.Toolbar');
+
 Ext.create("Ext.toolbar.Toolbar", {
     rtl: true,
     renderTo: document.body,

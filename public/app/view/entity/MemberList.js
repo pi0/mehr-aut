@@ -39,6 +39,13 @@ var tbar = [
         fieldLabel: ''
 
     },
+    'وضعیت نام‌نویسی:',
+    {
+        xtype: 'combo',
+        name: 'status',
+        value:'final',
+        store: Ahura.store.MembershipType
+    },
     {
         xtype: 'button',
         icon: icon('userAdd'),
@@ -64,14 +71,7 @@ var tbar = [
                 grid.getStore().load();
             }
         }
-    },
-    'وضعیت نام‌نویسی:',
-    {
-        xtype: 'combo',
-        name: 'status',
-        value:'final',
-        store: Ahura.store.EnrollmentStatus
-    },
+    },'-',
     {
         xtype: 'button',
 //        icon: icon('userAdd'),
@@ -120,7 +120,7 @@ Ext.define("Mehr.view.program.MemberGrid", {
     initComponent: function () {
 
         var me = this;
-        me.store = 'Enroller'
+        me.store = 'Member'
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
 //        me.store.getProxy().setExtraParam('programId', 3);
@@ -153,9 +153,16 @@ Ext.define("Mehr.view.program.MemberGrid", {
 Ext.define("Mehr.view.entity.MemberList", {
     extend: "Ahura.window.Grid",
     alias: "widget.member",
-    title: 'نام نوشتگان',
-//    title:'نام نوشتگان)برنامه:'+Mehr.v.program_id+"(",
     items: [
         {xtype: 'memberGrid'}
-    ]
+    ],
+    initComponent: function () {
+        this.title = (this.info) ? 'عضوها:' + this.info.get('name') : "عضوها";
+        this.callParent(arguments);
+        var grid = this.down('grid');
+        this.down('pagingtoolbar').bindStore(grid.getStore());
+        grid.getStore().getProxy().setExtraParam('entityId', (this.info) ? this.info.getId() : this.tid);
+        grid.getStore().load();
+    }
+
 })

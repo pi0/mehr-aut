@@ -4,7 +4,8 @@ Ext.define('Mehr.store.Entity', {
     fields: [
         "id",
         "name",
-        "typeText"
+        "typeText",
+        'councilCount'
     ],
     constructor: function () {
         this.callParent(arguments);

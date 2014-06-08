@@ -7,8 +7,8 @@ $config = array(
     'database' =>
     [
         'host' => 'localhost',
-        'username' => 'root',
-        'password' => '1111',
+        'username' => 'mehr',
+        'password' => '123',
         'name' => 'mehr2',
     ],
     'mongodb' =>

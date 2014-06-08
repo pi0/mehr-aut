@@ -203,7 +203,7 @@ Ext.define('Mehr.view.audience.Form', {
         }
         ,
         {
-            text: 'بارگذاری مجدد',
+            text: 'بارگیری مجدد',
             id: 'laod-form-btm',
             handler: function () {
                 //            Ahura.formPanel.Audiences.getForm().load({url:'/tests/response.json'});
