@@ -30,8 +30,9 @@ var columns = [
                 icon: icon('groupAdd'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نام نوشتگان',
                 handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                    var programId = record.get('id');
-                    var win = Ext.create('Mehr.view.program.Enrollers', {info: record, params: {'programId': programId}});
+                    console.log(record);
+
+                    var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
 //                    var grid = win.down('grid');
 //                    grid.setProgramId(programId);
 //                    grid.getStore().getProxy().setExtraParam('programId', programId);

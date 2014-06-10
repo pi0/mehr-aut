@@ -85,11 +85,9 @@ var tbar = [
     {
         width: 400,
         fieldLabel: 'جستجو',
-        labelWidth: 50,
         xtype: 'searchfield',
         emptyText: 'نام، #دانشجوی، #ملی',
-//        store:'User'
-
+        store:'User'
     }
 //    {
 //        xtype: 'button',
@@ -139,6 +137,6 @@ Ext.define("Ahura.grid.User", {
         me.tbar.store = 'User';
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
+//        me.down('searchfield').store=me.store;
     }
 });
-//        me.down('searchfield').bindStore('User');

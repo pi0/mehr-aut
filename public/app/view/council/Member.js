@@ -41,8 +41,7 @@ var termColumns = [
     }
 ];
 var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-    clicksToMoveEditor: 1,
-    autoCancel: false
+    clicksToMoveEditor: 1
 });
 Ext.define('Mehr.view.entity.TermCouncilGrid', {
     extend: 'Ahura.grid.Base',
@@ -87,7 +86,6 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
     listeners: {
         beforeedit: function (editor, context, eOpt) {
             context.record.set('councilId', context.grid.up('window').info.get('id'));
-            console.log(context.record.get('councilId'));
         },
         'selectionchange': function (view, records) {
             this.down('#removeUserBtn').setDisabled(!records.length);

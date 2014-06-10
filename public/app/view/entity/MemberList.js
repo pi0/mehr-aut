@@ -1,8 +1,8 @@
 Ext.require('Ahura.form.combo.User');
 var columns = Ext.clone(Ahura.userColumns);
-var statusCol = {
+var roleCol = {
     header: 'وضعیت',
-    dataIndex: 'statusText',
+    dataIndex: 'roleText',
     width: 80
 };
 var delCol = {
@@ -21,17 +21,17 @@ var delCol = {
     handler1: function (g, ri, ci) {
         var rec = Mehr.store.Member.getAt(ri);
         Ext.Ajax.request({
-                url: '/program/json-unsubscribe-user',
+                url: '/entity/json-unsubscribe-user',
                 params: {
                     user_id: rec.get('user_id'),
-                    program_id: Mehr.v.program_id
+                    entity_id: Mehr.v.entity_id
                 }
             }
         );
         Mehr.grid.Member.getStore().reload();
     }
 };
-columns.splice(1, 0, delCol, statusCol);
+columns.splice(1, 0, delCol, roleCol);
 var tbar = [
     'افزودن:', ' ',
     {
@@ -42,8 +42,8 @@ var tbar = [
     'وضعیت نام‌نویسی:',
     {
         xtype: 'combo',
-        name: 'status',
-        value:'final',
+        name: 'role',
+        value: 'member',
         store: Ahura.store.MembershipType
     },
     {
@@ -52,10 +52,10 @@ var tbar = [
         tooltip: "افزودن کاربر انتخاب شده",
         handler: function (button, event) {
             var id = this.up().down('user-combo').getValue();
-            var status = this.up().down('[name=status]').getValue();
+            var role = this.up().down('[name=role]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.getProgramId(), id: id, status: status});
+                var enroll = Ext.create('Mehr.model.Member', {entityId: grid.up('window').info.get('id'), userId: id, role: role});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({
@@ -71,46 +71,39 @@ var tbar = [
                 grid.getStore().load();
             }
         }
-    },'-',
+    }, '-',
     {
         xtype: 'button',
 //        icon: icon('userAdd'),
         text: "اعمال وضعیت",
         handler: function (button, event) {
-            var status = this.up().down('[name=status]').getValue();
-
-            if (status) {
+            var role = this.up().down('[name=role]').getValue();
+            if (role) {
                 var grid = button.up('grid');
                 var selection = grid.getSelectionModel().getSelection();
-                selection.forEach(function(e){
-                    e.set('status',status);
-                    e.save();
-                    grid.getStore().load();
+                selection.forEach(function (e) {
+                    e.set('role', role);
+                    e.save({failure: function (record, operation) {
+                        Ext.MessageBox.show({
+                            rtl: true,
+                            title: 'خطا',
+                            msg: operation.request.proxy.reader.jsonData.errors,
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                        });
 
-
-//                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.getProgramId(), id: id});
-//                    enroll.save({
-//                        failure: function (record, operation) {
-//                            Ext.MessageBox.show({
-//                                rtl: true,
-//                                title: 'خطا',
-//                                msg: operation.request.proxy.reader.jsonData.errors,
-//                                buttons: Ext.MessageBox.OK,
-//                                icon: Ext.MessageBox.ERROR
-//                            });
-//
-//                        }});
-//                    grid.down('combo').reset();
-                })
+                    }});
+                });
+                grid.getStore().load();
             }
         }
     }
 ];
-Ext.define("Mehr.view.program.MemberGrid", {
+Ext.define("Mehr.view.entity.MemberGrid", {
     extend: "Ahura.grid.Base",
     alias: "widget.memberGrid",
     config: {
-        'programId': null
+        'entityId': null
     },
     selModel: {model: 'MULTI'},
     multiSelect: true,
@@ -118,12 +111,11 @@ Ext.define("Mehr.view.program.MemberGrid", {
     columns: columns,
     tbar: tbar,
     initComponent: function () {
-
         var me = this;
         me.store = 'Member'
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
-//        me.store.getProxy().setExtraParam('programId', 3);
+//        me.store.getProxy().setExtraParam('entityId', 3);
 ////        me.tbar = tbar;
 ////        me.columns = Ext.clone(me.columns);
 ////        var firstCol = me.columns.shift();
@@ -137,10 +129,10 @@ Ext.define("Mehr.view.program.MemberGrid", {
 ////            handler: function (g, ri, ci) {
 ////                rec = Mehr.store.Member.getAt(ri);
 ////                Ext.Ajax.request({
-////                        url: '/program/json-unsubscribe-user',
+////                        url: '/entity/json-unsubscribe-user',
 ////                        params: {
 ////                            user_id: rec.get('user_id'),
-////                            program_id: Mehr.v.program_id
+////                            entity_id: Mehr.v.entity_id
 ////                        }
 ////                    }
 ////                );
@@ -160,8 +152,7 @@ Ext.define("Mehr.view.entity.MemberList", {
         this.title = (this.info) ? 'عضوها:' + this.info.get('name') : "عضوها";
         this.callParent(arguments);
         var grid = this.down('grid');
-        this.down('pagingtoolbar').bindStore(grid.getStore());
-        grid.getStore().getProxy().setExtraParam('entityId', (this.info) ? this.info.getId() : this.tid);
+        grid.getStore().getProxy().setExtraParam('entityId', this.info.get('id'));
         grid.getStore().load();
     }
 

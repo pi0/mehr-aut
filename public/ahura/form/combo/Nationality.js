@@ -5,5 +5,4 @@ Ext.define("Ahura.form.combo.Nationality",{
     value:'IR',
     name:"nationality",
     fieldLabel: 'ملیت',
-    labelWidth:50
 });

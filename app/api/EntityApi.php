@@ -1,12 +1,14 @@
 <?php
 
-require_once __DIR__.'/../config/services.php';
+require_once __DIR__ . '/../config/services.php';
 
 class EntityApi extends Phalcon\DI\Injectable
 {
-    function __construct(){
+    function __construct()
+    {
         $this->db = $this->getDI()['db'];
     }
+
     function audience()
     {
 
@@ -18,12 +20,11 @@ class EntityApi extends Phalcon\DI\Injectable
         $departments = $db->query('select * from department');
         $departments = $departments->fetchAll();
 
-
         $data = [];
         foreach ($colleges as $c) {
             foreach ($departments as $k => $d)
                 if ($d['collegeId'] == $c['id']) {
-                    $children[] = ['id' => $d['id'], 'leaf' => true, 'text' => $d['name'],'checked'=>false];
+                    $children[] = ['id' => $d['id'], 'leaf' => true, 'text' => $d['name'], 'checked' => false];
                     unset($departments[$k]);
                 }
             $data[] = ['id' => $c['id'], 'text' => $c['name'], 'checked' => false, 'children' => $children];
@@ -42,8 +43,8 @@ class EntityApi extends Phalcon\DI\Injectable
             return (['data' => $data, 'success' => true]);
         } else {
             $p = $this->di->getDb();
-            $data=$this->db->fetchAll('select * from entityList',Phalcon\Db::FETCH_ASSOC);
-            return(['data'=>$data]);
+            $data = $this->db->fetchAll('select * from entityList', Phalcon\Db::FETCH_ASSOC);
+            return (['data' => $data]);
 //            return paginator($p->query(),$params);
         }
     }
@@ -62,5 +63,11 @@ class EntityApi extends Phalcon\DI\Injectable
         }
 
 //        var_dump($P->getModelsMetaData()->getAttributes($P));
+    }
+
+    function combo($params)
+    {
+        $data = $this->db->fetchAll("select id ,concat(typeText,' ',name) as text from entitylist where fullName like :query limit 20", Phalcon\Db::FETCH_ASSOC, ['query' => '%' . $params->query . '%']);
+        return ($data);
     }
 }

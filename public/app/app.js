@@ -5,8 +5,8 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council'],
-    models: ['User', 'Enroller', 'CouncilMember', 'Council'],
+    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council','Member'],
+    models: ['User', 'Enroller', 'CouncilMember', 'Council','Member'],
     autoCreateViewport: true,
     paths: {
         'Ahura': '/aut/ahura',
@@ -17,14 +17,14 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-//        var win = Ext.create('Mehr.view.entity.List');
-        var win = Ext.create('Mehr.view.council.Member', {
-            info: {
-                get: function () {
-                    return 9;
-                }
-            }
-        });
+        var win = Ext.create('Mehr.view.setting.Password');
+//        var win = Ext.create("Mehr.view.program.Edit", {
+//            info: {
+//                get: function () {
+//                    return 9;
+//                }
+//            }
+//        });
 
 
     }

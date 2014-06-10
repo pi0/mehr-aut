@@ -2,8 +2,8 @@ Ext.require('Mehr.view.audience.Panel');
 
 Ext.define('Mehr.view.entity.Edit', {
     extend: 'Ahura.window.Base',
-    title: 'ویرایش نهاد',
-    height: 500,
+    requires: ['Ahura.form.field.FaEditor','Ahura.form.field.Integer','Ahura.form.combo.Entity','Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
+    title: 'ویرایش برنامه',
     width: 1000,
 
     items: [

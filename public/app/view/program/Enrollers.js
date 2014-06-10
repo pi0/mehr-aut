@@ -54,7 +54,7 @@ var tbar = [
             var status = this.up().down('[name=status]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.getProgramId(), id: id, status: status});
+                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.info.get('id'), id: id, status: status});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({
@@ -85,23 +85,19 @@ var tbar = [
                 var selection = grid.getSelectionModel().getSelection();
                 selection.forEach(function (e) {
                     e.set('status', status);
-                    e.save();
-                    grid.getStore().load();
-
-
-//                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.getProgramId(), id: id});
-//                    enroll.save({
-//                        failure: function (record, operation) {
-//                            Ext.MessageBox.show({
-//                                rtl: true,
-//                                title: 'خطا',
-//                                msg: operation.request.proxy.reader.jsonData.errors,
-//                                buttons: Ext.MessageBox.OK,
-//                                icon: Ext.MessageBox.ERROR
-//                            });
+                    e.save({
+                        failure: function (record, operation) {
+                            Ext.MessageBox.show({
+                                rtl: true,
+                                title: 'خطا',
+                                msg: operation.request.proxy.reader.jsonData.errors,
+                                buttons: Ext.MessageBox.OK,
+                                icon: Ext.MessageBox.ERROR
+                            });
 //
-//                        }});
-//                    grid.down('combo').reset();
+                        }
+                    });
+                    grid.getStore().load();
                 })
             }
         }
@@ -110,9 +106,6 @@ var tbar = [
 Ext.define("Mehr.view.program.EnrollersGrid", {
     extend: "Ahura.grid.Base",
     alias: "widget.enrollersGrid",
-    config: {
-        'programId': null
-    },
     selModel: {model: 'MULTI'},
     multiSelect: true,
     require: 'Ahura.form.combo.SID',
@@ -134,10 +127,13 @@ Ext.define("Mehr.view.program.Enrollers", {
         {xtype: 'enrollersGrid'}
     ],
     initComponent: function () {
-        this.title = (this.info) ? 'نام‌نوشتگان در:' + this.info.get('name') : "مدریت نام‌نوشتگان";
+        if (!this.info.get('id')) {
+            throw { name: 'FatalError', message: 'No id specified!' };
+        }
+        this.title = 'نام‌نوشتگان در:' + ' ' + this.info.get('name');
         this.callParent(arguments);
         var grid = this.down('grid');
-        grid.getStore().getProxy().setExtraParam('programId', (this.info) ? this.info.getId() : this.tid);
+        grid.getStore().getProxy().setExtraParam('programId', this.info.get('id'));
         grid.getStore().load();
     }
 })

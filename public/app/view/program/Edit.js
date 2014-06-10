@@ -1,9 +1,8 @@
 Ext.define("Mehr.view.program.Edit", {
     extend: "Ahura.window.Base",
-    requires: ['Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
+    requires: ['Ahura.form.field.FaEditor','Ahura.form.field.Integer','Ahura.form.combo.Entity','Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
     title: 'ویرایش برنامه',
     width: 800,
-    height: 400,
     items: {
         xtype: 'form',
         submitEmptyText: false,
@@ -56,6 +55,12 @@ Ext.define("Mehr.view.program.Edit", {
                                 xtype: 'jalali',
                                 vtype: 'daterange',
                                 startDateField: 'executionStartDate'
+                            },
+                            {
+                                fieldLabel: 'متولی برنامه',
+                                emptyText: "",
+                                name: 'entityId',
+                                xtype: 'entity-combo'
                             }
                         ]
 
@@ -73,16 +78,12 @@ Ext.define("Mehr.view.program.Edit", {
                             {
                                 fieldLabel: 'کمینه شمار شرکت کننده‌ها',
                                 name: 'minCapacity',
-                                xtype: 'numberfield',
-                                allowDesimal: false,
-                                allowNegative: false
+                                xtype: 'integer'
                             },
                             {
                                 fieldLabel: 'بیشینه شمار شرکت کننده‌ها',
                                 name: 'maxCapacity',
-                                xtype: 'numberfield',
-                                allowDesimal: false,
-                                allowNegative: false
+                                xtype: 'integer'
                             },
                             {
                                 fieldLabel: 'زمان آغاز نام‌نویسی',
@@ -135,12 +136,10 @@ Ext.define("Mehr.view.program.Edit", {
                         defaultType: 'textfield',
                         items: [
                             {
-                                fieldLabel: "هزینه شرکت در برنامه(تومان)",
-                                xtype: 'numberfield',
+                                fieldLabel: "هزینه نام‌نویسی (تومان)",
+                                xtype: 'integer',
                                 name: 'cost',
                                 labelWidth: 200,
-                                allowDecimal: false,
-                                allowNegative: false,
                                 width: 200,
                                 listeners: {
 //                                        'show': function (t, v) {
@@ -247,14 +246,8 @@ Ext.define("Mehr.view.program.Edit", {
                     },
                     {
                         title: 'جزئیات',
-                        xtype: 'htmleditor',
-                        name: "details",
-                        value: '',
-                        frame: false,
-                        fontFamilies: ['Tahoma', 'B Zar', 'B Titr'],
-                        layout: 'fit'
+                        xtype: 'fa-editor'
                     }
-
                 ]
             }
 
@@ -326,16 +319,16 @@ Ext.define("Mehr.view.program.Edit", {
             }
         },
         Ahura.button.CancelForm
-        ,
-        {
-            text: 'مدیریت نام نوشتگان',
-            icon: icon('groupEdit'),
-            handler: function (button) {
-//                Mehr.store.Enrollers.load({params: {program_id: Mehr.v.program_id}
-//                });
-//                Mehr.window.Enrollers.show("enrollersBtn");
-                (Ext.create("Mehr.view.program.Enrollers")).show()
-            }
-        }
+//        ,
+//        {
+//            text: 'مدیریت نام نوشتگان',
+//            icon: icon('groupEdit'),
+//            handler: function (button) {
+////                Mehr.store.Enrollers.load({params: {program_id: Mehr.v.program_id}
+////                });
+////                Mehr.window.Enrollers.show("enrollersBtn");
+//                (Ext.create("Mehr.view.program.Enrollers")).show()
+//            }
+//        }
     ]
 });

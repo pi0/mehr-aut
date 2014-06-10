@@ -8,6 +8,7 @@ Ext.require('Ahura.form.combo.Nationality');
 Ext.define('Mehr.view.audience.Panel', {
     extend: 'Ext.tab.Panel',
     xtype: 'audience-panel',
+    tabPosition:'bottom',
     items: [
         {
             activeTab: 3,
@@ -16,11 +17,11 @@ Ext.define('Mehr.view.audience.Panel', {
             bodyPadding: 15,
             title: 'دامنه',
             defaults: {
-                labelWidth: 50
             },
             items: [
                 {
                     fieldLabel: 'نوع کاربر',
+                    allowBlank: false,
                     xtype: 'local-combo',
                     name: 'audience[userType]',
                     multiSelect: true,
@@ -41,7 +42,6 @@ Ext.define('Mehr.view.audience.Panel', {
                     fieldLabel: 'جنسیت',
                     layout: 'hbox',
                     xtype: 'radiogroup',
-                    labelWidth: 50,
                     items: [
                         {
                             name: 'audience[sex]',
@@ -105,12 +105,18 @@ Ext.define('Mehr.view.audience.Panel', {
                     flex: 1,
                     multiSelect: true, typeAhead: false
                 },
+                {
+                    xtype: 'entity-combo',
+                    name: 'audience[entityMember]',
+                    fieldLabel: 'مخصوص عضوهای',
+                    multiSelect: true,
+                    emptyText: 'عضوها و شورای مرکزی و نه مخاطبان'
+                },
 //                'اعمال محدودیت روی رشته/دانشکده',
                 {
                     xtype: 'checkbox',
                     labelAlign: 'left',
-                    labelWidth: 180,
-                    fieldLabel: 'اعمال محدودیت روی رشته/دانشکده',
+                    fieldLabel: 'محدودیت رشته؟',
                     listeners: {
                         'change': function (t, value) {
                             if (value) {
@@ -136,6 +142,18 @@ Ext.define('Mehr.view.audience.Panel', {
                     xtype: 'treepanel',
                     rootVisible: false,
                     store: Ext.create('Ext.data.TreeStore', {
+                        listeners: {
+                            update: function (store, node, op, modifiedFields) {
+                                //If our checked value has changed
+                                if (modifiedFields && Ext.Array.contains(modifiedFields, 'checked')) {
+                                    var isChecked = node.get('checked');
+                                    node.eachChild(function (childNode) {
+                                        //set each child node to it's parent's checked value
+                                        childNode.set('checked', isChecked);
+                                    });
+                                }
+                            }
+                        },
                         fields: ['text', 'id', 'type'],
                         root: {
                             expanded: true,
@@ -162,6 +180,7 @@ Ext.define('Mehr.view.audience.Panel', {
         {
             title: 'پیش‌نمای مخاطبان',
             layout: 'fit',
+            height: 400,
             items: [
 
                 {

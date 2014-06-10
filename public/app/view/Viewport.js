@@ -231,6 +231,14 @@ Ext.create("Ext.toolbar.Toolbar", {
             },
             menu: [
                 {
+                    text: 'تغییر گذرواژه',
+                    icon: icon('key'),
+                    handler:function(){
+                        Ext.create('Mehr.view.setting.Password');
+                    }
+                }
+                /*,
+                {
                     text: 'مشخصات من',
                     icon: icon('information')
                 },
@@ -248,13 +256,14 @@ Ext.create("Ext.toolbar.Toolbar", {
                             text: 'اطلاعات تماس'
                         }
                     ]
-                }
+                }*/
             ]
         },
         {
             text: "راهنما",
             icon: icon('help'),
             menu: [
+                /*
                 {
                     icon: icon('help'),
                     text: "راهنمای برنامه"
@@ -266,8 +275,12 @@ Ext.create("Ext.toolbar.Toolbar", {
                         window.location = 'http://ahura.biz';
                     }
                 } ,
+                */
                 {
-                    text: "درباره"
+                    text: "درباره",
+                    handler:function(){
+                        Ahura.info('درباره','سامانه مهر نسخه 0.1'+'<br>'+'پیاده‌سازی: رضا سالارمهر salarmehr@gmail.com')
+                    }
                 }
             ],
             handler: function (b, e) {
