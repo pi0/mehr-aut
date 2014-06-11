@@ -298,6 +298,8 @@ Ext.define('Mehr.view.user.Edit',
                                         }
                                     ]
                                 }
+
+/*
                                 ,
                                 {
                                     fieldLabel: 'نقش**',
@@ -323,6 +325,7 @@ Ext.define('Mehr.view.user.Edit',
                                         }
                                     ]
                                 }
+*/
                             ]
 
                         }
