@@ -5,9 +5,9 @@
 $di = new \Phalcon\DI\FactoryDefault();
 
 //Read the configuration
-$configFile=(php_uname('s')=='Windows NT')? 'dev.php':'pro.php';
+$configFile = (php_uname('s') == 'Windows NT') ? 'dev.php' : 'pro.php';
 
-$config = new Phalcon\Config(include_once __DIR__ . '/'.$configFile);
+$config = new Phalcon\Config(include_once __DIR__ . '/' . $configFile);
 $loader = new \Phalcon\Loader();
 
 /**
@@ -54,7 +54,8 @@ $di->set('db', function () use ($config) {
         "host" => $config->database->host,
         "username" => $config->database->username,
         "password" => $config->database->password,
-        "dbname" => $config->database->name
+        "dbname" => $config->database->name,
+        'options' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => TRUE,],
     ));
 });
 

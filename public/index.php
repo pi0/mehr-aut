@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 //require_once 'firelogger.php';
 //require_once '../vendor/jdf.php';
 //require_once '../vendor/jdatetime.class.php';
-require_once 'ux/Ux.php';
 require_once '../app/util.php';
 
 try {

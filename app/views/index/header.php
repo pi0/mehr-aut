@@ -21,6 +21,4 @@
 
 </head>
 <body dir="rtl">
-<div class="nav">
-    <?php include_once "partials/navbar.php"; ?>
-</div>
+<?php include_once "partials/navbar.php"; ?>

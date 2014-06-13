@@ -121,3 +121,9 @@ function paginator($query, $params, $type = null)
 
 echo isoToJalali('1393/3/15');
 //echo jalaliToIso('1393/3/15');
+
+function jsonResponse($response,$type='application/json')
+{
+    header('Content-Type: '.$type);
+    echo json_encode($response);
+}
