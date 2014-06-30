@@ -1,3 +1,10 @@
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.ux.grid.FiltersFeature',
+    'Ext.toolbar.Paging'
+]);
+
 var entityColumns = [
     {
         xtype: 'actioncolumn',
@@ -30,6 +37,11 @@ var entityColumns = [
     {
         header: "نوع",
         dataIndex: "typeText"
+//        filter:{
+//            type:'list',
+//            store:[3,4,5,6]
+////            store:Ahura.store.EntityType
+//        }
     },
     {
         header: "عنوان",
@@ -39,11 +51,13 @@ var entityColumns = [
     {
         header: "دوره‌ها",
         dataIndex: "councilCount",
-        width:40
+        width: 40
     },
     {
         header: "مخاطبان",
-        dataIndex: "program_type_txt"
+        dataIndex: "program_type_txt",
+        xtype: 'numbercolumn',
+        filterable: true
     },
     {
         header: "اعضاء",
@@ -54,6 +68,22 @@ Ext.define("Mehr.view.entity.Grid", {
     extend: "Ahura.grid.Base",
     xtype: "entityGrid",
     columns: entityColumns,
+    features: [
+        {
+            ftype: 'filters',
+            // encode and local configuration options defined previously for easier reuse
+//            local: local,   // defaults to false (remote filtering)
+
+            // Filters are most naturally placed in the column definition, but can also be
+            // added here.
+            filters: [
+//                {
+//                    type: 'boolean',
+//                    dataIndex: 'visible'
+//                }
+            ]
+        }
+    ],
     initComponent: function () {
         this.store = 'Entity';
         this.callParent(arguments);

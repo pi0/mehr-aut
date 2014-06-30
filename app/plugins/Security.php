@@ -84,18 +84,17 @@ class Security extends Phalcon\Mvc\User\Plugin
      */
     public function beforeDispatch(Phalcon\Events\Event $event, Phalcon\Mvc\Dispatcher $dispatcher)
     {
-
-       $auth = $this->session->get('auth');
-        if (isset($auth->role) && in_array($auth->role, array('member', 'admin'))) {
-//            $role = $auth->role;
-            $role = 'guest';
-        } else {
-            $role = 'guest';
+        if ($this->session->auth and !isset($this->currentUser)) {
+            $this->getDI()->setShared('currentUser', function () {
+                return User::findFirst($this->session->auth);
+            });
         }
+
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
-
         $acl = $this->getAcl();
+        $role = $this->getCurrentRole();
+//        var_dump($role);die();
 
         $allowed = $acl->isAllowed($role, $controller, $action);
         if ($allowed != Phalcon\Acl::ALLOW) {
@@ -109,6 +108,19 @@ class Security extends Phalcon\Mvc\User\Plugin
             return false;
         }
 
+    }
+
+    public function getCurrentRole()
+    {
+        $auth = $this->session->get('auth');
+        if (!isset($this->currentUser)) {
+            return 'guest';
+        } elseif ($this->currentUser->level == 'a') {
+//            var_dump($this->currentUser);
+            return 'admin';
+        } else {
+            return 'user';
+        }
     }
 
 }

@@ -7,8 +7,8 @@ $config = array(
     'database' =>
     [
         'host' => 'localhost',
-        'username' => 'mehr',
-        'password' => '123',
+        'username' => 'root',
+        'password' => '',
         'name' => 'mehr2',
     ],
     'mongodb' =>
@@ -26,7 +26,7 @@ $config = array(
         'pluginsDir' => '/../app/plugins/',
         'libraryDir' => '/../app/library/',
         'apiDir' => '/../app/api/',
-        'baseUri' => '/aut/',
+        'baseUri' => '/',
     ],
     'metadata' =>
     [

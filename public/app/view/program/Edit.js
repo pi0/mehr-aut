@@ -1,6 +1,6 @@
 Ext.define("Mehr.view.program.Edit", {
     extend: "Ahura.window.Base",
-    requires: ['Ahura.form.field.FaEditor','Ahura.form.field.Integer','Ahura.form.combo.Entity','Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
+    requires: ["Ahura.form.combo.User",'Ahura.form.field.FaEditor','Ahura.form.field.Integer','Ahura.form.combo.Entity','Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
     title: 'ویرایش برنامه',
     width: 800,
     items: {
@@ -9,7 +9,7 @@ Ext.define("Mehr.view.program.Edit", {
         paramsAsHash: true,
         api: {
             load: RPC.ProgramApi.read,
-            submit: RPC.ProgramApi.write
+            submit: RPC.ProgramApi.create
         },
         items: [
             {
@@ -57,10 +57,16 @@ Ext.define("Mehr.view.program.Edit", {
                                 startDateField: 'executionStartDate'
                             },
                             {
-                                fieldLabel: 'متولی برنامه',
+                                fieldLabel: 'متولی',
                                 emptyText: "",
                                 name: 'entityId',
                                 xtype: 'entity-combo'
+                            },
+                            {
+                                fieldLabel: 'مسئول',
+                                emptyText: "",
+                                name: 'manager',
+                                xtype: 'user-combo'
                             }
                         ]
 

@@ -49,7 +49,7 @@ class EntityApi extends Phalcon\DI\Injectable
         }
     }
 
-    function write()
+    function create()
     {
         $data = $_REQUEST;
         formPreProcess($data);

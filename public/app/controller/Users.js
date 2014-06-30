@@ -2,12 +2,12 @@ Ext.define('Mehr.controller.Users', {
     extend: 'Ext.app.Controller',
     stores: ['User'],
     models: ['User'],
-    views:['user.Grid',
+    views: ['user.Grid',
         'user.Window',
 //        'user.Edit'
     ],
 
-    init: function() {
+    init: function () {
         this.control({
             '#vp button': {
                 click: this.onPanelRendered
@@ -15,7 +15,7 @@ Ext.define('Mehr.controller.Users', {
         });
     },
 
-    onPanelRendered: function() {
+    onPanelRendered: function () {
         console.log('The panel was rendered');
     }
 });

@@ -9,8 +9,6 @@ $router->add("/", array(
     'action' => 'index'
 ));
 
-
-
 $router->add('/help', array(
 	'controller' => 'about',
 	'action' => 'index'

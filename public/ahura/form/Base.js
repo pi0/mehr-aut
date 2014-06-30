@@ -1,6 +1,7 @@
 Ext.define('Ahura.form.Base', {
     extend: 'Ext.form.Panel',
     xtype: 'base-form',
+    layout:'form',
     submitEmptyText: false,
     paramsAsHash: true,
     bodyStyle: 'padding:5px',

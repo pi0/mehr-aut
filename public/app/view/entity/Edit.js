@@ -12,7 +12,7 @@ Ext.define('Mehr.view.entity.Edit', {
             paramsAsHash: true,
             api: {
                 load: RPC.EntityApi.read,
-                submit: RPC.EntityApi.write
+                submit: RPC.EntityApi.create
             },
             layout: 'fit',
             fieldDefaults: {

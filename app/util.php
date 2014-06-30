@@ -8,19 +8,23 @@ require_once '../app/config/services.php';
  * Time: 9:46 PM
  */
 
-function extJson($success = true, array $data = null, $errors = null)
+function extJson($success = true, array $data = null, $errors = [])
 {
-    return ['success' => $success, 'data' => $data, 'errors' => $errors];
+    $extError=[];
+    foreach ($errors as $e) {
+        $extError[$e->getField()]=$e->getMessage();
+    }
+
+    return ['success' => $success, 'data' => $data, 'errors' => $extError,''];
 }
 
 function toJsArray(array $arr)
 {
-    header('content-type:application/javascript; charset=utf-8');
-
     $result = [];
     foreach ($arr as $k => $v) {
-        $result[] = '["' . $v[0] . '","' . $v[1] . '"]';
+        $result[] = '["' . $v['value'] . '","' . $v['text'] . '"]';
     }
+//    var_dump($arr);die();
     return '[' . implode(',', $result) . ']';
 }
 

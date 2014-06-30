@@ -1,4 +1,4 @@
-Ext.require(['Ahura.form.combo.Provinces','Ahura.form.combo.Nationality','Ahura.form.combo.MaritalStatus']);
+Ext.require(['Ahura.form.combo.Provinces', 'Ahura.form.combo.Nationality', 'Ahura.form.combo.MaritalStatus', 'Ahura.form.combo.EntityType', 'Ahura.form.Base','Ahura.form.combo.Religion']);
 Ext.define('Mehr.view.user.Edit',
 
     {
@@ -44,7 +44,7 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'جنسیت**',
                                     allowBlank: false,
                                     xtype: 'radiogroup',
-                                    name: 'sex',
+//                                    name: 'sex',
                                     items: [
                                         {
                                             name: 'sex',
@@ -102,7 +102,7 @@ Ext.define('Mehr.view.user.Edit',
                                     xtype: 'integer',
                                     minLength: 10,
                                     maxLength: 10,
-                                    enforceMaxLength: true,
+                                    enforceMaxLength: true
                                 },
                                 {
                                     fieldLabel: 'نام پدر',
@@ -125,6 +125,9 @@ Ext.define('Mehr.view.user.Edit',
                                 ,
                                 {
                                     xtype: 'marital-status-combo'
+                                },
+                                {
+                                    xtype: 'religion-combo'
                                 }
                             ]
                         },
@@ -250,7 +253,7 @@ Ext.define('Mehr.view.user.Edit',
                                 {
                                     fieldLabel: 'نام کاربری',
                                     name: 'username',
-                                    allowBlank:false
+                                    allowBlank: false
 //                                    vtype:'alphanumMask'
 
                                 }
@@ -299,35 +302,56 @@ Ext.define('Mehr.view.user.Edit',
                                     ]
                                 }
 
-/*
-                                ,
-                                {
-                                    fieldLabel: 'نقش**',
-                                    name: 'user_type',
-                                    xtype: 'radiogroup',
-                                    labelAlign: 'right',
-                                    columns: 'auto',
-                                    items: [
-                                        {
-                                            boxLabel: "دانشجو",
-                                            inputValue: 's',
-                                            checked: true,
-                                            xtype: 'radio',
-                                            name: 'user_type'
-                                        },
+                                /*
+                                 ,
+                                 {
+                                 fieldLabel: 'نقش**',
+                                 name: 'user_type',
+                                 xtype: 'radiogroup',
+                                 labelAlign: 'right',
+                                 columns: 'auto',
+                                 items: [
+                                 {
+                                 boxLabel: "دانشجو",
+                                 inputValue: 's',
+                                 checked: true,
+                                 xtype: 'radio',
+                                 name: 'user_type'
+                                 },
 
-                                        {
-                                            boxLabel: "کارمند/استاد",
-                                            inputValue: 'e',
-                                            checked: false,
-                                            xtype: 'radio',
-                                            name: 'user_type'
-                                        }
-                                    ]
-                                }
-*/
+                                 {
+                                 boxLabel: "کارمند/استاد",
+                                 inputValue: 'e',
+                                 checked: false,
+                                 xtype: 'radio',
+                                 name: 'user_type'
+                                 }
+                                 ]
+                                 }
+                                 */
                             ]
-
+                        },
+                        {
+                            title: 'مسئولیت‌ها',
+//                            xtype: 'base-form',
+                            layout:'form',
+                            items: [
+                                {
+                                    xtype: 'entity-type-combo',
+                                    fieldLabel: 'کارشناس',
+                                    multiSelect:true,
+                                    name:'entityAdmin[]'
+                                }
+                            ]
+                        },
+                        {
+                            title: 'عضویت‌ها'
+                        },
+                        {
+                            title: 'شوراها'
+                        },
+                        {
+                            title: 'برنامه‌ها'
                         }
 
                     ]
@@ -344,4 +368,3 @@ Ext.define('Mehr.view.user.Edit',
         },
         fbar: [Ahura.button.CancelForm, Ahura.button.SaveForm]
     });
-

@@ -38,13 +38,13 @@ var menu = Ext.create('Ext.menu.Menu', {
                 icon: icon('databaseRefresh'),
                 text: 'همزمان‌سازی',
                 scale: 'small'
-            },
-//            {
-//                colspan: 2,
-//                icon: icon('user_suit'),
-//                text: 'کارمندان',
-//                scale: 'small'
-//            }
+           },
+            {
+                colspan: 2,
+                icon: icon('userSuit'),
+                text: 'نقش‌ها و سمت‌ها',
+                scale: 'small'
+            }
         ]
     }
 });
@@ -289,18 +289,27 @@ Ext.create("Ext.toolbar.Toolbar", {
         },
         '->'
         ,
+//        {
+//            icon:icon('arrowInout'),
+//            handler:function(){
+//                requestFullScreen(document.body);
+//            }
+//        }
+//        ,
         {
-            icon:icon('arrowInout'),
-            handler:function(){
-                requestFullScreen(document.body);
+            text: "بازگشت",
+            icon: icon('house'),
+            handler: function (b, e) {
+                window.location = '/';
             }
+
         }
         ,
         {
             text: "خروج",
             icon: icon('door_out'),
             handler: function (b, e) {
-                window.location = '/account/logout';
+                window.location = '/user/logout';
             }
 
         }

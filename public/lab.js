@@ -1,3 +1,14 @@
-/**
- * Created by Reza on 6/7/14.
- */
+function is(vr) {
+    vr.split('.');
+}
+
+x = {
+    title: 'مسئولیت‌ها',
+    xtype: 'base-form',
+    items: [
+        {
+            xtype: 'entity-combo',
+            labelField: 'کارشناس'
+        }
+    ]
+}

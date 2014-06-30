@@ -55,9 +55,25 @@ $di->set('db', function () use ($config) {
         "username" => $config->database->username,
         "password" => $config->database->password,
         "dbname" => $config->database->name,
+        'charset' => 'utf8', // UTF8 charset
         'options' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => TRUE,],
     ));
 });
+
+$di->set('pdo', function () use ($config) {
+    try {
+        $dbh = new PDO('mysql:dbname=' . $config->database->name . ';host=' . $config->database->host,
+            $config->database->username,
+            $config->database->password,
+            [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => TRUE,]
+        );
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+    }
+    return $dbh;
+});
+
+//$di['db']->query("SET NAMES 'utf8'");
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
@@ -78,6 +94,8 @@ $di->setShared('session', function () {
     $session->start();
     return $session;
 });
+
+
 
 //Register the flash service with custom CSS classes
 $di->set('flash', function () {

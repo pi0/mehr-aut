@@ -1,4 +1,4 @@
-Ext.require('Mehr.model.CouncilMember');
+Ext.require('Mehr.store.Role');
 var termColumns = [
     {
         header: '# دانشجویی',
@@ -42,8 +42,7 @@ var termColumns = [
 ];
 Ext.define('Mehr.view.entity.TermCouncilGrid', {
     extend: 'Ahura.grid.Base',
-    emptyText:'هیچ عضوی تعریف نشده است.',
-    xtype: 'council-member-grid',
+    xtype: 'role-grid',
     plugins: [
         {
             ptype:'rowediting',
@@ -56,11 +55,12 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
             text: 'افزودن',
             icon: icon('userAdd'),
             handler: function () {
+                var grid=this.up('role-grid');
                 rowEditing.cancelEdit();
-                this.up('council-member-grid').getStore().insert(0, [
+                grid.getStore().insert(0, [
                     []
                 ]);
-                rowEditing.startEdit(0, 0);
+                grid.findPlugin('rowediting').startEdit(0, 0);
             }
         },
         {
@@ -68,9 +68,10 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
             text: 'حذف',
             icon: icon('userDelete'),
             handler: function () {
-                var sm = this.up('grid').getSelectionModel();
-                var store = this.up('grid').getStore();
-                rowEditing.cancelEdit();
+                var grid=this.up('grid');
+                var sm = grid.getSelectionModel();
+                var store = grid.getStore();
+                grid.findPlugin('rowediting').cancelEdit();
                 store.remove(sm.getSelection());
                 if (store.getCount() > 0) {
                     sm.select(0);
@@ -80,7 +81,7 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
         }
     ],
     initComponent: function () {
-        this.store = 'CouncilMember';
+        this.store = 'Role';
         this.callParent(arguments);
         this.down('pagingtoolbar').bindStore(this.store);
     },
@@ -94,14 +95,14 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
 
     }
 })
-Ext.define('Mehr.view.council.Member', {
+Ext.define('Mehr.view.user.Role', {
     extend: 'Ahura.window.Base',
     requires: 'Ahura.form.combo.User',
     title: 'ویرایش/ایجاد دوره',
     height: 500,
     width: 500,
     items: [
-        {xtype: 'council-member-grid'}
+        {xtype: 'role-grid'}
     ],
     initComponent: function () {
         this.title = (this.info) ? 'شورای مرکزی: ' + this.info.get('name') : "شورای مرکزی";

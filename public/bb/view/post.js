@@ -1,6 +1,6 @@
 'use strict';
 app.PostView = Backbone.Marionette.ItemView.extend({
-    template: '#post-tpl',
+    template: '#post-tpl'
 //    model:
 //    initialize: function () {
 //

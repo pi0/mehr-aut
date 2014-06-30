@@ -5,19 +5,19 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council','Member'],
-    models: ['User', 'Enroller', 'CouncilMember', 'Council','Member'],
+    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    models: ['User', 'Enroller', 'CouncilMember', 'Council', 'Member'],
     autoCreateViewport: true,
     paths: {
-        'Ahura': '/aut/ahura',
-        'Ext.ux': '/aut/vendor/ext-ux'
+        'Ahura': '/ahura',
+        'Ext.ux': '/vendor/ext-ux'
     },
     controllers: [
 //        'Users',
 //        'Audiences'
     ],
     launch: function () {
-        var win = Ext.create('Mehr.view.setting.Password');
+//        var win = Ext.create('Mehr.view.user.Role');
 //        var win = Ext.create("Mehr.view.program.Edit", {
 //            info: {
 //                get: function () {
@@ -104,12 +104,15 @@ Ahura.button.SaveForm = {
                     })
                 },
                 failure: function (form, action) {
-//                            Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
+                    var msg = 'ارتباط با سرور برقرار نشد.';
+                    if (action.result) {
+                        if (action.result.message) msg = action.result.message;
+                        msg = 'در داده‌های وارد شده خطا وجود دارد.'
+                    }
                     Ext.MessageBox.show({
                         rtl: true,
+                        msg: msg,
                         title: 'خطا',
-                        msg: (action.result && action.result.message) ? 'در داده‌های وارد شده خطا وجود دارد.' : 'ارتباط با سرور برقرار نشد.',
-//                            msg: 'خطایی در داده‌ها وجود دارد.',
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });
@@ -122,8 +125,6 @@ Ahura.button.SaveForm = {
                     return { field: field.getName(), error: error }
                 }));
             });
-            console.log(errors);
-
             Ext.MessageBox.show({
                 rtl: true,
                 title: 'ورودی نامعتبر',

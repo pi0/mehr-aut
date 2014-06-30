@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
 
     <!--[if lt IE 9]>
     <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -18,6 +20,7 @@
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome-ie7.min.css">
     <![endif]-->
     <link rel="stylesheet" href="assets/css/_base.css"/>
+
 
 </head>
 <body dir="rtl">

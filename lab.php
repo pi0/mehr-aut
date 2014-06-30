@@ -56,34 +56,44 @@
 ////var_dump(localtime(time(),true));
 
 
-$time = IntlCalendar::createInstance("Asia/Tokyo", "en_US@calendar=persian");
-$time->set(1392,2,31);
-
-$formatter = IntlDateFormatter::create("en_US@calendar=gregorian",
-    IntlDateFormatter::FULL,
-    IntlDateFormatter::FULL,
-    'Asia/Tokyo',
-    IntlDateFormatter::TRADITIONAL);
-
+//$time = IntlCalendar::createInstance("Asia/Tokyo", "en_US@calendar=persian");
+//$time->set(1392,2,31);
+//
+//$formatter = IntlDateFormatter::create("en_US@calendar=gregorian",
+//    IntlDateFormatter::FULL,
+//    IntlDateFormatter::FULL,
+//    'Asia/Tokyo',
+//    IntlDateFormatter::TRADITIONAL);
+//
+////print $formatter->format($time);
+////Friday, Shaʻban 13, 1434 AH at 8:52:23 AM Japan Standard Time
+//
+//$fmt = new IntlDateFormatter(
+//    'en_US@calendar=persian',
+//    IntlDateFormatter::SHORT, //date format
+//    IntlDateFormatter::NONE, //time format
+//    'Asia/Tokyo',
+//    IntlDateFormatter::TRADITIONAL
+////    'yyyy/MM/dd'
+//);
+//
+//$time = $fmt->parse('3/31/1393 AP');
+//
+//$formatter = IntlDateFormatter::create("en_US@calendar=gregorian",
+//    IntlDateFormatter::FULL,
+//    IntlDateFormatter::FULL,
+//    'Asia/Tokyo',
+//    IntlDateFormatter::TRADITIONAL);
+//
 //print $formatter->format($time);
-//Friday, Shaʻban 13, 1434 AH at 8:52:23 AM Japan Standard Time
+////Friday, Shaʻban 13, 1434 AH at 8:52:23 AM Japan Standard Time
 
-$fmt = new IntlDateFormatter(
-    'en_US@calendar=persian',
-    IntlDateFormatter::SHORT, //date format
-    IntlDateFormatter::NONE, //time format
-    'Asia/Tokyo',
-    IntlDateFormatter::TRADITIONAL
-//    'yyyy/MM/dd'
-);
+//http_response_code(404);
+//echo $x= password_hash('s',PASSWORD_BCRYPT);
 
-$time = $fmt->parse('3/31/1393 AP');
-
-$formatter = IntlDateFormatter::create("en_US@calendar=gregorian",
-    IntlDateFormatter::FULL,
-    IntlDateFormatter::FULL,
-    'Asia/Tokyo',
-    IntlDateFormatter::TRADITIONAL);
-
-print $formatter->format($time);
-//Friday, Shaʻban 13, 1434 AH at 8:52:23 AM Japan Standard Time
+$acl = new \Phalcon\Acl\Adapter\Memory();
+$roleGuests = new \Phalcon\Acl\Role("Guests");
+$acl->addRole('x');
+$acl->addResource('a', ['c', 'd']);
+$acl->deny('x', 'a', '*');
+var_dump($acl->isAllowed('x','a','dd'));

@@ -10,7 +10,7 @@ Ext.define('Mehr.view.setting.Password', {
         layout:'anchor',
         api: {
             load: RPC.ProgramApi.read,
-            submit: RPC.ProgramApi.write
+            submit: RPC.ProgramApi.create
         },
         items: [
             {

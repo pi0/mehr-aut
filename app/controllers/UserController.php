@@ -14,10 +14,10 @@ class UserController extends ControllerBase
     {
     }
 
-    function readAction($params=null)
+    function readAction($params = null)
     {
-        if(!$params){
-            $params=$_REQUEST;
+        if (!$params) {
+            $params = $_REQUEST;
         }
 //        var_dump($params);
 //        die();
@@ -30,7 +30,7 @@ class UserController extends ControllerBase
             $query = $u->query();
 //            $data = $u->getModelsManager()->createBuilder()->where('firstName like :q: ')->bind(['q' => ($params->query) . '%'])->orderBy($sort)->execute();
 //            echo $data = $u->query()->where('firstName like "علی"')->bind(['q'=>($params->query)])->limit($params->limit,$params->start)->orderBy($sort)->getPhql();
-            return paginator($query,$params,'user');
+            return paginator($query, $params, 'user');
         }
     }
 
@@ -48,4 +48,55 @@ class UserController extends ControllerBase
 
 //        var_dump($P->getModelsMetaData()->getAttributes($P));
     }
+
+    function loginAction()
+    {
+        $this->view->disable();
+        {
+            $request = (array)$this->request->getJsonRawBody();
+            $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
+                ['username' => $request['username']]);
+            if (password_verify($request['password'], $data['password'])) {
+                $user = $this->di['db']->fetchOne('select id from user where username=:username', Phalcon\Db::FETCH_ASSOC,
+                    ['username' => $request['username']]);
+                $this->getDI()['session']->set('auth', $user['id']);
+
+//                $this->getDI()['session']->set('user', $user);
+                jsonResponse($user);
+            } else {
+                http_response_code(401);
+                jsonResponse(['message' => 'شناسه و/یا گذرواژه وارد شده معتبر نمی‌باشد. ']);
+            }
+        }
+    }
+
+    function logoutAction()
+    {
+        $this->session->destroy();
+        $this->response->redirect();
+    }
+
+    function passwordAction()
+    {
+        $jr = $this->jr;
+        $this->view->disable();
+        $new = $jr->newPassword;
+        if (!password_verify($jr->password, $this->user->password)) {
+            http_response_code(422);
+            jsonResponse(['message' => 'گذرواژه فعلی درست نیست.']);
+        } elseif ($jr->newPassword !== $jr->confirmPassword) {
+            http_response_code(422);
+            jsonResponse(['message' => 'گذرواژه جدید به تایید آن برابر نیست!']);
+
+//        } elseif (strlen($new) < 6) {
+//            http_response_code(422);
+//            jsonResponse(['message' => 'گذرواژه انتخابی به اندازه کافی قوی نیست!']);
+        } else {
+            $this->user->password = password_hash($new, PASSWORD_BCRYPT);
+            $this->user->save();
+            jsonResponse([]);
+        }
+//        $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
+    }
 }
+
