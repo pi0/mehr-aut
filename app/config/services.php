@@ -10,6 +10,16 @@ $configFile = (php_uname('s') == 'Windows NT') ? 'dev.php' : 'pro.php';
 $config = new Phalcon\Config(include_once __DIR__ . '/' . $configFile);
 $loader = new \Phalcon\Loader();
 
+//Start the session the first time some component request the session service
+$di->setShared('session', function () {
+    $session = new Phalcon\Session\Adapter\Files();
+    $session->start();
+    return $session;
+});
+
+
+
+
 /**
  * We register the events manager
  */
@@ -87,14 +97,6 @@ $di->set('modelsMetadata', function () use ($config) {
         return new Phalcon\Mvc\Model\Metadata\Memory();
     }
 });
-
-//Start the session the first time some component request the session service
-$di->setShared('session', function () {
-    $session = new Phalcon\Session\Adapter\Files();
-    $session->start();
-    return $session;
-});
-
 
 
 //Register the flash service with custom CSS classes

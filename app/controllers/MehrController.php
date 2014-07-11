@@ -17,12 +17,15 @@ class MehrController extends ControllerBase
 
     public function apiAction()
     {
+//        var_dump($this->session->role);
+//        var_dump($this->session->user);
+//        die();
         $this->view->disable();
         ExtDirect::$namespace = 'RPC';
         ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug = true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
-        ExtDirect::$form_handlers = array('ProgramApi::write', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create');
+        ExtDirect::$form_handlers = array('ProgramApi::create', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create');
         ExtDirect::provide(['UserController', 'ProgramApi', 'UserApi', 'EntityApi', 'EnrollerApi', 'CouncilMemberApi', 'MemberApi', 'CouncilApi']);
     }
 

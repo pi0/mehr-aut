@@ -8,7 +8,6 @@ Ext.define("Ahura.form.combo.User", {
     store: 'User',
     displayField: 'sid',
     valueField: 'id',
-    minChar: 2,
     tpl: Ext.create('Ext.XTemplate',
         '<tpl for=".">',
         '<div class="x-boundlist-item">{sid} ■ {firstName} {lastName}</div>',

@@ -33,8 +33,10 @@ ul.plain {
     float: right;
     list-style: none;
     margin: 0;
-    padding: 0;
-    padding-left: 4px;
+    padding: 0 8px;
+    &:hover {
+      background: $b;
+    }
   }
 }
 
@@ -120,6 +122,7 @@ footer p {
   }
   .body {
     background: $c;
+    overflow: auto;
     //    opacity: 0.95;
     padding: $padding;
     > .name {
@@ -133,7 +136,22 @@ footer p {
     }
   }
 
-  .post-container {
+  &.post-container {
+    .buttons{
+      text-align: left;
+    }
+    .poster {
+      margin-left: 30px;
+      display: block;
+      cursor: -webkit-zoom-in;
+      cursor: -moz-zoom-in;
+      cursor: zoom-in;
+      height: 200px;
+      float: right;
+    }
+    .details {
+    }
+
   }
   .info table {
     margin: 30px;
@@ -229,3 +247,4 @@ form.main-style {
 
   }
 }
+

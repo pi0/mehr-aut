@@ -1,5 +1,4 @@
 Ext.require("Ext.ux.form.SearchField");
-
 var columns = [
     {
         xtype: 'actioncolumn',
@@ -9,10 +8,9 @@ var columns = [
             {
                 icon: icon('userEdit'),
                 tooltip: 'ویرایش کاربر',
-                handler: function (grid, rowIndex, colIndex) {
-                    var id = grid.getStore().getAt(rowIndex).getId();
-                    var panel = Ext.create('Mehr.view.user.Edit');
-                    panel.down('form').getForm().load({params: {id: id}});
+                handler: function (grid, rowIndex, colIndex, item, e, record) {
+                    var id = record.getId();
+                    openUserEditWindow(id);
                 }
             }
         ]    },
@@ -87,7 +85,7 @@ var tbar = [
         fieldLabel: 'جستجو',
         xtype: 'searchfield',
         emptyText: 'نام، #دانشجوی، #ملی',
-        store:'User'
+        store: 'User'
     }
 //    {
 //        xtype: 'button',
@@ -129,6 +127,36 @@ var tbar = [
 Ext.define("Ahura.grid.User", {
     extend: "Ahura.grid.Base",
     alias: "widget.users-grid",
+    menu: [
+        {
+            icon: icon('userEdit'),
+            text: 'ویرایش کاربر',
+            handler: function () {
+                openUserEditWindow(this.up().rowId);
+            }
+
+        },
+        {
+            text: 'پرونده فرهنگی',
+            menu: [
+                {
+                    text: 'برنامه‌ها',
+                    handler: function(){
+                     Ext.create()
+                    }
+
+                },
+                {
+                    text: 'عضویت‌ها'
+                },
+                {
+                    text: 'شوراها'
+                }
+            ]
+        }
+    ],
+
+
     initComponent: function () {
         var me = this;
         me.store = "User";
@@ -140,3 +168,8 @@ Ext.define("Ahura.grid.User", {
 //        me.down('searchfield').store=me.store;
     }
 });
+
+var openUserEditWindow = function (id) {
+    var panel = Ext.create('Mehr.view.user.Edit');
+    panel.down('form').getForm().load({params: {id: id}});
+}

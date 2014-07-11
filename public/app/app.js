@@ -9,14 +9,15 @@ Ext.application({
     models: ['User', 'Enroller', 'CouncilMember', 'Council', 'Member'],
     autoCreateViewport: true,
     paths: {
-        'Ahura': '/ahura',
-        'Ext.ux': '/vendor/ext-ux'
+        'Ahura': BASE + 'ahura',
+        'Ext.ux': BASE + 'vendor/ext-ux'
     },
     controllers: [
 //        'Users',
 //        'Audiences'
     ],
     launch: function () {
+        Ext.create('Mehr.view.user.List');
 //        var win = Ext.create('Mehr.view.user.Role');
 //        var win = Ext.create("Mehr.view.program.Edit", {
 //            info: {
@@ -29,17 +30,6 @@ Ext.application({
 
     }
 
-});
-Ext.onReady(function () {
-//    var grid = win.down('grid');
-//    var entityId = 1;
-//    grid.setProgramId(programId);
-//    grid.getStore().getProxy().setExtraParam('entityId', entityId);
-//    grid.getStore().load();
-
-//    Ext.create('Mehr.view.program.List');
-//    Ext.create('Mehr.view.user.List');
-    init();
 });
 
 Ext.require([
@@ -54,8 +44,24 @@ Ext.require([
     'Ahura.form.button.Cancel',
     'Ahura.form.date.Jalali',
     'Mehr.view.program.List',
-    'Ext.form.*'
+    'Ext.form.*',
+    'Ext.ux.grid.FiltersFeature',
+    'Ext.ux.grid.filter.ListFilter'
 ]);
+
+Ext.onReady(function () {
+//    var grid = win.down('grid');
+//    var entityId = 1;
+//    grid.setProgramId(programId);
+//    grid.getStore().getProxy().setExtraParam('entityId', entityId);
+//    grid.getStore().load();
+
+//    Ext.create('Mehr.view.program.List');
+//    Ext.create('Mehr.view.user.List');
+    init();
+});
+
+
 //    {
 //        text: 'ذخیره و بستن',
 //        icon: icon('save'),

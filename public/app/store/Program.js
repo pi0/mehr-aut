@@ -11,6 +11,10 @@
         "enrollmentStartDate",
         "enrollmentEndDate",
         "enrollmentMethod",
+        'executionStatusText',
+        'enrollmentStatusText',
+        'enrollmentStatus',
+        'executionStatus',
         "minCapacity",
         "maxCapacity",
         "cost",
@@ -25,7 +29,8 @@
         "executionToDate",
         "planId",
         "sessions",
-        "enrollerCount"
+        "enrollerCount",
+        'entityFullName'
     ],
     constructor: function () {
         this.callParent(arguments);

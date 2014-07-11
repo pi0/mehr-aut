@@ -30,8 +30,6 @@ var columns = [
                 icon: icon('groupAdd'),                // Use a URL in the icon config
                 tooltip: 'مدیریت نام نوشتگان',
                 handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                    console.log(record);
-
                     var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
 //                    var grid = win.down('grid');
 //                    grid.setProgramId(programId);
@@ -43,34 +41,55 @@ var columns = [
 
     },
     {
-        flex: 1,
         header: "عنوان",
+        flex: 1,
+        filterable: true,
         dataIndex: "name"
 
     }
     ,
     {
+        header: "متولی",
+        flex: 1,
+        filterable: true,
+        dataIndex: "entityFullName"
+    }
+    ,
+    {
         header: "نوع",
-        dataIndex: "typeText"
+        hidden: true,
+        dataIndex: "typeText",
+        filter: {
+            type: 'list',
+            options: Ahura.store.ProgramType
+        }
     }
     ,
     {
         header: "موضوع",
+        hidden: true,
+        filter: {
+            type: 'list',
+            store: Ahura.store.ProgramSubject
+        },
         dataIndex: "subjectText"
     }
     ,
     {
         header: "وضعیت نام‌نویسی",
         dataIndex: "enrollmentStatusText",
+        filter: {
+            type: 'list',
+            store: Ahura.store.TimeStage
+        },
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            if (0 == record.get('enrollmentStatus'))
-                return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
-            if (-1 == record.get('enrollmentStatus'))
-                return  '<span style="font-weight:bold;color:blue;">' + value + '</span>';
-            if (1 == record.get('enrollmentStatus'))
+            if ('c' == record.get('enrollmentStatus'))
+                return  '<span style="color:red;">' + value + '</span>';
+            if ('b' == record.get('enrollmentStatus'))
+                return  '<span style="color:blue;">' + value + '</span>';
+            if ('a' == record.get('enrollmentStatus'))
                 return  '<span style="color:green;">' + value + '</span>';
-            return value;
-
+            return 'نامشخص';
         }
     }
     ,
@@ -78,24 +97,25 @@ var columns = [
         header: "وضعیت اجرا",
         dataIndex: "executionStatusText",
         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            if (0 == record.get('executionStatus'))
-                return  '<span style="font-weight:bold;color:red;">' + value + '</span>';
-            if (-1 == record.get('executionStatus'))
-                return  '<span style="font-weight:bold;color:blue;">' + value + '</span>';
-            if (1 == record.get('executionStatus'))
+            if ('c' == record.get('executionStatus'))
+                return  '<span style="color:red;">' + value + '</span>';
+            if ('b' == record.get('executionStatus'))
+                return  '<span style="color:blue;">' + value + '</span>';
+            if ('a' == record.get('executionStatus'))
                 return  '<span style="color:green;">' + value + '</span>';
-            return value;
-
+            return 'نامشخص';
         }
     },
     {
-        header: "شمار نام‌نوشته‌گان",
+        header: "نام‌نوشته‌گان",
+        filter: {type: 'numeric'},
         dataIndex: "enrollerCount"
     }
     ,
     {
         header: "شمار نام‌نوشتگاه قطعی",
         hidden: true,
+        filter: {type: 'numeric'},
         dataIndex: "confirmedCount"
     }
 
@@ -104,13 +124,13 @@ Ext.define("Mehr.view.program.Grid", {
     extend: "Ahura.grid.Base",
     xtype: "programsGrid",
     columns: columns,
+
     initComponent: function () {
         this.store = 'Program';
         this.callParent(arguments);
         this.down('pagingtoolbar').bindStore(this.store);
     }
 });
-
 Ext.define("Mehr.view.program.List", {
     extend: "Ahura.window.Grid",
     alias: "widget.programs",

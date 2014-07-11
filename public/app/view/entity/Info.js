@@ -25,10 +25,10 @@ Ext.define('Mehr.view.entity.Info', {
                 Ext.create('Mehr.view.entity.MemberList',{info: this.up('window').info});
             }
         },
-        {
-            text: 'مخاطبان',
-            icon: icon('users')
-        },
+//        {
+//            text: 'مخاطبان',
+//            icon: icon('users')
+//        },
         {text: 'برنامه‌ها',
             icon: icon('microphone')},
         {

@@ -1,6 +1,10 @@
 'use strict';
 app.Post = Backbone.Model.extend({
     urlRoot: 'api/post'
+//    urlRoot: fucntion (){
+////       if(this.)
+//    }
+
 });
 
     app.Posts = Backbone.Collection.extend({

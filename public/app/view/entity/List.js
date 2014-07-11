@@ -70,18 +70,7 @@ Ext.define("Mehr.view.entity.Grid", {
     columns: entityColumns,
     features: [
         {
-            ftype: 'filters',
-            // encode and local configuration options defined previously for easier reuse
-//            local: local,   // defaults to false (remote filtering)
-
-            // Filters are most naturally placed in the column definition, but can also be
-            // added here.
-            filters: [
-//                {
-//                    type: 'boolean',
-//                    dataIndex: 'visible'
-//                }
-            ]
+            ftype: 'filters'
         }
     ],
     initComponent: function () {

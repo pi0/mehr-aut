@@ -1,5 +1,5 @@
 <?php
-require_once '../vendor/jdf.php';
+//require_once '../vendor/jdf.php';
 require_once '../app/config/services.php';
 /**
  * Created by PhpStorm.
@@ -10,12 +10,13 @@ require_once '../app/config/services.php';
 
 function extJson($success = true, array $data = null, $errors = [])
 {
-    $extError=[];
+    $extError = [];
+//    var_dump($errors);
     foreach ($errors as $e) {
-        $extError[$e->getField()]=$e->getMessage();
+        $extError[$e->getField()] = $e->getMessage();
     }
 
-    return ['success' => $success, 'data' => $data, 'errors' => $extError,''];
+    return ['success' => $success, 'data' => $data, 'errors' => $extError, ''];
 }
 
 function toJsArray(array $arr)
@@ -50,9 +51,9 @@ function jalaliToIso($time)
 
 function isoToJalali($time = null)
 {
-    $time=new DateTime($time);
+    $time = new DateTime($time);
     $formatter = IntlDateFormatter::create('fa_IR@', IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL, 'Asia/Tokyo',null,'yy-MMMMM-dd');
+        IntlDateFormatter::FULL, 'Asia/Tokyo', null, 'yy-MMMMM-dd');
 
 //    var_dump($formatter->format(0));
 //    var_dump($formatter->getErrorMessage());
@@ -123,11 +124,25 @@ function paginator($query, $params, $type = null)
     return ['data' => $data->toArray(), 'total' => $total];
 }
 
-echo isoToJalali('1393/3/15');
-//echo jalaliToIso('1393/3/15');
-
-function jsonResponse($response,$type='application/json')
+function jsonResponse($response, $type = 'application/json')
 {
-    header('Content-Type: '.$type);
+    header('Content-Type: ' . $type);
     echo json_encode($response);
+//    echo json_last_error_msg();
 }
+
+function ellipsis($text, $max = 500, $append = '…' )
+{
+//    if (strlen($text) <= $max) return $text;
+//    $str = explode("\n", wordwrap($text, $max));
+//    return $str = $str[0] . '...';
+    if (strlen($text) <= $max)
+        return $text;
+//    $out = mb_substr($text, 0, $max);
+//    if (strpos($text, ' ') === FALSE) return $out . $append;
+//    return preg_replace('/\w+$/', '', $out) . $append;
+    return mb_substr($text,0,$max) . $append;
+}
+
+//echo ellipsis('سیشبشسی بشسیم بسشکیب سیکب ', 10);
+

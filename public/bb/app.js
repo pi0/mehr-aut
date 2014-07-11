@@ -1,3 +1,5 @@
+var Mehr = Mehr || {};
+
 _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
 _.extend(Backbone.Validation.messages, {
     required: 'درج {0} الزامی است.',
@@ -50,7 +52,8 @@ $(function () {
         if (typeof xhr.responseJSON == 'object' && xhr.status == 422) {
         }
         else if (typeof xhr.responseJSON == 'string' && xhr.status == 401) {
-            location.href = (xhr.responseJSON);
+
+            Window.location.href = (xhr.responseJSON);
         }
         else if (typeof xhr.responseJSON == 'object' && xhr.status == 423) {
             notif({
@@ -94,6 +97,10 @@ $(function () {
 
     app.layout = new app.Layout;
     Backbone.history.start();
-    app.layout.topbar.show(new app.TopbarView());
+    if (Mehr.user.id) {
+        app.layout.topbar.show(new app.TopbarView({model: new app.Auth(Mehr.user)}));
+    } else {
+        app.layout.topbar.show(new app.TopbarView());
+    }
     app.start();
 });

@@ -20,8 +20,6 @@ app.MainRouter = Backbone.Router.extend({
             app.layout.content.show(new app.ProgramView({model: model}));
         }
         });
-
-
     },
     'login': function (id) {
         app.layout.content.show(new app.LoginView);

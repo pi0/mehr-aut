@@ -13,9 +13,6 @@
     <!--[if lt IE 9]>
     <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
     <![endif]-->
-
-
-    <link rel="stylesheet" href="vendor/vendor.css"/>
     <!--[if IE 7]>
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome-ie7.min.css">
     <![endif]-->

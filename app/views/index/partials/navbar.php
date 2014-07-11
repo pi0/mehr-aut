@@ -21,14 +21,12 @@
                         سامانه مدریت
                     </a>
                 </li>
-<li>|</li>
                 <li>
                     <a href="#account/password" title="">
                         <i class="fa fa-key"></i>
 تغییر گذرواژه
                     </a>
                 </li>
-<li>|</li>
                 <li>
                     <a href="/user/logout" title="">
                         <i class="fa fa-sign-out"></i>

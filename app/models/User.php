@@ -17,3 +17,5 @@ class User extends Phalcon\Mvc\Model
 
 //$u=new User;
 //var_dump($u->findFirst()->toArray());;
+
+//var_dump($u->getModelsMetaData()->getAttributes($u));

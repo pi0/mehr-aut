@@ -252,10 +252,7 @@ Ext.define('Mehr.view.user.Edit',
                             items: [
                                 {
                                     fieldLabel: 'نام کاربری',
-                                    name: 'username',
-                                    allowBlank: false
-//                                    vtype:'alphanumMask'
-
+                                    name: 'username'
                                 }
                                 ,
                                 {
@@ -343,15 +340,6 @@ Ext.define('Mehr.view.user.Edit',
                                     name:'entityAdmin[]'
                                 }
                             ]
-                        },
-                        {
-                            title: 'عضویت‌ها'
-                        },
-                        {
-                            title: 'شوراها'
-                        },
-                        {
-                            title: 'برنامه‌ها'
                         }
 
                     ]

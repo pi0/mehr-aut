@@ -13,7 +13,7 @@ class CouncilApi extends Phalcon\DI\Injectable
             if (!isset($params->entityId)) {
                 return ['success' => 'false', 'errors' => ['Incomplete Request']];
             }
-            $data =  $this->db->fetchAll("select name,entityId,userId,council.id as id,role,firstName,lastName from council left join councilmember on council.id=councilId left join user on userId=user.id and role='head' where  entityId=:entityId order by startDate desc", Phalcon\Db::FETCH_ASSOC, ['entityId' => $params->entityId]);
+            $data =  $this->db->fetchAll("select * from councillist where  entityId=:entityId   ", Phalcon\Db::FETCH_ASSOC, ['entityId' => $params->entityId]);
             $total = $this->db->fetchAll("select count(*) from Council  where entityId=:entityId", Phalcon\Db::FETCH_NUM, ['entityId' => $params->entityId]);
             return (['data' => $data, 'total' => $total[0][0]]);
         }

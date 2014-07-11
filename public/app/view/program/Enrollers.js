@@ -54,7 +54,7 @@ var tbar = [
             var status = this.up().down('[name=status]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.info.get('id'), id: id, status: status});
+                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.up('window').info.get('id'), id: id, status: status});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({

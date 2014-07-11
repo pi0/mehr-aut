@@ -59,7 +59,12 @@
         </div>
         <div class="body">
             <div class="name">{{name}}</div>
-            <p class="details">{{details}}</p>
+            {{#if image}}
+            <img class="poster" src="assets/program-img/{{image}}.jpg" alt=""/>
+            {{/if}}
+            <p class="details">
+                {{details}}
+            </p>
 
             <div class="buttons">
                 <a class="button" href="#program/{{id}}">مشاهده جزئیات</a>
@@ -73,12 +78,12 @@
             <form>
                 <div class="filter-main-entity">
                     <span>نمایش: </span>
-                    <input type="radio" value="programs" checked name="postType" id="program"/>
-                    <label for="programs">برنامه‌ها</label>
-                    <input type="radio" value="memberships" name="postType" id="membership"/>
-                    <label for="memberships">عضویت‌ها</label>
-                    <input type="radio" value="elections" name="postType" id="election"/>
-                    <label for="elections">انتخابات‌ها</label>
+                    <input type="radio" value="program" checked name="postType" id="program"/>
+                    <label for="program">برنامه‌ها</label>
+                    <input type="radio" value="membership" name="postType" id="membership"/>
+                    <label for="membership">عضویت‌ها</label>
+                    <input type="radio" value="election" name="postType" id="election"/>
+                    <label for="election">انتخابات‌ها</label>
                 </div>
                 <div class="post-filter-box">
                     <div class="filter-options">
@@ -89,6 +94,7 @@
                     <div class="filter-options">
                         <label for="">نوع:</label>
                         <select name="type" id="">
+                            <option checked value="">همه</option>
                             {{#store.ProgramTypes}}
                             <option value="{{this.[0]}}">{{[1]}}</option>
                             {{/store.ProgramTypes}}
@@ -97,6 +103,7 @@
                     <div class="filter-options">
                         <label for="">موضوع‌:</label>
                         <select name="subject" id="">
+                            <option checked value="">همه</option>
                             {{#store.ProgramSubjects}}
                             <option value="{{this.[0]}}">{{[1]}}</option>
                             {{/store.ProgramSubjects}}
@@ -114,7 +121,7 @@
                         </div>
                     </div>
 
-                </dvi>
+                    </dvi>
             </form>
         </div>
         <div class="post-models"></div>
@@ -124,6 +131,14 @@
     <div class="post-container program-container component">
         <div class="header">برنامه</div>
 
+        <div class="body">
+            {{#if image}}
+            <div class="poster">
+                <a data-lightbox data-title="{{name}}" href="assets/program-img/{{image}}.jpg">
+                    <img class="poster" src="assets/program-img/{{image}}.jpg" alt=""/>
+                </a>
+            </div>
+            {{/if}}
         <div class="info float-far">
             <table>
                 <caption>کلیات</caption>
@@ -149,7 +164,8 @@
                 </tr>
             </table>
         </div>
-        <div class="body">
+
+
             <div class="name">{{name}}</div>
             <p class="details">{{details}}</p>
 

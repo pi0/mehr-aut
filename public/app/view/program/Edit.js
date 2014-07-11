@@ -1,6 +1,6 @@
 Ext.define("Mehr.view.program.Edit", {
     extend: "Ahura.window.Base",
-    requires: ["Ahura.form.combo.User",'Ahura.form.field.FaEditor','Ahura.form.field.Integer','Ahura.form.combo.Entity','Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term',"Ahura.form.combo.ProgramType","Ahura.form.combo.ProgramLevel"],
+    requires: ["Ahura.form.combo.User", 'Ahura.form.field.FaEditor', 'Ahura.form.field.Integer', 'Ahura.form.combo.Entity', 'Ahura.form.combo.ProgramSubject', 'Mehr.view.audience.Panel', 'Ahura.form.combo.Term', "Ahura.form.combo.ProgramType", "Ahura.form.combo.ProgramLevel"],
     title: 'ویرایش برنامه',
     width: 800,
     items: {
@@ -41,25 +41,50 @@ Ext.define("Mehr.view.program.Edit", {
 //                                xtype: 'program-level-combo'
 //                            },
                             {
+                                xtype: 'fieldcontainer',
+                                layout: 'hbox',
                                 fieldLabel: 'تاریخ آغاز برنامه',
-                                emptyText: "",
-                                name: 'executionStartDate',
-                                vtype: 'daterange',
-                                endDateField: 'executionEndDate',
-                                xtype: 'jalali'
+                                items: [
+                                    {
+                                        xtype: 'timefield',
+                                        name: 'executionStartTime',
+                                        format: 'H:i',
+                                        width: 75
+                                    },
+                                    {
+                                        xtype: 'jalali',
+                                        name: 'executionStartDate',
+                                        vtype: 'daterange',
+                                        endDateField: 'executionEndDate',
+                                        flex: 1
+                                    }
+                                ]
                             },
                             {
+                                xtype: 'fieldcontainer',
+                                layout: 'hbox',
                                 fieldLabel: 'تاریخ پایان برنامه',
-                                emptyText: "",
-                                name: 'executionEndDate',
-                                xtype: 'jalali',
-                                vtype: 'daterange',
-                                startDateField: 'executionStartDate'
+                                items: [
+                                    {
+                                        xtype: 'timefield',
+                                        name: 'executionEndTime',
+                                        format: 'H:i',
+                                        width: 75
+                                    },
+                                    {
+                                        xtype: 'jalali',
+                                        name: 'executionEndDate',
+                                        vtype: 'daterange',
+                                        startDateField: 'executionStartDate',
+                                        flex: 1
+                                    }
+                                ]
                             },
                             {
                                 fieldLabel: 'متولی',
                                 emptyText: "",
                                 name: 'entityId',
+                                allowBlank: false,
                                 xtype: 'entity-combo'
                             },
                             {
@@ -92,20 +117,45 @@ Ext.define("Mehr.view.program.Edit", {
                                 xtype: 'integer'
                             },
                             {
+                                xtype: 'fieldcontainer',
+                                layout: 'hbox',
                                 fieldLabel: 'زمان آغاز نام‌نویسی',
-                                emptyText: "",
-                                name: 'enrollmentStartDate',
-                                xtype: 'jalali',
-                                vtype: 'daterange',
-                                endDateField: 'enrollmentEndDate' // id of the start date field
+                                items: [
+                                    {
+                                        xtype: 'timefield',
+                                        name: 'enrollmentStartTime',
+                                        format: 'H:i',
+                                        width: 75
+                                    },
+                                    {
+                                        xtype: 'jalali',
+                                        name: 'enrollmentStartDate',
+                                        flex: 1,
+                                        emptyText: "",
+                                        vtype: 'daterange',
+                                        endDateField: 'enrollmentEndDate' // id of the start date field
+                                    }
+                                ]
                             },
                             {
+                                xtype: 'fieldcontainer',
+                                layout: 'hbox',
                                 fieldLabel: 'زمان پایان نام‌نویسی',
-                                emptyText: "",
-                                name: 'enrollmentEndDate',
-                                xtype: 'jalali',
-                                vtype: 'daterange',
-                                startDateField: 'enrollmentStartDate' // id of the start date field
+                                items: [
+                                    {
+                                        xtype: 'timefield',
+                                        name: 'enrollmentStartTime',
+                                        format: 'H:i',
+                                        width: 75
+                                    },
+                                    {
+                                        xtype: 'jalali',
+                                        name: 'enrollmentEndDate',
+                                        flex: 1,
+                                        vtype: 'daterange',
+                                        startDateField: 'enrollmentStartDate'
+                                    }
+                                ]
                             }
 //                            ,{
 //                                fieldLabel: 'شیوه نام‌نویسی',

@@ -42,7 +42,7 @@ Ext.define('Mehr.view.council.List', {
                 {
                     header: 'دبیر',
                     flex: 1,
-                    dataIndex: 'secretary'
+                    dataIndex: 'secretaryFullName'
                 }
             ]
         }
