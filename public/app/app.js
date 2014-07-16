@@ -17,7 +17,7 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-        Ext.create('Mehr.view.user.List');
+        Ext.create('Mehr.view.program.List');
 //        var win = Ext.create('Mehr.view.user.Role');
 //        var win = Ext.create("Mehr.view.program.Edit", {
 //            info: {

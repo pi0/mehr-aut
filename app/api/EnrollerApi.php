@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 require_once __DIR__ . '/../config/services.php';
 
-class EnrollerApi extends Phalcon\DI\Injectable
+class EnrollerApi extends BaseApi
 {
     function read($params)
     {

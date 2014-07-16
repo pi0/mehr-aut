@@ -23,7 +23,7 @@ Ext.define('Mehr.view.audience.Panel', {
                     fieldLabel: 'نوع کاربر',
                     allowBlank: false,
                     xtype: 'local-combo',
-                    name: 'audience[userType]',
+                        name: 'audience[userType]',
                     multiSelect: true,
                     typeAhead: false,
                     value: 's',

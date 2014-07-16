@@ -1,4 +1,8 @@
 Ext.require('Mehr.model.CouncilMember');
+var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+    clicksToMoveEditor: 1,
+    autoCancel: false
+});
 var termColumns = [
     {
         header: '# دانشجویی',
@@ -45,10 +49,11 @@ Ext.define('Mehr.view.entity.TermCouncilGrid', {
     emptyText:'هیچ عضوی تعریف نشده است.',
     xtype: 'council-member-grid',
     plugins: [
-        {
-            ptype:'rowediting',
-            clicksToEdit: 1
-        }
+        rowEditing
+//        {
+//            ptype:'rowediting',
+//            clicksToEdit: 1
+//        }
     ],
     columns: termColumns,
     tbar: [

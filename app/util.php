@@ -1,5 +1,5 @@
 <?php
-//require_once '../vendor/jdf.php';
+require_once '../vendor/IntlDateTime/IntlDateTime.php';
 require_once '../app/config/services.php';
 /**
  * Created by PhpStorm.
@@ -11,9 +11,14 @@ require_once '../app/config/services.php';
 function extJson($success = true, array $data = null, $errors = [])
 {
     $extError = [];
-//    var_dump($errors);
-    foreach ($errors as $e) {
-        $extError[$e->getField()] = $e->getMessage();
+//    var_dumpf($errors);die();
+
+    foreach ($errors as $k => $e) {
+        if ($e instanceof Phalcon\Mvc\Model\MessageInterface) {
+            $extError[$e->getField()] = $e->getMessage();
+        } else {
+            $extError[$k] = $e;
+        }
     }
 
     return ['success' => $success, 'data' => $data, 'errors' => $extError, ''];
@@ -29,44 +34,25 @@ function toJsArray(array $arr)
     return '[' . implode(',', $result) . ']';
 }
 
+
 function jalaliToIso($time)
 {
-    $time = '2003-1-1';
-    $formatter = IntlDateFormatter::create('ir_FA@calendar=Persian', IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL, 'Asia/Tokyo', IntlDateFormatter::TRADITIONAL, 'y/m/d');
-
-//    echo "before: ", $formatter->format($time), "\n";
-
-    /* note that the calendar's locale is not used! */
-    $formatter->setCalendar(IntlCalendar::createInstance(
-        "Asia/Tehran", "en_UST@calendar=gregorian"));
-
-    return $formatter->format($time);
-//    $d = preg_split('#[^\d]+#', $date);
-//    print_r($d);
-//    $dd = jalali_to_gregorian($d[0], $d[1], $d[2]);
-//    print_r($dd);
-//    return $dd[0] . '-' . ($dd[1]) . '-' . ($dd[2]) . ' ' . @$d[3] . ' ' . @$d[4];
+    $date = new IntlDateTime($time, 'Asia/Tehran', 'persian');
+    return $date->classicFormat('Y-m-d H:i:s');
 }
 
-function isoToJalali($time = null)
+function isoToJalali($time = null, $split = false)
 {
-    $time = new DateTime($time);
-    $formatter = IntlDateFormatter::create('fa_IR@', IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL, 'Asia/Tokyo', null, 'yy-MMMMM-dd');
-
-//    var_dump($formatter->format(0));
-//    var_dump($formatter->getErrorMessage());
-
-    /* note that the calendar's locale is not used! */
-    $formatter->setCalendar(IntlCalendar::createInstance(
-        "Asia/Tehran", "en_US@calendar=Persian"));
-
-    return $formatter->format($time);
-//    $date = new DateTime($date);
-//    $d = gregorian_to_jalali($date->format('Y'), $date->format('m'), $date->format('d'));
-//    return $d[0] . '/' . str_pad($d[1], 2, '0', STR_PAD_LEFT) . '/' . str_pad($d[2], 2, '0', STR_PAD_LEFT) . ' ' . $date->format('H' . ':' . $date->format('i'));
+    $date = new IntlDateTime($time, 'Asia/Tehran');
+    $date->setCalendar('persian');
+    if ($split) return ['time' => $date->format('H:mm:ss'), 'date' => $date->format('YYYY-MM-dd')];
+    return $date->format('YYYY-MM-dd H:mm:ss');
 }
+
+//var_dump(
+//isoToJalali('2014-07-15 10:11:00',true)
+//);
+
 
 function fromDB($data)
 {
@@ -79,19 +65,47 @@ function fromDB($data)
     return $data;
 }
 
+function formPostProcess(&$data)
+{
+    foreach ($data as $k => $v) {
+        if ($v && preg_match('#(.+)Date$#u', $k, $m)) {
+            $date = new IntlDateTime($v, 'Asia/Tehran');
+            $date->setCalendar('persian');
+            $data[$k] = $date->format('y/MM/dd');
+            $data[$m[1] . 'Time'] = $date->format('HH:mm');
+        }
+    }
+}
+
 function formPreProcess(&$data)
 {
     foreach ($data as $k => $v) {
         if ($v === '') {
             $data[$k] = null;
         }
-        if ($v && preg_match('#Date$#u', $k)) {
-//            $data[$k] = jalaliToIso($v);
-            //TODO convert time from Solar to Gregorian
-            $data[$k] = null;
+        if ($v && preg_match('#(.+)Date$#u', $k, $m)) {
+            $date = new IntlDateTime($v, 'Asia/Tehran', 'persian');
+            $date->setCalendar('gregorian');
+            $data[$k] = $date->format('y-MM-dd');
+            $data[$k] = $date->classicFormat('Y-m-d');
+            if (isset($data[$m[1] . 'Time'])) {
+                $data[$k] = $data[$k] . ' ' . $data[$m[1] . 'Time'];
+                unset($data[$m[1] . 'Time']);
+            }
         }
     }
 }
+
+
+//$a = [
+//    'xDate' => '1380-01-02',//2001-03-22
+//    'xTime' => '10:00',
+//];
+//formPreProcess($a);
+////formPostProcess($a);
+//print_r($a);
+
+//echo jalaliToIso(isoToJalali('2010-01-02 10:00'));
 
 function extErrors($msgs)
 {
@@ -131,7 +145,7 @@ function jsonResponse($response, $type = 'application/json')
 //    echo json_last_error_msg();
 }
 
-function ellipsis($text, $max = 500, $append = '…' )
+function ellipsis($text, $max = 500, $append = '…')
 {
 //    if (strlen($text) <= $max) return $text;
 //    $str = explode("\n", wordwrap($text, $max));
@@ -141,7 +155,7 @@ function ellipsis($text, $max = 500, $append = '…' )
 //    $out = mb_substr($text, 0, $max);
 //    if (strpos($text, ' ') === FALSE) return $out . $append;
 //    return preg_replace('/\w+$/', '', $out) . $append;
-    return mb_substr($text,0,$max) . $append;
+    return mb_substr($text, 0, $max) . $append;
 }
 
 //echo ellipsis('سیشبشسی بشسیم بسشکیب سیکب ', 10);

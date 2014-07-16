@@ -1,7 +1,6 @@
 var columns = [
     {
         xtype: 'actioncolumn',
-        alt: "54",
         width: 50,
         items: [
             {
@@ -131,11 +130,20 @@ Ext.define("Mehr.view.program.Grid", {
         this.down('pagingtoolbar').bindStore(this.store);
     }
 });
+
 Ext.define("Mehr.view.program.List", {
     extend: "Ahura.window.Grid",
     alias: "widget.programs",
-    title: 'برنامه‌ها',
+    info: [],
     items: [
         {xtype: 'programsGrid'}
-    ]
+    ],
+    initComponent: function () {
+        this.title = this.info.title || 'برنامه‌ها';
+            this.callParent(arguments);
+        var grid = this.down('grid');
+//        this.down('pagingtoolbar').bindStore(grid.getStore());
+        grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+        grid.getStore().load();
+    }
 });

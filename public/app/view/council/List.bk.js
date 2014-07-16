@@ -1,10 +1,4 @@
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.ux.grid.FiltersFeature',
-    'Ext.toolbar.Paging'
-]);
-var entityColumns = [
+var columns = [
     {
         xtype: 'actioncolumn',
         width: 45,
@@ -44,30 +38,35 @@ var entityColumns = [
         dataIndex: 'secretaryFullName'
     }
 ];
-Ext.define("Mehr.view.entity.Grid", {
-    extend: "Ahura.grid.Base",
-    xtype: "entityGrid",
-    columns: entityColumns,
-    initComponent: function () {
-        this.store = 'Council';
-        this.callParent(arguments);
-        this.down('pagingtoolbar').bindStore(this.store);
+Ext.define('Mehr.view.council.ListGrid', {
+        xtype: 'councilListGrid',
+        columns: columns,
+        store: 'Council'
+//            initComponent: function () {
+////                this.store = 'Council';
+//                this.callParent(arguments);
+//            }
+//
     }
-});
-
-Ext.define("Mehr.view.council.List", {
-    extend: "Ahura.window.Grid",
-    info: [],
-    items: [
-        {xtype: 'entityGrid'}
-    ],
+);
+Ext.define('Mehr.view.council.List', {
+    extend: 'Ahura.window.Grid',
+    height: 300,
+    width: 400,
+    items: {xtype:'councilListGrid'},
     initComponent: function () {
-        this.title = this.info.title || 'شوراها';
+        this.title = (this.info.for == 'user') ? this.info.title : (this.info.row) ? 'شورای مرکزی: ' + this.info.row.get('name') : "شورای مرکزی";
         this.callParent(arguments);
-        var grid = this.down('grid');
-        var type = (this.info.for == 'user') ? 'userId' : 'entityId';
-        grid.getStore().getProxy().setExtraParam(type, (this.info.row) ? this.info.row.getId() : this.tid);
-        grid.getStore().load();
-    }
 
+//        var grid = this.down('grid');
+//        this.down('pagingtoolbar').bindStore(grid.getStore());
+//        var grid = this.down('grid');
+////        if (this.info.for == 'user') {
+////            grid.getStore().getProxy().setExtraParam('userId', this.info.row.getId());
+////        }
+//// else {
+////            grid.getStore().getProxy().setExtraParam('entityId', (this.info) ? this.info.getId() : this.tid);
+////        }
+////        grid.getStore().load();
+    }
 });

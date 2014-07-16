@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../config/services.php';
 
-class EntityApi extends Phalcon\DI\Injectable
+class EntityApi extends BaseApi
 {
     function __construct()
     {
@@ -14,10 +14,10 @@ class EntityApi extends Phalcon\DI\Injectable
 
         $db = $this->getDI()['db'];
 
-        $colleges = $db->query('select * from college');
+        $colleges = $db->query('SELECT * FROM college');
         $colleges = $colleges->fetchAll();
 
-        $departments = $db->query('select * from department');
+        $departments = $db->query('SELECT * FROM department');
         $departments = $departments->fetchAll();
 
         $data = [];
@@ -35,17 +35,22 @@ class EntityApi extends Phalcon\DI\Injectable
 
     function read($params)
     {
-        $id = @$params->id;
+        $params = (array)$params;
+        $id = @$params['id'];
         if ($id) {
             $p = new Entity();
             $data = $p->findFirst("id=$id")->toArray();
+            formPostProcess($data);
             $data['audience'] = unserialize($data['audience']);
             return (['data' => $data, 'success' => true]);
         } else {
-            $p = $this->di->getDb();
-            $data = $this->db->fetchAll('select * from entityList', Phalcon\Db::FETCH_ASSOC);
-            return (['data' => $data]);
-//            return paginator($p->query(),$params);
+            $whitList = [];
+            $query = $this->queryBuilder('EntityList');
+            if (isset($params['userId'])) {
+                $query->join('EntityMember', ' EntityList.id=entityId ')->where('userId=?0', [$params['userId']]);
+            };
+            $response = $this->extFilter($query, $params, $whitList);
+            return ($response);
         }
     }
 
@@ -67,7 +72,10 @@ class EntityApi extends Phalcon\DI\Injectable
 
     function combo($params)
     {
-        $data = $this->db->fetchAll("select id ,concat(typeText,' ',name) as text from entitylist where fullName like :query limit 20", Phalcon\Db::FETCH_ASSOC, ['query' => '%' . $params->query . '%']);
+        if (!isset($params->query)) {
+            $params->query = '';
+        }
+        $data = $this->db->fetchAll("SELECT id ,concat(typeText,' ',name) AS text FROM entitylist WHERE fullName LIKE :query LIMIT 20", Phalcon\Db::FETCH_ASSOC, ['query' => '%' . $params->query . '%']);
         return ($data);
     }
 }

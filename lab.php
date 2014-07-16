@@ -1,30 +1,11 @@
 <?php
-    $acl = new Phalcon\Acl\Adapter\Memory();
+require_once 'vendor/IntlDateTime/IntlDateTime.php';
+$date = new IntlDateTime('1380-01-02', 'Asia/Tehran', 'persian');
+$date->setCalendar('gregorian');
+echo  $date->format('y-MM-dd'); // it should be 2001-03-22 but it returns 2001-03-21$date = new IntlDateTime('1380-01-02', 'Asia/Tehran', 'persian');
 
-//    $acl->setDefaultAction(Phalcon\Acl::ALLOW);
-            $acl->setDefaultAction(Phalcon\Acl::DENY);
+echo PHP_EOL;
 
-//Register roles
-    $acl->addRole(new Phalcon\Acl\Role('guest'));
-    $acl->addRole(new Phalcon\Acl\Role('member'), 'guest');
-    $acl->addRole(new Phalcon\Acl\Role('admin'), 'member');
-
-    $acl->addResource(new Phalcon\Acl\Resource('user'), array('index', 'register', 'start', 'end'));
-    $acl->addResource(new Phalcon\Acl\Resource('index'), array('index', 'js'));
-    $acl->addResource(new Phalcon\Acl\Resource('mehr'), array('js'));
-//            $acl->addResource(new Phalcon\Acl\Resource('session'), array('index', 'register', 'start', 'end'));
-
-    $acl->allow('guest', 'index', array('index', 'js'));
-    $acl->allow('guest', '*', '*');
-    $acl->allow('guest', 'user', array('index', 'register', 'start', 'end'));
-
-
-try {
-} catch (\Phalcon\Exception $e) {
-      var_dump($e->getMessage());
-      var_dump($e->getTrace());
-}
-
-
-//echo $acl->isAllowed('guest','sddd','d');
-var_dump([]==null);
+$date = new IntlDateTime('1393-04-24', 'Asia/Tehran', 'persian');
+$date->setCalendar('gregorian');
+echo  $date->format('y-MM-dd'); // it works.

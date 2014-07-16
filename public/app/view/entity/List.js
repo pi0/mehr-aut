@@ -4,7 +4,6 @@ Ext.require([
     'Ext.ux.grid.FiltersFeature',
     'Ext.toolbar.Paging'
 ]);
-
 var entityColumns = [
     {
         xtype: 'actioncolumn',
@@ -32,10 +31,10 @@ var entityColumns = [
                 }
             }
         ]
-
     },
     {
         header: "نوع",
+        flex:.7,
         dataIndex: "typeText"
 //        filter:{
 //            type:'list',
@@ -68,11 +67,6 @@ Ext.define("Mehr.view.entity.Grid", {
     extend: "Ahura.grid.Base",
     xtype: "entityGrid",
     columns: entityColumns,
-    features: [
-        {
-            ftype: 'filters'
-        }
-    ],
     initComponent: function () {
         this.store = 'Entity';
         this.callParent(arguments);
@@ -82,8 +76,16 @@ Ext.define("Mehr.view.entity.Grid", {
 
 Ext.define("Mehr.view.entity.List", {
     extend: "Ahura.window.Grid",
-    title: 'نهاد‌ها',
+    info: [],
     items: [
         {xtype: 'entityGrid'}
-    ]
+    ],
+    initComponent: function () {
+        this.title = this.info.title || 'نهاد‌ها';
+        this.callParent(arguments);
+        var grid = this.down('grid');
+        grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+        grid.getStore().load();
+    }
+
 });

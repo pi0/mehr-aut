@@ -141,16 +141,46 @@ Ext.define("Ahura.grid.User", {
             menu: [
                 {
                     text: 'برنامه‌ها',
-                    handler: function(){
-                     Ext.create()
+                    handler: function () {
+                        var row = this.up().up().model;
+                        var grid = this.up().up().grid;
+                        var programs = Ext.create('Mehr.view.program.List', {
+                            info: {
+                                title: 'برنامه‌های: ' + Ahura.window.Base.userWindowTitle(row),
+                                row: row
+                            }
+                        });
                     }
 
                 },
                 {
-                    text: 'عضویت‌ها'
+                    text: 'عضویت‌ها',
+                    handler: function () {
+                        var row = this.up().up().model;
+                        var grid = this.up().up().grid;
+                        var programs = Ext.create('Mehr.view.entity.List', {
+                            info: {
+                                title: 'عضویت‌های: ' + Ahura.window.Base.userWindowTitle(row),
+                                row: row
+                            }
+                        });
+                    }
+
                 },
                 {
-                    text: 'شوراها'
+                    text: 'شوراها',
+                    handler: function () {
+                        var row = this.up().up().model;
+                        var grid = this.up().up().grid;
+                        var programs = Ext.create('Mehr.view.council.List', {
+                            info: {
+                                title: 'عضویت‌ها در شورای مرکزی: ' + Ahura.window.Base.userWindowTitle(row),
+                                row: row,
+                                for: 'user'
+                            }
+                        });
+                    }
+
                 }
             ]
         }

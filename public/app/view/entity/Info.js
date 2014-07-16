@@ -21,8 +21,8 @@ Ext.define('Mehr.view.entity.Info', {
         {
             text: 'اعضاء',
             icon: icon('member'),
-            handler:function(){
-                Ext.create('Mehr.view.entity.MemberList',{info: this.up('window').info});
+            handler: function () {
+                Ext.create('Mehr.view.entity.MemberList', {info: this.up('window').info});
             }
         },
 //        {
@@ -35,7 +35,11 @@ Ext.define('Mehr.view.entity.Info', {
             xtype: 'splitbutton',
             'text': 'دوره‌ها',
             handler: function () {
-                Ext.create('Mehr.view.council.List', {info: this.up('window').info})
+                Ext.create('Mehr.view.council.List', {
+                    info: {
+                        row: this.up('window').info,
+                        for: 'entity'
+                    }})
             },
             menu: [
                 {

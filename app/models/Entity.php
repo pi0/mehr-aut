@@ -8,5 +8,6 @@
 //$di->set('db',$db);
 
 class Entity extends Phalcon\Mvc\Model{
-
 }
+
+

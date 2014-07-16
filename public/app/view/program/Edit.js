@@ -7,6 +7,7 @@ Ext.define("Mehr.view.program.Edit", {
         xtype: 'form',
         submitEmptyText: false,
         paramsAsHash: true,
+        jsonSubmit: true,
         api: {
             load: RPC.ProgramApi.read,
             submit: RPC.ProgramApi.create
@@ -82,16 +83,19 @@ Ext.define("Mehr.view.program.Edit", {
                             },
                             {
                                 fieldLabel: 'متولی',
-                                emptyText: "",
                                 name: 'entityId',
                                 allowBlank: false,
                                 xtype: 'entity-combo'
                             },
                             {
                                 fieldLabel: 'مسئول',
-                                emptyText: "",
                                 name: 'manager',
                                 xtype: 'user-combo'
+                            },
+                            {
+                                fieldLabel: 'پستر/تصویر',
+                                name: 'image',
+                                xtype: 'text'
                             }
                         ]
 
@@ -144,16 +148,16 @@ Ext.define("Mehr.view.program.Edit", {
                                 items: [
                                     {
                                         xtype: 'timefield',
-                                        name: 'enrollmentStartTime',
+                                        name: 'enrollmentEndTime',
                                         format: 'H:i',
                                         width: 75
                                     },
                                     {
                                         xtype: 'jalali',
-                                        name: 'enrollmentEndDate',
                                         flex: 1,
                                         vtype: 'daterange',
-                                        startDateField: 'enrollmentStartDate'
+//                                        startDateField: 'enrollmentStartDate'
+                                        name: 'enrollmentEndDate'
                                     }
                                 ]
                             }
