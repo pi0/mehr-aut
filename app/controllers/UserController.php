@@ -2,11 +2,11 @@
 
 class UserController extends ControllerBase
 {
+    public $user = null;
+
     public function initialize()
     {
         $this->view->setTemplateAfter('main');
-        Phalcon\Tag::setTitle('واژه');
-//        Phalcon\Tag::setTitle('| واژه: فرهنگ فارسی به فارسی');
         parent::initialize();
     }
 
@@ -19,9 +19,6 @@ class UserController extends ControllerBase
         if (!$params) {
             $params = $_REQUEST;
         }
-//        var_dump($params);
-//        die();
-//        die($params->sort[0]->property.' '.$params->sort[0]->direction);
         $u = new User();
         if (isset($params->id)) {
             $data = $u->findFirst("id=" . $params->id)->toArray();
@@ -54,14 +51,17 @@ class UserController extends ControllerBase
         $this->view->disable();
         {
             $request = (array)$this->request->getJsonRawBody();
-            $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
-                ['username' => $request['username']]);
-            if (password_verify($request['password'], $data['password'])) {
-                $user = $this->di['db']->fetchOne('select id from user where username=:username', Phalcon\Db::FETCH_ASSOC,
-                    ['username' => $request['username']]);
-                $this->getDI()['session']->set('auth', $user['id']);
+            $data = $this->di['db']->fetchOne(
+                'SELECT id, password,active FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC, ['username' => $request['username']]
+            );
 
-//                $this->getDI()['session']->set('user', $user);
+            if (password_verify($request['password'], $data['password'])) {
+                $user = $this->di['db']->fetchOne('SELECT id FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC,
+                    ['username' => $request['username']]);
+                $userModel = User::findFirst(['username' => $request['username']]);
+                $this->getDI()['session']->set('auth', $user['id']);
+                $this->getDI()['session']->set('user', $userModel);
+                $this->user = $userModel;
                 jsonResponse($user);
             } else {
                 http_response_code(401);
@@ -78,25 +78,26 @@ class UserController extends ControllerBase
 
     function passwordAction()
     {
-        $jr = $this->jr;
+        $user = $this->di['session']['user'];
+        $request = $this->request->getJsonRawBody();
         $this->view->disable();
-        $new = $jr->newPassword;
-        if (!password_verify($jr->password, $this->user->password)) {
+        $new = $request->newPassword;
+        if (!password_verify($request->password, $user->password)) {
             http_response_code(422);
             jsonResponse(['message' => 'گذرواژه فعلی درست نیست.']);
-        } elseif ($jr->newPassword !== $jr->confirmPassword) {
+        } elseif ($request->newPassword !== $request->confirmPassword) {
             http_response_code(422);
             jsonResponse(['message' => 'گذرواژه جدید به تایید آن برابر نیست!']);
-
 //        } elseif (strlen($new) < 6) {
 //            http_response_code(422);
 //            jsonResponse(['message' => 'گذرواژه انتخابی به اندازه کافی قوی نیست!']);
         } else {
-            $this->user->password = password_hash($new, PASSWORD_BCRYPT);
-            $this->user->save();
+            $user->password = password_hash($new, PASSWORD_BCRYPT);
+            $user->save();
             jsonResponse([]);
         }
 //        $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
     }
+
 }
 

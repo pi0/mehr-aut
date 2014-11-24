@@ -1,5 +1,5 @@
 Ext.define("Ahura.form.combo.Term",{
-    xtype:'terms-combo',
+    xtype:'term-combo',
     extend:"Ahura.form.combo.Local",
     name: "term",
     fieldLabel: "ترم",

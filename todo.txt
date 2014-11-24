@@ -5,15 +5,6 @@
 فیلتر کردن
 نقش
 
-فیلدهای برنامه:
-درآمد برنامه
-بودجه هزینه شده
-درآمد محقق شده
-درآمد پیش‌بینی‌شده
-اساتید
-محل برگزاری
-محل برگزای
-
 TODO:
  _ Filter Preview
  _ Program Status
@@ -21,4 +12,4 @@ TODO:
  _ single manager
  _ reserved enrollment
  _ Program Filter
- _
+ _ Display enrollment date in grid

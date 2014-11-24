@@ -13,5 +13,5 @@ Ext.define('Mehr.model.Council', {
             update: 'RPC.CouncilApi.create'
         }
     },
-    fields: ['userId','councilId','role','name']
+    fields: ['userId','councilId','role','name','entityId','entityFullName']
 });

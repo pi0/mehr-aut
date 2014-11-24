@@ -1,3 +1,5 @@
+'use strict';
+
 Ext.Loader.setConfig({
     enabled: true
 });
@@ -17,6 +19,7 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
+//        Ext.create('Mehr.view.user.Edit');
         Ext.create('Mehr.view.program.List');
 //        var win = Ext.create('Mehr.view.user.Role');
 //        var win = Ext.create("Mehr.view.program.Edit", {
@@ -38,15 +41,26 @@ Ext.require([
     'Ext.ux.JalaliDatePlugin',
     'Ext.ux.JalaliDatePlugin-fa_IR',
     'Ext.grid.RowEditor',
+    "Ext.ux.form.SearchField",
+    'Ext.form.*',
+    'Ext.ux.grid.FiltersFeature',
+    'Ext.ux.grid.filter.ListFilter',
     'Ahura.form.field.Integer',
     'Ahura.form.Base',
     'Ahura.form.button.Save',
     'Ahura.form.button.Cancel',
     'Ahura.form.date.Jalali',
-    'Mehr.view.program.List',
-    'Ext.form.*',
-    'Ext.ux.grid.FiltersFeature',
-    'Ext.ux.grid.filter.ListFilter'
+    'Ahura.form.combo.Department',
+    'Ahura.grid.User',
+    'Ahura.form.combo.MaritalStatus',
+    'Ahura.form.combo.Term',
+    'Ahura.form.combo.Degree',
+    'Ahura.form.combo.Religion',
+    'Ahura.form.combo.Course',
+    'Ahura.form.combo.Nationality',
+    'Ahura.form.combo.Department',
+    'Ahura.form.combo.College',
+    'Mehr.view.program.List'
 ]);
 
 Ext.onReady(function () {
@@ -152,7 +166,7 @@ Ahura.button.CancelForm = {
 };
 
 
-$$ = function (q) {
+var $$ = function (q) {
     return Ext.ComponentQuery.query(q)
 }
 

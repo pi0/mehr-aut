@@ -7,17 +7,25 @@ class BaseApi extends Phalcon\DI\Injectable
         return $query = $this->modelsManager->createBuilder()->from($table);
     }
 
-    public function extFilter($query, $params = [], $whitList = [])
+    public function extFilter($query, $params = [], $blackList = [], $extraFilter = [])
     {
         $params = array_merge([
                 'start' => 0,
             ]
-            , $params);
-//        $filters=$params['filters'];
-        $filters = isset($params['filter']) ? json_decode($params['filter'], true) : [];
-        foreach ($filters as $filter) {
-            if (!in_array($filter['field'], $whitList)) {
-                echo 'Invalid: ' . $filter['field'];;
+            , (array)$params);
+
+        if (isset($params['sort'])) {
+            $query->orderBy($params['sort'][0]->property . ' ' . $params['sort'][0]->direction);
+        }
+
+        if (isset($params['filter'])) {
+            $extraFilter = array_merge($extraFilter, json_decode($params['filter'], true));
+        }
+
+
+        foreach ($extraFilter as $filter) {
+            if (!preg_match('#[a-zA-Z]#u', $filter['field']) or in_array($filter['field'], $blackList)) {
+                echo 'Error: Invalid: ' . $filter['field'];;
                 die();
             }
             switch ($filter['type']) {
@@ -62,8 +70,8 @@ class BaseApi extends Phalcon\DI\Injectable
 
         $paginator = new Phalcon\Paginator\Adapter\QueryBuilder(array(
             "builder" => $query,
-            "limit" => ($params['limit'] <= 100) ? $params['limit'] : 100,
-            "page" => $params['page']
+            "limit" => (isset($params['limit']) && $params['limit'] <= 100) ? $params['limit'] : 100,
+            "page" => isset($params['page']) ? $params['page'] : 1
         ));
 
         $page = $paginator->getPaginate();

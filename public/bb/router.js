@@ -6,7 +6,8 @@ app.MainRouter = Backbone.Router.extend({
         'program(/)': 'program',
         'account/password': 'password',
         'login': 'login',
-        'account/membership': 'membership'
+        'account/membership': 'membership',
+        'entity/:id(/*url)': 'entity'
     },
     home: function () {
 
@@ -32,6 +33,9 @@ app.MainRouter = Backbone.Router.extend({
             app.layout.content.show(new app.MembershipView({model: model}));
         }
         });
+    },
+    'entity':function(id,url){
+        app.router.navigate(url);
     }
 
 

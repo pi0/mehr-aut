@@ -10,7 +10,7 @@ var delCol = {
     header: "",
     xtype: 'actioncolumn',
     icon: icon('delete'),
-    tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
+    tooltip: "حدف کاربر از فهرست شرکت‌کننده‌گان",
     width: 22,
     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
         var id = record.getId();

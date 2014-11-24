@@ -10,7 +10,7 @@ var delCol = {
     header: "",
     xtype: 'actioncolumn',
     icon: icon('delete'),
-    tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
+    tooltip: "حدف کاربر از فهرست شرکت‌کننده‌گان",
     width: 22,
     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
         var id = record.getId();
@@ -39,7 +39,7 @@ var tbar = [
         fieldLabel: ''
 
     },
-    'وضعیت نام‌نویسی:',
+    'وضعیت/نقش:',
     {
         xtype: 'combo',
         name: 'role',
@@ -124,7 +124,7 @@ Ext.define("Mehr.view.entity.MemberGrid", {
 ////            header: "",
 ////            xtype: 'actioncolumn',
 ////            icon: icon('delete'),
-////            tooltip: "حدف کاربر از فهرست نام‌نوشته‌گان",
+////            tooltip: "حدف کاربر از فهرست شرکت‌کننده‌گان",
 ////            width: 22,
 ////            handler: function (g, ri, ci) {
 ////                rec = Mehr.store.Member.getAt(ri);

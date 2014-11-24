@@ -1,52 +1,52 @@
-Ext.require("Ext.ux.form.SearchField");
-var columns = [
-    {
-        xtype: 'actioncolumn',
-        alt: "54",
-        width: 20,
-        items: [
-            {
-                icon: icon('userEdit'),
-                tooltip: 'ویرایش کاربر',
-                handler: function (grid, rowIndex, colIndex, item, e, record) {
-                    var id = record.getId();
-                    openUserEditWindow(id);
+(function () {
+    var columns = [
+        {
+            xtype: 'actioncolumn',
+            alt: "54",
+            width: 20,
+            items: [
+                {
+                    icon: icon('userEdit'),
+                    tooltip: 'ویرایش کاربر',
+                    handler: function (grid, rowIndex, colIndex, item, e, record) {
+                        var id = record.getId();
+                        openUserEditWindow(id);
+                    }
                 }
+            ]    },
+        {
+            header: "# دانشجوی",
+            dataIndex: "sid",
+            renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                if ('f' == record.get('sex'))
+                    return  '<span style="color:red;">' + value + '</span>';
+                else if ('m' == record.get('sex'))
+                    return  '<span style="color:blue;">' + value + '</span>';
+                return value;
+
             }
-        ]    },
-    {
-        header: "# دانشجوی",
-        dataIndex: "sid",
-        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-            if ('f' == record.get('sex'))
-                return  '<span style="color:red;">' + value + '</span>';
-            else if ('m' == record.get('sex'))
-                return  '<span style="color:blue;">' + value + '</span>';
-            return value;
 
-        }
+        },
+        {
+            header: "نام",
+            dataIndex: "firstName"
 
-    },
-    {
-        header: "نام",
-        dataIndex: "firstName"
+        },
+        {
 
-    },
-    {
-
-        header: "نام خانوادگی",
-        dataIndex: "lastName",
-        flex: 1
-    },
-    {
-        width: 40,
-        header: "جنسیت",
-        dataIndex: "sex",
-        hidden: true,
-        renderer: function (val) {
-            if (val == 'm')return 'مذکر'; else return 'مونث';
-        }
-    },
+            header: "نام خانوادگی",
+            dataIndex: "lastName",
+            flex: 1
+        },
+        {
+            width: 40,
+            header: "جنسیت",
+            dataIndex: "sex",
+            hidden: true,
+            renderer: function (val) {
+                if (val == 'm')return 'مذکر'; else return 'مونث';
+            }
+        },
 //        {
 //            header:"نقش",
 //            dataIndex:"role_id",
@@ -55,38 +55,40 @@ var columns = [
 //            }
 //        }
 //        ,
-//    {
-//
-//        header: "نقش",
-//        dataIndex: "userTypeText"
-//    },
-    {
+        {
 
-        header: "رشته",
-        flex: 1,
-        dataIndex: "disciplineTitle"
-    },
-    {
+            header: "نوع‌",
+            dataIndex: "typeText"
+        },
+        {
 
-        header: "مقطع",
-        dataIndex: "degreeTitle",
-        width: 150
-    },
-    {
-        header: "دوره",
-        dataIndex: "courseTitle",
-        width: 50
-    }
-];
-Ahura.userColumns = columns;
-var tbar = [
-    {
-        width: 400,
-        fieldLabel: 'جستجو',
-        xtype: 'searchfield',
-        emptyText: 'نام، #دانشجوی، #ملی',
-        store: 'User'
-    }
+            header: "رشته",
+            flex: 1,
+            dataIndex: "disciplineTitle"
+        },
+        {
+
+            header: "مقطع",
+            dataIndex: "degreeTitle",
+            hidden: true,
+            width: 150
+        },
+        {
+            header: "دوره",
+            hidden: true,
+            dataIndex: "courseTitle",
+            width: 50
+        }
+    ];
+    Ahura.userColumns = columns;
+    var tbar = [
+        {
+            width: 400,
+            fieldLabel: 'جستجو',
+            xtype: 'searchfield',
+            emptyText: 'نام، #دانشجوی، #ملی',
+            store: 'User'
+        }
 //    {
 //        xtype: 'button',
 ////            text: 'جستجو',
@@ -122,84 +124,86 @@ var tbar = [
 //                //                Mehr.window.Audiences.show('domain-button');
 //            }
 //        }
-];
+    ];
 
-Ext.define("Ahura.grid.User", {
-    extend: "Ahura.grid.Base",
-    alias: "widget.users-grid",
-    menu: [
-        {
-            icon: icon('userEdit'),
-            text: 'ویرایش کاربر',
-            handler: function () {
-                openUserEditWindow(this.up().rowId);
-            }
-
-        },
-        {
-            text: 'پرونده فرهنگی',
-            menu: [
-                {
-                    text: 'برنامه‌ها',
-                    handler: function () {
-                        var row = this.up().up().model;
-                        var grid = this.up().up().grid;
-                        var programs = Ext.create('Mehr.view.program.List', {
-                            info: {
-                                title: 'برنامه‌های: ' + Ahura.window.Base.userWindowTitle(row),
-                                row: row
-                            }
-                        });
-                    }
-
-                },
-                {
-                    text: 'عضویت‌ها',
-                    handler: function () {
-                        var row = this.up().up().model;
-                        var grid = this.up().up().grid;
-                        var programs = Ext.create('Mehr.view.entity.List', {
-                            info: {
-                                title: 'عضویت‌های: ' + Ahura.window.Base.userWindowTitle(row),
-                                row: row
-                            }
-                        });
-                    }
-
-                },
-                {
-                    text: 'شوراها',
-                    handler: function () {
-                        var row = this.up().up().model;
-                        var grid = this.up().up().grid;
-                        var programs = Ext.create('Mehr.view.council.List', {
-                            info: {
-                                title: 'عضویت‌ها در شورای مرکزی: ' + Ahura.window.Base.userWindowTitle(row),
-                                row: row,
-                                for: 'user'
-                            }
-                        });
-                    }
-
+    Ext.define("Ahura.grid.User", {
+        extend: "Ahura.grid.Base",
+        alias: "widget.users-grid",
+        menu: [
+            {
+                icon: icon('userEdit'),
+                text: 'ویرایش کاربر',
+                handler: function () {
+                    openUserEditWindow(this.up().rowId);
                 }
-            ]
-        }
-    ],
+
+            },
+            {
+                text: 'پرونده فرهنگی',
+                menu: [
+                    {
+                        text: 'برنامه‌ها',
+                        handler: function () {
+                            var row = this.up().up().model;
+                            var grid = this.up().up().grid;
+                            var programs = Ext.create('Mehr.view.program.List', {
+                                info: {
+                                    title: 'برنامه‌های: ' + Ahura.window.Base.userWindowTitle(row),
+                                    row: row
+                                }
+                            });
+                        }
+
+                    },
+                    {
+                        text: 'عضویت‌ها',
+                        handler: function () {
+                            var row = this.up().up().model;
+                            var grid = this.up().up().grid;
+                            var programs = Ext.create('Mehr.view.entity.List', {
+                                info: {
+                                    title: 'عضویت‌های: ' + Ahura.window.Base.userWindowTitle(row),
+                                    row: row
+                                }
+                            });
+                        }
+
+                    },
+                    {
+                        text: 'شوراها',
+                        handler: function () {
+                            var row = this.up().up().model;
+                            var grid = this.up().up().grid;
+                            var programs = Ext.create('Mehr.view.council.List', {
+                                info: {
+                                    title: 'عضویت‌ها در شورای مرکزی: ' + Ahura.window.Base.userWindowTitle(row),
+                                    row: row,
+                                    for: 'user'
+                                }
+                            });
+                        }
+
+                    }
+                ]
+            }
+        ],
 
 
-    initComponent: function () {
-        var me = this;
-        me.store = "User";
-        me.columns = columns;
-        me.tbar = tbar;
-        me.tbar.store = 'User';
-        me.callParent(arguments);
-        me.down('pagingtoolbar').bindStore(me.store);
+        initComponent: function () {
+            var me = this;
+            me.store = "User";
+            me.columns = columns;
+            me.tbar = tbar;
+            me.tbar.store = 'User';
+            me.callParent(arguments);
+            me.down('pagingtoolbar').bindStore(me.store);
 //        me.down('searchfield').store=me.store;
-    }
-});
+        }
+    });
 
-var openUserEditWindow = function (id) {
-    var panel = Ext.create('Mehr.view.user.Edit');
-    panel.down('form').getForm().load({params: {id: id}});
-}
+    var openUserEditWindow = function (id) {
+        var panel = Ext.create('Mehr.view.user.Edit');
+        panel.down('form').getForm().load({params: {id: id}});
+    }
+
+})()

@@ -2,7 +2,6 @@ Ext.define('Mehr.view.council.Edit', {
     extend: 'Ahura.window.Base',
     requires: 'Ahura.form.combo.User',
     title: 'ویرایش/ایجاد دوره',
-    height: 500,
     width: 500,
     items: [
         {
@@ -36,6 +35,13 @@ Ext.define('Mehr.view.council.Edit', {
                                     xtype: 'hidden',
                                     name: 'entityId'
                                 },
+                                {
+                                    name: 'active',
+                                    fieldLabel: 'فعال (با انتخاب این گزینه اختیارات شورا به دوره جدید واگذار می‌شود و دوره قبل غیرفعال می‌شود.)',
+                                    xtype: 'checkbox',
+                                    inputValue: 1
+                                }
+                                ,
                                 {
                                     xtype: 'hidden',
                                     name: 'id'
@@ -86,6 +92,13 @@ Ext.define('Mehr.view.council.Edit', {
                                     allowBlank: false,
                                     name: 'startDate',
 //                                    startDateField: 'electionEndDate',
+                                    xtype: 'jalali'
+                                },
+                                {
+                                    fieldLabel: 'زمان پایان فعالیت',
+                                    allowBlank: false,
+                                    name: 'endDate',
+                                    startDateField: 'endDate',
                                     xtype: 'jalali'
                                 }
 

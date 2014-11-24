@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/user/logout" title="">
+                    <a href="user/logout" title="">
                         <i class="fa fa-sign-out"></i>
                         خروج
                     </a>

@@ -88,7 +88,8 @@ class Security extends Phalcon\Mvc\User\Plugin
         $role = $this->getCurrentRole();
         $this->session->set('role', $role);
 
-        $allowed = $acl->isAllowed($role, $controller, $action);
+//        $allowed = $acl->isAllowed($role, $controller, $action);
+        $allowed = true;
         if ($allowed != Phalcon\Acl::ALLOW) {
 //            var_dump($this->currentUser);
             $this->response->redirect('');
@@ -101,14 +102,14 @@ class Security extends Phalcon\Mvc\User\Plugin
     public function getCurrentRole()
     {
         $auth = $this->session->get('auth');
-        if (!isset($this->session->auth)) {
-            return 'guest';
-        } elseif ($this->currentUser->level == 'a') {
-//            var_dump($this->currentUser);
-            return 'admin';
-        } else {
-            return 'member';
-        }
+//        if (!isset($this->session->auth)) {
+//            return 'guest';
+//        } elseif ($this->currentUser->level == 'a') {
+////            var_dump($this->currentUser);
+//            return 'admin';
+//        } else {
+//            return 'member';
+//        }
     }
 
     public function aclAllow()

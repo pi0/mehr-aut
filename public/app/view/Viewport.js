@@ -16,7 +16,7 @@ var menu = Ext.create('Ext.menu.Menu', {
         items: [
             {
                 text: 'کاربران',
-                icon: 'assets/img/32p/users.gif',
+                icon: icon('users.gif', 32),
                 handler: function () {
                     Ext.create("Mehr.view.user.List").show();
 //                    var w = Ext.widget("usersW");
@@ -24,7 +24,8 @@ var menu = Ext.create('Ext.menu.Menu', {
                 }
             },
             {
-                icon: 'assets/img/32p/add-user.gif',
+                icon: icon('add-user.gif', 32),
+                //icon: 'assets/img/32p/add-user.gif',
                 width: 'auto',
                 tooltip: 'افزودن کاربر',
                 handler: function () {
@@ -38,8 +39,19 @@ var menu = Ext.create('Ext.menu.Menu', {
                 icon: icon('databaseRefresh'),
                 text: 'همزمان‌سازی',
                 scale: 'small'
-           }
-//            ,
+            },
+            {
+                colspan: 2,
+                icon: icon('db-import'),
+                text: 'درون‌برد از فایل',
+                scale: 'small'
+            },
+            {
+                colspan: 2,
+                icon: icon('db-export'),
+                text: 'برون‌برد به فایل',
+                scale: 'small'
+            }
 //            {
 //                colspan: 2,
 //                icon: icon('userSuit'),
@@ -61,45 +73,6 @@ Ext.create("Ext.toolbar.Toolbar", {
             icon: icon('user'),
             menu: menu
         },
-//        {
-//            hidden:true,
-//            text: "پیام‌ها",
-//            icon: icon('email'),
-//            menu: [
-//                {
-//                    icon: icon('email_add'),
-//                    text: 'نگارش پیام',
-//                    handler: function () {
-//                        Mehr.window.NewMessage.show();
-//                    }
-//                },
-//
-//                {
-//                    text: 'پیامهای دریافت شده',
-//                    icon: icon('email'),
-//                    handler: function () {
-//                        Mehr.window.Messages.show();
-//                    }
-//                },
-//
-//                {
-//                    text: 'پیامهای ارسال شده',
-//                    icon: icon('email_go'),
-//                    handler: function () {
-//                        Mehr.window.Messages.show();
-//                    }
-//                },
-//
-//                {
-//                    text: 'دفترچه تماس',
-//                    icon: icon('vcard')
-//                }
-//
-//            ]
-//
-//
-//
-//        },
         {
             text: "نهادها و برنامه‌ها",
             icon: icon('microphone'),
@@ -107,6 +80,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                 {
 
                     text: 'نهادها',
+                    icon: icon('building'),
                     handler: function () {
                         Ext.create('Mehr.view.entity.List');
                     }
@@ -120,21 +94,21 @@ Ext.create("Ext.toolbar.Toolbar", {
                     }
                 },
 
-//                {
-//                    text: 'طرح‌ها',
-//                    icon: icon('ruler-triangle'),
-//                    handler: function () {
-//                        Ext.create('Mehr.view.plan.Window');
-//                    }
-//                },
+                {
+                    text: 'طرح‌ها',
+                    icon: icon('ruler-triangle'),
+                    handler: function () {
+                        Ext.create('Mehr.view.plan.Window');
+                    }
+                },
 
-//                {
-//                    text: 'نشریه‌ها',
-//                    icon: icon('newspaper'),
-//                    handler: function () {
-//                        Mehr.window.Issues.show();
-//                    }
-//                },
+                {
+                    text: 'نشریه‌ها',
+                    icon: icon('newspaper'),
+                    handler: function () {
+                        Mehr.window.Issues.show();
+                    }
+                },
 
                 {
                     text: "ایجاد",
@@ -142,7 +116,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                     menu: [
                         {
                             text: 'نهاد نو',
-                            handler:function(){
+                            handler: function () {
                                 Ext.create('Mehr.view.entity.Edit');
                             }
                         },
@@ -153,21 +127,20 @@ Ext.create("Ext.toolbar.Toolbar", {
 //                                Mehr.window.ProgramEdit.show();
                                 Ext.create('Mehr.view.program.Edit')
                             }
-                        }
+                        },
 
-//                        {
-//                            text: 'طرح نو'
-//                        },
-//
-//                        {
-//                            text: 'نشریه نو'
-//                        }
+                        {
+                            text: 'پیشنهاد طرح'
+                        },
+                        {
+                            text: 'نشریه نو'
+                        }
                     ]
                 }
             ]
         },
         {
-            hidden:true,
+            hidden: true,
             text: "آموزش",
             menu: [
                 {
@@ -210,7 +183,7 @@ Ext.create("Ext.toolbar.Toolbar", {
             ]
         },
         {
-            hidden:true,
+            hidden: true,
             text: "اخبار",
             icon: icon('newspaper'),
             menu: [
@@ -225,62 +198,135 @@ Ext.create("Ext.toolbar.Toolbar", {
                 }
             ]
         },
-//        {
-//            text: 'تنظیمات',
-//            icon: icon('gear'),
-//            handler: function (btn) {
-//            },
-//            menu: [
-//                {
-//                    text: 'تغییر گذرواژه',
-//                    icon: icon('key'),
-//                    handler:function(){
-//                        Ext.create('Mehr.view.setting.Password');
-//                    }
-//                }
-//                /*,
-//                {
-//                    text: 'مشخصات من',
-//                    icon: icon('information')
-//                },
-//                {
-//                    text: 'سامانه',
-//                    icon: icon('gear'),
-//                    handler: function (btn) {
-//                    },
-//                    menu: [
-//                        {
-//                            text: 'پیام آغازین'
-//                        },
-//
-//                        {
-//                            text: 'اطلاعات تماس'
-//                        }
-//                    ]
-//                }*/
-//            ]
-//        },
+        {
+            text: "SMS",
+            icon: icon('phone'),
+            menu: [
+                {
+                    icon: icon('phone-add'),
+                    text: 'نگارش پیام',
+                    handler: function () {
+                        Ext.create('Mehr.view.sms.Edit');
+                    }
+                },
+
+                {
+                    text: 'پیامهای دریافت شده',
+                    icon: icon('phone'),
+                    handler: function () {
+                        Mehr.window.Messages.show();
+                    }
+                },
+
+                {
+                    text: 'پیامهای ارسال شده',
+                    icon: icon('phone-go'),
+                    handler: function () {
+                        Mehr.window.Messages.show();
+                    }
+                },
+
+                {
+                    text: 'دفترچه تماس',
+                    icon: icon('vcard')
+                }
+
+            ]
+        },
+        {
+            text: "رایانامه",
+            icon: icon('email'),
+            menu: [
+                {
+                    icon: icon('email-add'),
+                    text: 'نگارش پیام',
+                    handler: function () {
+                        Ext.create('Mehr.view.email.Edit');
+                    }
+                },
+
+                {
+                    text: 'پیامهای دریافت شده',
+                    icon: icon('email'),
+                    handler: function () {
+                        Mehr.window.Messages.show();
+                    }
+                },
+
+                {
+                    text: 'پیامهای ارسال شده',
+                    icon: icon('email-go'),
+                    handler: function () {
+                        Mehr.window.Messages.show();
+                    }
+                },
+
+                {
+                    text: 'دفترچه تماس',
+                    icon: icon('vcard')
+                }
+
+            ]
+        },
+        {
+            text: 'تنظیمات',
+            icon: icon('gear'),
+            handler: function (btn) {
+            },
+            menu: [
+                //{
+                //    text: 'تغییر گذرواژه',
+                //    icon: icon('key'),
+                //    handler:function(){
+                //        Ext.create('Mehr.view.setting.Password');
+                //    }
+                //}
+                {
+                    text: 'مشخصات من',
+                    icon: icon('information')
+                },
+                {
+                    text: 'سامانه',
+                    icon: icon('gear'),
+                    handler: function (btn) {
+                    },
+                    menu: [
+                        {
+                            text: 'پرداخت الکترونیک',
+                            icon: icon('money')
+                        },
+
+                        {
+                            text: 'سامانه پیامک',
+                            icon: icon('email')
+                        }
+                    ]
+
+                }
+            ]
+        },
         {
             text: "راهنما",
             icon: icon('help'),
             menu: [
                 /*
-                {
-                    icon: icon('help'),
-                    text: "راهنمای برنامه"
-                } ,
+                 {
+                 icon: icon('help'),
+                 text: "راهنمای برنامه"
+                 } ,
+                 */
                 {
                     text: "وبگاه شرکت",
-                    icon: icon('World'),
+                    icon: icon('world'),
                     handler: function (b, e) {
-                        window.location = 'http://ahura.biz';
+                        window.location = 'http://www.ahurait.com';
                     }
-                } ,
-                */
+                },
                 {
+                    icon: icon('help'),
                     text: "درباره",
-                    handler:function(){
-                        Ahura.info('درباره','سامانه مهر نسخه 0.1'+'<br>'+'پیاده‌سازی: رضا سالارمهر salarmehr@gmail.com')
+                    handler: function () {
+                        Ahura.info('درباره', 'سامانه یکپارچه فرهنگی مهر <br> شرکت مهندسی اهورا')
                     }
                 }
             ],
@@ -288,8 +334,7 @@ Ext.create("Ext.toolbar.Toolbar", {
             }
 
         },
-        '->'
-        ,
+        '->',
 //        {
 //            icon:icon('arrowInout'),
 //            handler:function(){
@@ -301,16 +346,15 @@ Ext.create("Ext.toolbar.Toolbar", {
             text: "بازگشت",
             icon: icon('house'),
             handler: function (b, e) {
-                window.location = '/';
+                window.location = BASE;
             }
 
-        }
-        ,
+        },
         {
             text: "خروج",
             icon: icon('door_out'),
             handler: function (b, e) {
-                window.location = '/user/logout';
+                window.location = 'user/logout';
             }
 
         }
@@ -321,6 +365,5 @@ Ext.define('Mehr.view.Viewport', {
     itemId: 'vp',
     //    layout: 'fit',
     //layout: 'border',
-    items: [
-    ]
+    items: []
 });

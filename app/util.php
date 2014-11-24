@@ -28,9 +28,9 @@ function toJsArray(array $arr)
 {
     $result = [];
     foreach ($arr as $k => $v) {
-        $result[] = '["' . $v['value'] . '","' . $v['text'] . '"]';
+        $vv=array_values($v);
+        $result[] = '["' . $vv[0] . '","' . $vv[1] . '"]';
     }
-//    var_dump($arr);die();
     return '[' . implode(',', $result) . ']';
 }
 
@@ -79,20 +79,27 @@ function formPostProcess(&$data)
 
 function formPreProcess(&$data)
 {
+//    print_r($data);
+    $audience = [];
     foreach ($data as $k => $v) {
         if ($v === '') {
             $data[$k] = null;
         }
+        if ($v && preg_match('#audience_(.+)$#u', $k, $m)) {
+            $audience[$m[1]] = $v;
+        }
         if ($v && preg_match('#(.+)Date$#u', $k, $m)) {
             $date = new IntlDateTime($v, 'Asia/Tehran', 'persian');
             $date->setCalendar('gregorian');
-            $data[$k] = $date->format('y-MM-dd');
+//            $data[$k] = $date->format('y-MM-dd');
             $data[$k] = $date->classicFormat('Y-m-d');
             if (isset($data[$m[1] . 'Time'])) {
                 $data[$k] = $data[$k] . ' ' . $data[$m[1] . 'Time'];
                 unset($data[$m[1] . 'Time']);
             }
         }
+//        var_dump($audience);
+//           die();
     }
 }
 
@@ -142,7 +149,6 @@ function jsonResponse($response, $type = 'application/json')
 {
     header('Content-Type: ' . $type);
     echo json_encode($response);
-//    echo json_last_error_msg();
 }
 
 function ellipsis($text, $max = 500, $append = '…')

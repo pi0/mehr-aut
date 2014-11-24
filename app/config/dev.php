@@ -6,10 +6,10 @@ $config = array(
     ],
     'database' =>
     [
-        'host' => 'localhost',
-        'username' => 'mehr',
+        'host' => '127.0.0.1',
+        'username' => 'root',
         'password' => '',
-        'name' => 'mehr2',
+        'name' => 'mehr3',
     ],
     'mongodb' =>
     [

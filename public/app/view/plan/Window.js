@@ -2,6 +2,7 @@ var columns=[
     {
         header:"عنوان",
         dataIndex:"title",
+        flex:1,
         sortable:true
     }
     ,
@@ -25,13 +26,9 @@ var columns=[
 
 ];
 Ext.define("Mehr.view.plan.Grid", {
-    extend: "Ext.grid.Panel",
+    extend: "Ahura.grid.Base",
     alias: "widget.plansGrid",
     columns: columns,
-    loadMask: true,
-    clicksToEdit: 1,
-    autoExpandColumn: "title",
-
     //    sm:new Ext.grid.RowSelectionModel({
     //        singleSelect:true,
     //        listeners:{
@@ -47,29 +44,15 @@ Ext.define("Mehr.view.plan.Grid", {
     //    }),
 //    store: 'Mehr.store.Plans',
 
-//    view: new Ext.grid.GroupingView(),
-    defaults: {
-        sortable: true
-    },
-    bbar: new Ext.PagingToolbar({
-        pageSize: 50,
-        displayInfo: true,
-        displayMsg: 'نمایش موارد {0} - {1} از {2}',
-        emptyMsg: "موردی یافت نشد.",
-        store: Mehr.store.Plans
-    })
 });
 
 Ext.define("Mehr.view.plan.Window", {
     rtl: true,
-    extend: "Ext.window.Window",
+    extend: "Ahura.window.Grid",
     alias: "widget.plans",
-    layout: 'fit',
     height: 400,
     width: 900,
     title: 'طرح‌ها',
-    autoShow:true,
-//    closeAction:'hide',
     items: [
         {xtype: 'plansGrid'}
     ]

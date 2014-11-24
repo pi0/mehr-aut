@@ -22,7 +22,7 @@ class MehrController extends ControllerBase
 //        die();
         $this->view->disable();
         ExtDirect::$namespace = 'RPC';
-        ExtDirect::$url = 'mehr/api';
+        ExtDirect::$url = 'api';
         ExtDirect::$debug = true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
         ExtDirect::$form_handlers = array('ProgramApi::create', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create');
@@ -57,11 +57,21 @@ class MehrController extends ControllerBase
         $councilMembership = toJsArray($db->query('select `value`,text from constant where category="councilMembership"')->fetchAll());
         $this->view->councilMembership = $councilMembership;
 
+        $course = toJsArray($db->query('select `value`,text from constant where category="course"')->fetchAll());
+        $this->view->course = $course;
+
         $enrollmentStatus = toJsArray($db->query('select `value`,text from constant where category="enrollmentStatus"')->fetchAll());
         $this->view->enrollmentStatus = $enrollmentStatus;
 
         $nationality = toJsArray($db->query('select `id` as value,name as text from country')->fetchAll());
         $this->view->nationality = $nationality;
+
+        $this->view->userType = toJsArray($db->query('select `value`,text from constant where category="userType"')->fetchAll());;
+        $this->view->department = toJsArray($db->query('select id,name from department')->fetchAll());;
+        $this->view->college = toJsArray($db->query('select id,name from college')->fetchAll());;
+//        var_dump($this->view->college);
+//        die();
+
         header('content-type:application/javascript; charset=utf-8');
 
     }

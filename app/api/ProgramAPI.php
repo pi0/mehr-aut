@@ -1,18 +1,31 @@
 <?php
 
-require_once __DIR__.'/../config/services.php';
+require_once __DIR__ . '/../config/services.php';
 
-class ProgramApi extends Phalcon\DI\Injectable
+class Enroller extends Phalcon\Mvc\Model
+{
+}
+
+class ProgramList extends Phalcon\Mvc\Model
+{
+    public function getSource()
+    {
+        return "programlist";
+    }
+}
+
+
+class ProgramApi extends BaseApi
 {
     function audience()
     {
 
         $db = $this->getDI()['db'];
 
-        $colleges = $db->query('select * from college');
+        $colleges = $db->query('SELECT * FROM college');
         $colleges = $colleges->fetchAll();
 
-        $departments = $db->query('select * from department');
+        $departments = $db->query('SELECT * FROM department');
         $departments = $departments->fetchAll();
 
 
@@ -20,7 +33,7 @@ class ProgramApi extends Phalcon\DI\Injectable
         foreach ($colleges as $c) {
             foreach ($departments as $k => $d)
                 if ($d['collegeId'] == $c['id']) {
-                    $children[] = ['id' => $d['id'], 'leaf' => true, 'text' => $d['name'],'checked'=>false];
+                    $children[] = ['id' => $d['id'], 'leaf' => true, 'text' => $d['name'], 'checked' => false];
                     unset($departments[$k]);
                 }
             $data[] = ['id' => $c['id'], 'text' => $c['name'], 'checked' => false, 'children' => $children];
@@ -31,30 +44,43 @@ class ProgramApi extends Phalcon\DI\Injectable
 
     function read($params)
     {
-        $id = @$params->id;
+        $params = (array)$params;
+        $id = @$params['id'];
         if ($id) {
             $p = new Program();
-            $data = $p->findFirst("id=$id")->toArray();
-            $data['audience'] = unserialize($data['audience']);
-            return (['data' => $data, 'success' => true]);
+            $response = $p->findFirst("id=$id")->toArray();
+            formPostProcess($response);
+            $aud = unserialize($response['audience']);
+            foreach ($aud as $k => $v) {
+                if (is_array($v)) {
+                    $response['audience[' . $k . '][]'] = $v;
+                } else {
+                    $response['audience[' . $k . ']'] = $v;
+                }
+            }
+
+            return (['data' => $response, 'success' => true]);
         } else {
-            $data = $this->db->fetchAll("select * from programlist", Phalcon\Db::FETCH_ASSOC);
-            $total = $this->db->fetchAll("select count(*) from programlist ", Phalcon\Db::FETCH_NUM);
-            return (['data' => $data, 'total' => $total[0][0]]);
+            $query = $this->queryBuilder('ProgramList')->orderBy('executionStartDate desc');
+            if (isset($params['userId'])) {
+                $query->join('Enroller', 'ProgramList.id=programId')->where('userId=?0', [$params['userId']]);
+//                $params[] = ['type' => 'numeric', 'value' => $params['userId'], 'comparison' => 'eq', 'field' => 'userId'];
+            };
+            $response = $this->extFilter($query, $params);
+            return ($response);
         }
     }
 
-    function write()
+    function create()
     {
         $data = $_REQUEST;
         formPreProcess($data);
         $data['audience'] = serialize($data['audience']);
-
         $p = new Program();
         if ($p->save($data)) {
             return extJson(true, $p->toArray());
         } else {
-            return extJson(false, $p->toArray(), extErrors($p->getMessages()));
+            return extJson(false, $p->toArray(), (array)($p->getMessages()));
         }
 
 //        var_dump($P->getModelsMetaData()->getAttributes($P));

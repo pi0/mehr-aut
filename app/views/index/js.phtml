@@ -1,2 +1,2 @@
 var Mehr=Mehr||{};
-Mehr.user=<?= $user ?>;
+Mehr.user=<?php if(isset($user)) echo $user; else echo '{}';   ?>;

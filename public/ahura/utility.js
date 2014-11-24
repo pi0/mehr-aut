@@ -111,11 +111,13 @@ Ahura.validation.checkMelliCode = function (varmellicode) {
     }
 }
 
+
 function icon(name, size) {
+    var base=BASE+'/assets/img/';
     if (!size) {
-        return 'assets/img/16p/' + name+'.png';
+        return base+'16p/' + name+'.png';
     }
-    return 'assets/img/' + size + 'p/' + name+'.png';
+    return base + size + 'p/' + name;
 }
 
 function requestFullScreen(element) {

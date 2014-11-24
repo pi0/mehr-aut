@@ -9,7 +9,7 @@
 require_once __DIR__ . '/../config/services.php';
 
 
-class CouncilMember extends Phalcon\Mvc\Model
+class CouncilMember extends BaseModel
 {
     public function getSource()
     {

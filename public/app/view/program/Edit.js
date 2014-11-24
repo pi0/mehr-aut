@@ -33,6 +33,11 @@ Ext.define("Mehr.view.program.Edit", {
                                 anchor: '90%'
                             },
                             {
+                                xtype: 'textfield',
+                                name: 'location',
+                                fieldLabel: 'مکان برگزاری'
+                            },
+                            {
                                 xtype: 'program-subject-combo'
                             },
                             {
@@ -50,6 +55,7 @@ Ext.define("Mehr.view.program.Edit", {
                                         xtype: 'timefield',
                                         name: 'executionStartTime',
                                         format: 'H:i',
+                                        allowedBlank:false,
                                         width: 75
                                     },
                                     {
@@ -57,6 +63,7 @@ Ext.define("Mehr.view.program.Edit", {
                                         name: 'executionStartDate',
                                         vtype: 'daterange',
                                         endDateField: 'executionEndDate',
+                                        allowedBlank:false,
                                         flex: 1
                                     }
                                 ]
@@ -70,10 +77,12 @@ Ext.define("Mehr.view.program.Edit", {
                                         xtype: 'timefield',
                                         name: 'executionEndTime',
                                         format: 'H:i',
+                                        allowedBlank:false,
                                         width: 75
                                     },
                                     {
                                         xtype: 'jalali',
+                                        allowedBlank:false,
                                         name: 'executionEndDate',
                                         vtype: 'daterange',
                                         startDateField: 'executionStartDate',
@@ -93,7 +102,7 @@ Ext.define("Mehr.view.program.Edit", {
                                 xtype: 'user-combo'
                             },
                             {
-                                fieldLabel: 'پستر/تصویر',
+                                fieldLabel: 'پوستر/تصویر',
                                 name: 'image',
                                 xtype: 'text'
                             }
@@ -108,8 +117,65 @@ Ext.define("Mehr.view.program.Edit", {
                             labelWidth: 180
                         },
                         defaultType: 'textfield',
-                        labelWidth: 350,
                         items: [
+
+                            {
+                                fieldLabel: "هزینه نام‌نویسی (تومان)",
+                                xtype: 'integer',
+                                name: 'registerFee',
+                                listeners: {
+//                                        'show': function (t, v) {
+//                                            if (Number(v) > 0) {
+//                                                Ext.getCmp("paymentMethodRadio").enable();
+//                                            }
+//                                            else Ext.getCmp("paymentMethodRadio").disable();
+//                                        },
+                                    'change': function (el, v) {
+//                                            var radio = el.up('panel').down('radiogroup');
+//                                            console.log(radio);
+//
+//                                            if (Number(v) > 0) {
+//                                                radio.enable();
+//                                            } else radio.disable();
+////                                            radio.forEach(function (e) {
+////                                                console.log(e);
+////                                            });
+////                                                Ext.getCmp("paymentMethodRadio").enable();
+                                    }
+                                }
+                            },
+//                            {
+//                                fieldLabel: 'نحوه پرداخت هزیته',
+//                                xtype: 'radiogroup',
+////                                id: 'paymentMethodRadio',
+//                                width: 300,
+//                                labelAlign: 'right',
+//                                disabled: true,
+//                                columns: 'auto',
+//                                name: 'paymentMethod',
+//                                items: [
+//                                    {
+//                                        boxLabel: "نقدی",
+//                                        inputValue: 'c',
+//                                        checked: true
+////                                            name: 'paymentMethod'
+//                                    },
+//
+//                                    {
+//                                        boxLabel: "اینترنتی",
+//                                        inputValue: 'i',
+//                                        checked: false
+////                                            name: 'paymentMethod'
+//                                    }
+//                                    ,
+//                                    {
+//                                        boxLabel: "فیش بانکی",
+//                                        inputValue: 'b',
+//                                        checked: false
+////                                            name: 'paymentMethod'
+//                                    }
+//                                ]
+//                            },
                             {
                                 fieldLabel: 'کمینه شمار شرکت کننده‌ها',
                                 name: 'minCapacity',
@@ -126,6 +192,7 @@ Ext.define("Mehr.view.program.Edit", {
                                 fieldLabel: 'زمان آغاز نام‌نویسی',
                                 items: [
                                     {
+
                                         xtype: 'timefield',
                                         name: 'enrollmentStartTime',
                                         format: 'H:i',
@@ -187,74 +254,30 @@ Ext.define("Mehr.view.program.Edit", {
                         ]
                     },
                     {
-                        title: 'هزینه',
+                        title: 'مالی',
                         layout: 'form',
                         bodyPadding: 10,
+                        defaultType: 'integer',
                         defaults: {
-                            width: 230
+                            labelWidth: 180
                         },
-                        defaultType: 'textfield',
                         items: [
                             {
-                                fieldLabel: "هزینه نام‌نویسی (تومان)",
-                                xtype: 'integer',
-                                name: 'cost',
-                                labelWidth: 200,
-                                width: 200,
-                                listeners: {
-//                                        'show': function (t, v) {
-//                                            if (Number(v) > 0) {
-//                                                Ext.getCmp("paymentMethodRadio").enable();
-//                                            }
-//                                            else Ext.getCmp("paymentMethodRadio").disable();
-//                                        },
-                                    'change': function (el, v) {
-//                                            var radio = el.up('panel').down('radiogroup');
-//                                            console.log(radio);
-//
-//                                            if (Number(v) > 0) {
-//                                                radio.enable();
-//                                            } else radio.disable();
-////                                            radio.forEach(function (e) {
-////                                                console.log(e);
-////                                            });
-////                                                Ext.getCmp("paymentMethodRadio").enable();
-                                    }
-                                }
+                                fieldLabel: "بودجه مصوب",
+                                name: 'projectedCost'
                             },
                             {
-                                fieldLabel: 'نحوه پرداخت هزیته',
-                                xtype: 'radiogroup',
-//                                id: 'paymentMethodRadio',
-                                width: 300,
-                                labelAlign: 'right',
-                                disabled: true,
-                                columns: 'auto',
-                                name: 'paymentMethod',
-                                items: [
-                                    {
-                                        boxLabel: "نقدی",
-                                        inputValue: 'c',
-                                        checked: true
-//                                            name: 'paymentMethod'
-                                    },
-
-                                    {
-                                        boxLabel: "اینترنتی",
-                                        inputValue: 'i',
-                                        checked: false
-//                                            name: 'paymentMethod'
-                                    }
-                                    ,
-                                    {
-                                        boxLabel: "فیش بانکی",
-                                        inputValue: 'b',
-                                        checked: false
-//                                            name: 'paymentMethod'
-                                    }
-                                ]
+                                fieldLabel: "بودجه هزینه‌شده",
+                                name: 'cost'
+                            },
+                            {
+                                fieldLabel: "درآمد پیش‌بینی‌شده",
+                                name: 'projectedIncome'
+                            },
+                            {
+                                fieldLabel: "درآمد محقق‌شده",
+                                name: 'income'
                             }
-
                         ]
                     },
 //                {
@@ -297,16 +320,17 @@ Ext.define("Mehr.view.program.Edit", {
 //
 //                },
                     {
+                        title: 'جزئیات',
+                        xtype: 'fa-editor'
+                    }
+                    ,
+                    {
                         title: 'مخاطبان',
                         icon: icon('group'),
                         layout: 'fit',
                         items: {
                             xtype: 'audience-panel'
                         }
-                    },
-                    {
-                        title: 'جزئیات',
-                        xtype: 'fa-editor'
                     }
                 ]
             }
@@ -323,13 +347,13 @@ Ext.define("Mehr.view.program.Edit", {
                 var c = [], d = [];
                 var form = this.up('window').down('form').getForm();
                 var win = this.up('window');
-                win.down('treepanel').getChecked().forEach(function (v) {
-                    if (v.get('type') == 'college') {
-                        c.push(v.get('id'));
-                    } else if (v.get('type') == 'department') {
-                        d.push(v.get('id'));
-                    }
-                });
+//                win.down('treepanel').getChecked().forEach(function (v) {
+//                    if (v.get('type') == 'college') {
+//                        c.push(v.get('id'));
+//                    } else if (v.get('type') == 'department') {
+//                        d.push(v.get('id'));
+//                    }
+//                });
 
                 if (form.isValid()) {
                     // Submit the Ajax request and handle the response

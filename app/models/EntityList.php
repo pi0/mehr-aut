@@ -1,6 +1,6 @@
 <?php
 
-class EntityList extends Phalcon\Mvc\Model{
+class EntityList extends BaseModel{
     public function getSource()
     {
         return "entitylist";

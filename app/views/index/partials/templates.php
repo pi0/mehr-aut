@@ -72,6 +72,13 @@
         </div>
     </div>
 </script>
+<script type="text/html" id="empty-post-tpl">
+    <div class="component post-container">
+        <div class="body">
+            موردی یافت نشد.
+        </div>
+    </div>
+</script>
 <script type="text/html" id="posts-tpl">
     <div class="posts-container">
         <div class="filters component">
@@ -94,7 +101,7 @@
                     <div class="filter-options">
                         <label for="">نوع:</label>
                         <select name="type" id="">
-                            <option checked value="">همه</option>
+                            <option selected value="">همه</option>
                             {{#store.ProgramTypes}}
                             <option value="{{this.[0]}}">{{[1]}}</option>
                             {{/store.ProgramTypes}}
@@ -103,7 +110,7 @@
                     <div class="filter-options">
                         <label for="">موضوع‌:</label>
                         <select name="subject" id="">
-                            <option checked value="">همه</option>
+                            <option selected value="">همه</option>
                             {{#store.ProgramSubjects}}
                             <option value="{{this.[0]}}">{{[1]}}</option>
                             {{/store.ProgramSubjects}}
@@ -121,10 +128,12 @@
                         </div>
                     </div>
 
-                    </dvi>
+                </div>
             </form>
         </div>
-        <div class="post-models"></div>
+        <div class="post-models">
+
+        </div>
     </div>
 </script>
 <script type="text/html" id="program-tpl">
@@ -139,39 +148,102 @@
                 </a>
             </div>
             {{/if}}
-        <div class="info float-far">
-            <table>
-                <caption>کلیات</caption>
-                <tr>
-                    <td class="name">نوع:</td>
-                    <td>{{typeText}}</td>
-                </tr>
-                <tr>
-                    <td class="name">موضوع:</td>
-                    <td>{{subjectText}}</td>
-                </tr>
-                <tr>
-                    <td class="name">حدنصاب:</td>
-                    <td>{{minCapacity}}</td>
-                </tr>
-                <tr>
-                    <td class="name">ظرفیت:</td>
-                    <td>{{maxCapacity}}</td>
-                </tr>
-                <tr>
-                    <td class="name">هزینه:</td>
-                    <td>{{cost}} تومان</td>
-                </tr>
-            </table>
-        </div>
+            <div class="info float-far">
+                <table>
+                    <tr>
+                        <td class="group" colspan="2">
+                            کلیات
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">نوع:</td>
+                        <td>{{typeText}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">موضوع:</td>
+                        <td>{{subjectText}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">حدنصاب:</td>
+                        <td>{{minCapacity}} نفر</td>
+                    </tr>
+                    <tr>
+                        <td class="name">ظرفیت:</td>
+                        <td>{{maxCapacity}} نفر</td>
+                    </tr>
+                    <tr>
+                        <td class="group" colspan="2">
+                            نام‌نویسی
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">هزینه:</td>
+                        <td>{{#is cost '>' 0}}
+                            {{cost}}
+                            تومان
+                            {{else}}
+                            <b style="color: green">رایگان</b>
+                            {{/is}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">آغاز :</td>
+                        <td> {{{toJ enrollmentStartDate}}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">پایان‌ :</td>
+                        <td> {{toJ enrollmentEndDate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">وضعیت:</td>
+                        <td>{{def enrollmentStatusText}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">نام‌نوسی شما:</td>
+                        <td>{{def enrollmentStatusText 'انجام نشده'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="group" colspan="2">
+                            برگزاری
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">آغاز :</td>
+                        <td> {{toJ executionStartDate}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">پایان :</td>
+                        <td> {{{toJ executionEndDate}}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">وضعیت :</td>
+                        <td>{{def executionStatusText}}</td>
+                    </tr>
+                    <tr>
+                        <td class="name">مکان برگزاری:</td>
+                        <td>{{def location}}</td>
+                    </tr>
+                    <tr class="buttons">
+                        <td colspan="2">
+                            {{#if isAllowed}}
+                            {{#if enroll}}
+                            <a href="#program/{{id}}" class="button">ثبت‌نام</a>
+                            {{/if}}
+                            {{#if overenroll}}
+                            <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
+                            {{/if}}
+                            {{else}}
+                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+                            {{/if}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
 
             <div class="name">{{name}}</div>
             <p class="details">{{details}}</p>
 
-            <div class="buttons">
-                <a href="#program/{{id}}" class="button">ثبت‌نام</a>
-            </div>
 
         </div>
 

@@ -1,7 +1,6 @@
 Ext.define('Mehr.store.Enroller', {
         autoLoad: false,
         extend: 'Ahura.store.Direct',
-//        extend: 'Ext.data.DirectStore',
         model: 'Mehr.model.Enroller',
 
         constructor: function () {

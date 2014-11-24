@@ -19,7 +19,8 @@ class ApiController extends Phalcon\Mvc\Controller
             @$filter['postType'] || $filter['postType'] = 'program';
             $table = ucfirst($filter['postType']);
             $query = $this->modelsManager->createBuilder()
-                ->from($table)//                ->limit(3)
+                ->from($table)
+                ->orderBy('executionStartDate desc')
             ;
 
             if (isset($filter['subject']) && $filter['subject'] != null) {
@@ -69,10 +70,11 @@ class ApiController extends Phalcon\Mvc\Controller
     {
         $app = new Phalcon\Mvc\Micro();
         $app->setDI($this->di);
-//
         $app->get('/api/program', function ($id = null) use ($app) {
-
-            $data = $this->di['db']->fetchAll('select * from program', Phalcon\Db::FETCH_ASSOC);
+            $query = $this->modelsManager->createBuilder()->from('ProgramEnroller')
+            ->where('userId=?0',[$this->user->id]);
+            var_dump($this->user->id);
+//            $data = $this->di['db']->fetchAll('select * from programenroller', Phalcon\Db::FETCH_ASSOC);
             jsonResponse($data);
         });
 
@@ -97,12 +99,10 @@ class ApiController extends Phalcon\Mvc\Controller
             $data = $this->di['db']->fetchAll('select * from entityList', Phalcon\Db::FETCH_ASSOC);
             jsonResponse($data);
         });
-
         $app->get('/api/membership/{id}', function ($id = null) {
             $data = $this->di['db']->fetchOne('select * from entityList where id=:id', Phalcon\Db::FETCH_ASSOC, ['id' => $id]);
             jsonResponse($data);
         });
-
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
             echo 'This is crazy, but this page was not found!';

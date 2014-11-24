@@ -1,5 +1,22 @@
 var Mehr = Mehr || {};
 
+Handlebars.registerHelper('def', function (x, def) {
+    if (x == null) {
+        if (typeof def == 'string') {
+            return def;
+        }
+        return new Handlebars.SafeString('<span class="unknown">نامشخص</span> ');
+    }
+    return x;
+});
+Handlebars.registerHelper('toJ', function (date) {
+    if (date == null) {
+        return new Handlebars.SafeString('<span class="unknown">نامشخص</span> ');
+    }
+    var date = moment(date)
+    return new Handlebars.SafeString('<span class="date">' + date.format('jYYYY/jMM/jDD HH:mm') + '</span>');
+});
+
 _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
 _.extend(Backbone.Validation.messages, {
     required: 'درج {0} الزامی است.',

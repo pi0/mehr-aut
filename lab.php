@@ -1,11 +1,6 @@
 <?php
-require_once 'vendor/IntlDateTime/IntlDateTime.php';
-$date = new IntlDateTime('1380-01-02', 'Asia/Tehran', 'persian');
-$date->setCalendar('gregorian');
-echo  $date->format('y-MM-dd'); // it should be 2001-03-22 but it returns 2001-03-21$date = new IntlDateTime('1380-01-02', 'Asia/Tehran', 'persian');
-
-echo PHP_EOL;
-
-$date = new IntlDateTime('1393-04-24', 'Asia/Tehran', 'persian');
-$date->setCalendar('gregorian');
-echo  $date->format('y-MM-dd'); // it works.
+require_once 'app/config/services.php';
+$p = $di['db'];
+//echo password_hash('1', PASSWORD_BCRYPT);
+//$p->update('user',['password'],[password_hash('1', PASSWORD_DEFAULT)],'username="naderfar"');
+var_dump((string)password_verify('1','$2y$10$9VydXuvlGjlHDQiVqybES.q84I3/HzcywFu400l6I1JXVCTBF9ady'));

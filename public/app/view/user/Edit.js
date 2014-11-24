@@ -1,4 +1,4 @@
-Ext.require(['Ahura.form.combo.Provinces', 'Ahura.form.combo.Nationality', 'Ahura.form.combo.MaritalStatus', 'Ahura.form.combo.EntityType', 'Ahura.form.Base','Ahura.form.combo.Religion']);
+Ext.require(['Ahura.form.combo.Provinces', 'Ahura.form.combo.Nationality', 'Ahura.form.combo.MaritalStatus', 'Ahura.form.combo.EntityType', 'Ahura.form.Base', 'Ahura.form.combo.Religion']);
 Ext.define('Mehr.view.user.Edit',
 
     {
@@ -8,10 +8,10 @@ Ext.define('Mehr.view.user.Edit',
         width: 600,
         items: {
             xtype: 'form',
+            paramsAsHash: true,
             fieldDefaults: {
                 msgTarget: 'under'
             },
-            paramsAsHash: true,
             api: {
                 load: RPC.UserApi.read,
                 submit: RPC.UserApi.create
@@ -33,7 +33,7 @@ Ext.define('Mehr.view.user.Edit',
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'نام**',
+                                    fieldLabel: 'نام*',
                                     name: 'firstName',
                                     allowBlank: false,
                                     anchor: '90%'
@@ -41,7 +41,7 @@ Ext.define('Mehr.view.user.Edit',
                                 {
 //                                    anchor:'90%',
                                     columns: 2,
-                                    fieldLabel: 'جنسیت**',
+                                    fieldLabel: 'جنسیت*',
                                     allowBlank: false,
                                     xtype: 'radiogroup',
 //                                    name: 'sex',
@@ -67,15 +67,17 @@ Ext.define('Mehr.view.user.Edit',
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'نام خانوادگي**',
+                                    fieldLabel: 'نام خانوادگی*',
                                     allowBlank: false,
                                     name: 'lastName',
                                     anchor: '90%'
                                 },
                                 {
-                                    fieldLabel: 'شماره دانشجویی',
-                                    xtype: 'integer',
-                                    name: 'sid'
+                                    xtype: 'combo',
+                                    store: Ahura.store.UserType,
+                                    fieldLabel: 'نوع‌ کاربر',
+                                    readOnly: true,
+                                    name: 'type'
                                 }
                             ]
                         }
@@ -110,7 +112,7 @@ Ext.define('Mehr.view.user.Edit',
                                 }
                                 ,
                                 {
-                                    fieldLabel: 'تاریخ تولد**',
+                                    fieldLabel: 'تاریخ تولد',
                                     name: 'birthdayDate',
                                     emptyText: "مثلا: 24-6-1365"
                                 },
@@ -139,50 +141,52 @@ Ext.define('Mehr.view.user.Edit',
 
                             items: [
                                 {
-                                    valueField: "discipline_id",
-                                    hiddenName: "discipline_id",
-                                    xtype: 'combo',
-                                    minChars: 0,
-                                    anchor: '90%',
-                                    fieldLabel: 'رشته',
-                                    name: 'disciplined',
-                                    displayField: 'title',
-                                    forceSelection: true,
-                                    width: 450,
-                                    store: Ahura.store.Disciplines
-//                                    store:{
-//                                        fields: ['discipline_id', 'title'],
-//                                        reader: new Ext.data.JsonReader({
-//                                            root: 'disciplines'
-//                                        }),
-//                                        proxy: Mehr.proxy.disciplines,
-//                                        autoLoad: true
-//                                    }
+                                    fieldLabel: 'شماره دانشجویی',
+                                    xtype: 'integer',
+                                    name: 'sid'
                                 },
                                 {
-                                    xtype: 'combo',
-                                    width: 200,
-                                    mode: 'local',
-                                    selectOnFocus: true,
-                                    forceSelection: true,
-                                    typeAhead: true,
-                                    store: Ahura.store.Terms,
-                                    name: 'startTerm',
-                                    fieldLabel: 'ترم ورود**',
-                                    value: ''
+                                    xtype: 'department-combo'
+                                },
+                                {
+                                    xtype: 'course-combo'
+                                },
+                                {
+                                    xtype: 'degree-combo'
+                                },
+                                {
+                                    xtype: 'term-combo',
+                                    fieldLabel: 'ترم ورود',
+                                    name: 'startTerm'
                                 }
                                 ,
                                 {
-                                    xtype: 'combo',
-                                    width: 200,
-                                    mode: 'local',
-                                    selectOnFocus: true,
-                                    forceSelection: true,
-                                    typeAhead: true,
-                                    store: Ahura.store.Terms,
-                                    name: 'endTerm',
+                                    xtype: 'term-combo',
                                     fieldLabel: 'ترم خروج',
-                                    value: ''
+                                    name: 'endTerm'
+                                }
+                            ]
+
+                        },
+                        {
+                            layout: 'form',
+                            title: 'تحصیلات',
+                            autoScroll: true,
+                            defaultType: 'textfield',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    name: 'lastUniversity',
+                                    fieldLabel: 'مرکز آموزشی:'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'lastDepartment',
+                                    fieldLabel:'رشته'
+                                },
+                                {
+                                    xtype: 'degree-combo',
+                                    name: 'lastDegree'
                                 }
                             ]
 
@@ -275,7 +279,7 @@ Ext.define('Mehr.view.user.Edit',
                                     validateBlank: true
                                 },
                                 {
-                                    fieldLabel: 'فعال**',
+                                    fieldLabel: 'فعال',
                                     name: 'active',
                                     xtype: 'radiogroup',
                                     labelAlign: 'right',
@@ -302,7 +306,7 @@ Ext.define('Mehr.view.user.Edit',
                                 /*
                                  ,
                                  {
-                                 fieldLabel: 'نقش**',
+                                 fieldLabel: 'نقش',
                                  name: 'user_type',
                                  xtype: 'radiogroup',
                                  labelAlign: 'right',
@@ -331,13 +335,13 @@ Ext.define('Mehr.view.user.Edit',
                         {
                             title: 'مسئولیت‌ها',
 //                            xtype: 'base-form',
-                            layout:'form',
+                            layout: 'form',
                             items: [
                                 {
                                     xtype: 'entity-type-combo',
                                     fieldLabel: 'کارشناس',
-                                    multiSelect:true,
-                                    name:'entityAdmin[]'
+                                    multiSelect: true,
+                                    name: 'entityAdmin[]'
                                 }
                             ]
                         }
@@ -350,7 +354,7 @@ Ext.define('Mehr.view.user.Edit',
 ////                        anchor: '100%',
 //                    border: false,
 //                    bodyStyle: 'padding:10px',
-//                    html: "<ui><li>موارد ** توسط کاربر قابل ویرایش نیست.</li><li>درج موارد * الزامی است.</li></ul>"
+//                    html: "<ui><li>موارد  توسط کاربر قابل ویرایش نیست.</li><li>درج موارد * الزامی است.</li></ul>"
 //                }
             ]
         },

@@ -97,9 +97,9 @@ Ext.define('Mehr.view.entity.Edit', {
                         },
                         {
                             title: 'مخاطبان',
+                            icon: icon('group'),
                             xtype: 'audience-panel',
                             rtl: true
-//                            layout: 'accordion',
                         }
                     ]
                 }

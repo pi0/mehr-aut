@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 require_once __DIR__ . '/../config/services.php';
 
 class CouncilApi extends BaseApi
@@ -7,7 +6,7 @@ class CouncilApi extends BaseApi
     function read($params)
     {
         $params = (array)$params;
-        if (isset($params->id)) {
+        if (isset($params['id'])) {
             $data = $this->db->fetchOne("SELECT * FROM council WHERE id=:id", Phalcon\Db::FETCH_ASSOC, ['id' => $params['id']]);
             return (['data' => fromDB($data), 'success' => true]);
         } else {
@@ -19,7 +18,6 @@ class CouncilApi extends BaseApi
             if (isset($params['userId'])) {
                 $query->join('CouncilMember', ' CouncilList.id=entityId ')->where('CouncilList.userId=?0', [$params['userId']]);
             } else {
-//                die($params['entityId']);
                 $query->where('entityId=?0', [$params['entityId']]);
             };
             $response = $this->extFilter($query, $params, $whitList);
@@ -39,8 +37,7 @@ class CouncilApi extends BaseApi
         if ($p->save($data)) {
             return extJson(true, $p->toArray());
         } else {
-//            var_dump($p->getMessages());
-//            return extJson(false, $p->toArray(), $p->getMessages());
+            return extJson(false, $p->toArray(), $p->getMessages());
         }
     }
 

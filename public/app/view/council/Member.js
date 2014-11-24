@@ -103,7 +103,6 @@ Ext.define('Mehr.view.council.Member', {
     extend: 'Ahura.window.Base',
     requires: 'Ahura.form.combo.User',
     title: 'ویرایش/ایجاد دوره',
-    height: 500,
     width: 500,
     items: [
         {xtype: 'council-member-grid'}

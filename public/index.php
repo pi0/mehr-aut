@@ -1,12 +1,20 @@
 <?php
 
 date_default_timezone_set('Asia/Tehran');
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 //require_once 'FB/fb.php';
 //require_once 'firelogger.php';
 //require_once '../vendor/jdf.php';
 require_once '../vendor/IntlDateTime/IntlDateTime.php';
 require_once '../app/util.php';
+
+spl_autoload_register(function($className) {
+    if (strpos($className, 'App\Models') !== false) {
+        eval("class $className extends \App\Models\BaseModel { };");
+    }
+});
 
 try {
 
@@ -41,7 +49,6 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-
 
 
 //print_r( (new ProgramApi())->read());

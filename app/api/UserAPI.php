@@ -1,31 +1,88 @@
 <?php
-error_reporting(E_ALL);
 require_once __DIR__ . '/../config/services.php';
+require_once __DIR__ . '/../models/User.php';
 
-class UserApi extends Phalcon\DI\Injectable
+class UserApi extends BaseApi
 {
     function read($params)
     {
-        $u = new User();
         if (isset($params->id)) {
+            $u = new User();
             $data = $u->findFirst("id=" . $params->id)->toArray();
+            unset($data['password']);
+            $r = $this->pdo->prepare('SELECT resourceId FROM resource WHERE userId=?');
+            $r->execute([$params->id]);
+            $data['entityAdmin[]'] = $r->fetchAll(PDO::FETCH_COLUMN, 0);
             return (['data' => $data, 'success' => true]);
         } else {
-            $query = $u->query();
-            return paginator($query,$params,'user');
+            $extraFilter = [];
+//            $whitList = ['id', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'address', 'phone', 'mobile', 'email', 'role_id', 'birthdayDate', 'zip', 'provinceId', 'departmentId', 'startTerm', 'endTerm', 'religion', 'dormitory_al', 'active', 'user_type', 'job_title', 'countryId', 'nationality',];
+            $query = $this->queryBuilder('UserList'); //->columns('id,firstName,lastName,sid,sex');
+            if (!isset($params->filters)) $params->filters = [];
+            if (isset($params->query)) {
+                $q = ['q' => ($params->query) . '%'];
+                $query
+                    ->where('firstName like :q: ', $q)
+                    ->orWhere('lastName like :q:', $q)
+                    ->orWhere('nid like :q:', $q)
+                    ->orWhere('sid like :q:', $q);
+            }
+            if (isset($params->audience)) {
+                parse_str($params->audience, $formValues);
+                if (isset($formValues['audience'])) {
+                    $audiences = array_filter($formValues['audience']);
+                    foreach ($audiences as $k => $v) {
+                        switch ($k) {
+                            case 'sex':
+                                if ($v == 'm' or $v == 'f') $query->where('sex=?0', [$v]);
+                                break;
+                            case 'entityMember':
+                                $query->join('EntityMember', 'EntityMember.userId=UserList.id');
+                                $query->inWhere('entityId', $v);
+                                break;
+                            case 'educationStatus':
+                                if ($v == 'current')
+                                    $query->where('endTerm is null');
+                                if ($v == 'finished')
+                                    $query->where('endTerm is not null');
+                                break;
+                            case 'religion':
+                            case 'nationality':
+                            case 'degree':
+                            case 'course':
+                            case 'college':
+                            case 'department':
+                                $extraFilter[] = ['type' => 'list', 'field' => $k, 'value' => $v];
+                                break;
+                        }
+                    }
+                }
+            }
+            $response = $this->extFilter($query, $params, [], $extraFilter);
+            return $response;
+//            return paginator($query, $params, 'user');
         }
     }
 
     function create()
     {
         $data = $_REQUEST;
+        $user = new User();
+        if ($data['id']) {
+            $user = User::findFirst($data['id']);
+        }
+        if ($data['password'] == '') unset($data['password']);
         formPreProcess($data);
-        $p = new User();
-        if ($p->save($data)) {
-            return extJson(true, $p->toArray());
+        if ($user->save($data)) {
+            $this->db->delete('resource', 'userId=?', [$user->id]);
+            foreach ($data['entityAdmin'] as $entity) {
+                $this->db->execute('INSERT INTO resource SET userId=?,resourceId=?,resourceType="entity",level="w"', [$user->id, $entity]);
+            }
+            if ($data['entityAdmin']) {
+            }
+            return extJson(true, $user->toArray());
         } else {
-            var_dump($p->getMessages());
-            return extJson(false, $p->toArray(), $p->getMessages());
+            return extJson(false, $user->toArray(), (array)$user->getMessages());
         }
     }
 }

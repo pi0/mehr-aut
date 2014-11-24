@@ -10,7 +10,7 @@ require_once __DIR__ . '/../config/services.php';
 require_once 'CouncilMember.php';
 
 
-class Council extends Phalcon\Mvc\Model
+class Council extends BaseModel
 {
     public function initialize()
     {

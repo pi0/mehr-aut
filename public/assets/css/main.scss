@@ -14,6 +14,11 @@ $solid: thin solid $a;
 
 $padding: 30px;
 
+.date {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
 textarea, input, select {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -29,6 +34,7 @@ ul.plain {
   margin: 0;
   padding: 0;
   li {
+    transition-duration: .5s;
     white-space: nowrap;
     float: right;
     list-style: none;
@@ -36,6 +42,7 @@ ul.plain {
     padding: 0 8px;
     &:hover {
       background: $b;
+      transition-duration: 1s;
     }
   }
 }
@@ -137,7 +144,7 @@ footer p {
   }
 
   &.post-container {
-    .buttons{
+    .buttons {
       text-align: left;
     }
     .poster {
@@ -160,6 +167,20 @@ footer p {
     tr td.name {
       font-weight: bold;
       min-width: 80px;
+    }
+    td.group {
+      border-bottom: $solid;
+      border-top: $solid;
+      text-align: center;
+      font-weight: bold;
+
+    }
+    tr.buttons td {
+      text-align: center;
+      padding-top: 30px;
+      .button {
+
+      }
     }
   }
 }
