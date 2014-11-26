@@ -183,7 +183,7 @@ Ext.create("Ext.toolbar.Toolbar", {
             ]
         },
         {
-            hidden: true,
+            //hidden: true,
             text: "اخبار",
             icon: icon('newspaper'),
             menu: [

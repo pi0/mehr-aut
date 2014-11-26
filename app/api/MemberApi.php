@@ -20,7 +20,10 @@ class MemberApi extends BaseApi
 
     function create($params)
     {
-        $result = $this->db->execute('insert entitymember (userId,entityId,role) values (:user,:entity, :role) on duplicate key update role=:role ', ['entity' => $params->entityId, 'user' => $params->userId,'role'=>$params->role]);
+        error_reporting(E_STRICT);
+
+        $result = $this->db->execute('insert entitymember (userId,entityId,role) values (:user,:entity, :role) on duplicate key update role=:role ',
+            ['entity' => $params->entityId, 'user' => $params->userId,'role'=>$params->role]);
         $affected=$this->db->affectedRows();
         if ($affected > 0) {
             return extJson(true, [], []);

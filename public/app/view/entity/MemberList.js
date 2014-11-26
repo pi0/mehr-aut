@@ -3,7 +3,7 @@ var columns = Ext.clone(Ahura.userColumns);
 var roleCol = {
     header: 'وضعیت',
     dataIndex: 'roleText',
-    width: 80
+    width: 120
 };
 var delCol = {
     menuDisabled: true,

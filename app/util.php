@@ -148,7 +148,7 @@ function paginator($query, $params, $type = null)
 function jsonResponse($response, $type = 'application/json')
 {
     header('Content-Type: ' . $type);
-    echo json_encode($response);
+    echo json_encode($response,JSON_UNESCAPED_UNICODE);
 }
 
 function ellipsis($text, $max = 500, $append = '…')

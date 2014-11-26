@@ -56,9 +56,9 @@ class UserController extends ControllerBase
             );
 
             if (password_verify($request['password'], $data['password'])) {
-                $user = $this->di['db']->fetchOne('SELECT id FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC,
+                $user = $this->di['db']->fetchOne('SELECT id,firstName,lastName FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC,
                     ['username' => $request['username']]);
-                $userModel = User::findFirst(['username' => $request['username']]);
+                $userModel = User::findFirst('username="'.$request['username'].'"');
                 $this->getDI()['session']->set('auth', $user['id']);
                 $this->getDI()['session']->set('user', $userModel);
                 $this->user = $userModel;
@@ -82,6 +82,8 @@ class UserController extends ControllerBase
         $request = $this->request->getJsonRawBody();
         $this->view->disable();
         $new = $request->newPassword;
+//        var_dump($request);
+//        var_dump($user->toArray());
         if (!password_verify($request->password, $user->password)) {
             http_response_code(422);
             jsonResponse(['message' => 'گذرواژه فعلی درست نیست.']);

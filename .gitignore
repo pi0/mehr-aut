@@ -12,7 +12,6 @@ Thumbs.db
 .sass-cache/
 public/vendor/
 *-temp*
-public/vendor/
 vendor/
 public/assets/img/bg/
 public/assets/program-img/

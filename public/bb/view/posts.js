@@ -20,7 +20,7 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
 //        this.collection.fetch({data: {id: 3}});
 //        console.log(form);
 
-        var type = $(e.tffdarget).attr('value');
+        var type = $(e.target).attr('value');
         if (type == 'program') {
             $('.post-filter-box').slideDown();
         } else {

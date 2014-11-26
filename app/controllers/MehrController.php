@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../../vendor/ExtDirect/ExtDirect.php';
+error_reporting(E_STRICT);
 
 class MehrController extends ControllerBase
 {
@@ -17,12 +18,9 @@ class MehrController extends ControllerBase
 
     public function apiAction()
     {
-//        var_dump($this->session->role);
-//        var_dump($this->session->user);
-//        die();
         $this->view->disable();
         ExtDirect::$namespace = 'RPC';
-        ExtDirect::$url = 'api';
+        ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug = true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
         ExtDirect::$form_handlers = array('ProgramApi::create', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create');
