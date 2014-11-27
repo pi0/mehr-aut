@@ -6,13 +6,6 @@ class Enroller extends Phalcon\Mvc\Model
 {
 }
 
-class ProgramList extends Phalcon\Mvc\Model
-{
-    public function getSource()
-    {
-        return "programlist";
-    }
-}
 
 
 class ProgramApi extends BaseApi
@@ -40,6 +33,51 @@ class ProgramApi extends BaseApi
             $children = [];
         }
         return $data;
+    }
+
+    function canEnroll($userId,$programId){
+        $program = ProgramList::findFirst("id=$programId");
+
+        if($program->executionStatus!='f'){
+            return 'isPast' . $program->executionStatus;
+        }
+        $audience = $program->audience;
+        $query = $this->queryBuilder('UserList')->columns(['UserList.id']);
+        $audience = unserialize($audience);
+        foreach ($audience as $k => $v) {
+            switch ($k) {
+                case 'entityMember':
+                    $query->join('EntityMember', 'EntityMember.userId=UserList.id');
+                    $query->inWhere('entityId', $v);
+                    break;
+                case 'sex':
+                    if ($v == 'm' or $v == 'f') {$query->andWhere('sex=?0', [$v]);}
+                    break;
+                case 'educationStatus':
+                    if ($v == 'current')
+                        $query->andWhere('endTerm is null');
+                    if ($v == 'finished')
+                        $query->andWhere('endTerm is not null');
+                    break;
+                case 'religion':
+                case 'nationality':
+                case 'degree':
+                case 'course':
+                case 'college':
+                case 'department':
+                    $extraFilter[] = ['type' => 'list', 'field' => $k, 'value' => $v];
+                    break;
+            }
+        }
+        $query->andWhere('UserList.id=?0',[$userId]);
+        if($query->getQuery()->execute()->count() == 0)
+            return 'notValid';
+        if($program->enrollmentStatus == 'c' && $program->enrollerCount >= $program->maxCapacity)
+            return 'enroll';
+        else
+            return 'reserved';
+
+
     }
 
     function read($params)

@@ -23,6 +23,10 @@ class ApiController extends Phalcon\Mvc\Controller
                 ->orderBy('executionStartDate desc')
             ;
 
+            if (isset($filter['text']) && $filter['text'] != null)
+                $query->where($table . '.details like :s: OR name like :t:',
+                    ['s' => '%'.$filter['text'].'%','t' => '%'.$filter['text'].'%']);
+
             if (isset($filter['subject']) && $filter['subject'] != null) {
                 $query->where($table . '.subject = :s:', ['s' => $filter['subject']]);
             }
@@ -80,6 +84,8 @@ class ApiController extends Phalcon\Mvc\Controller
 
         $app->get('/api/program/{id}', function ($id = null) {
             $data = $this->di['db']->fetchOne('select * from programList where id=:id', Phalcon\Db::FETCH_ASSOC, ['id' => $id]);
+            $pApi = new ProgramApi;
+            $data['status'] = $pApi->canEnroll($this->di['session']['user']->id,$id);
             jsonResponse($data);
         });
 

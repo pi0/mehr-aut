@@ -85,6 +85,8 @@
             <form>
                 <div class="filter-main-entity">
                     <span>نمایش: </span>
+                    <input type="radio" value="news" checked name="postType" id="news"/>
+                    <label for="news">اخبار</label>
                     <input type="radio" value="program" checked name="postType" id="program"/>
                     <label for="program">برنامه‌ها</label>
                     <input type="radio" value="membership" name="postType" id="membership"/>
@@ -225,16 +227,18 @@
                     </tr>
                     <tr class="buttons">
                         <td colspan="2">
-                            {{#if isAllowed}}
-                            {{#if enroll}}
+                            {{#is status 'enroll'}}
                             <a href="#program/{{id}}" class="button">ثبت‌نام</a>
-                            {{/if}}
-                            {{#if overenroll}}
+                            {{/is}}
+                            {{#is status 'reserve'}}
                             <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
-                            {{/if}}
-                            {{else}}
+                            {{/is}}
+                            {{#is status 'notValid'}}
                             شما واجد شرایط نام‌نویسی در این برنامه نیستید.
-                            {{/if}}
+                            {{/is}}
+                            {{#is status 'isPast'}}
+                            این برنامه برگزار شده است.
+                            {{/is}}
                         </td>
                     </tr>
                 </table>
