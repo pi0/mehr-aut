@@ -1,2 +1,3 @@
-mysqldump -d                 -u root mehr2                         > schema.sql
-mysqldump  --no-create-info  -u root mehr2 constant country degree > constant-tables.sql
+REM mysqldump -d --skip-add-drop-table --routines --triggers --events -u root mehr   > schema-if-not-exist.sql --ignore-table=mehr.programlist 
+mysqldump -d                       --routines --triggers --events -u root mehr   > schema.sql
+mysqldump --no-create-info   -u root mehr constant country degree               > constant-tables.sql
