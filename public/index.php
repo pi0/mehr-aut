@@ -8,8 +8,8 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 //require_once 'firelogger.php';
 //require_once '../vendor/jdf.php';
 require_once '../vendor/IntlDateTime/IntlDateTime.php';
+require_once "../vendor/Ahura/Util.php";
 require_once '../app/util.php';
-
 spl_autoload_register(function($className) {
     if (strpos($className, 'App\Models') !== false) {
         eval("class $className extends \App\Models\BaseModel { };");

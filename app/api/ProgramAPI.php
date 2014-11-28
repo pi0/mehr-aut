@@ -37,7 +37,6 @@ class ProgramApi extends BaseApi
 
     function canEnroll($userId,$programId){
         $program = ProgramList::findFirst("id=$programId");
-
         if($program->executionStatus!='f'){
             return 'isPast' . $program->executionStatus;
         }

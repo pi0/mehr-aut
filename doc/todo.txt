@@ -1,0 +1,15 @@
+تاریخ عضویت
+عضویت پیش‌فرض
+وضعیت در لیست
+عضویت‌ها
+فیلتر کردن
+نقش
+
+TODO:
+ _ Filter Preview
+ _ Program Status
+ _ Council roles
+ _ single manager
+ _ reserved enrollment
+ _ Program Filter
+ _ Display enrollment date in grid

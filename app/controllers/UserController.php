@@ -2,8 +2,6 @@
 
 class UserController extends ControllerBase
 {
-    public $user = null;
-
     public function initialize()
     {
         $this->view->setTemplateAfter('main');
@@ -51,17 +49,13 @@ class UserController extends ControllerBase
         $this->view->disable();
         {
             $request = (array)$this->request->getJsonRawBody();
-            $data = $this->di['db']->fetchOne(
-                'SELECT id, password,active FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC, ['username' => $request['username']]
-            );
+            $user = User::findFirstByUsername($request['username']);
 
-            if (password_verify($request['password'], $data['password'])) {
-                $user = $this->di['db']->fetchOne('SELECT id,firstName,lastName FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC,
-                    ['username' => $request['username']]);
-                $userModel = User::findFirst('username="'.$request['username'].'"');
-                $this->getDI()['session']->set('auth', $user['id']);
+            if (password_verify($request['password'], $user->password)) {
+                $userModel = User::findFirst('username="' . $request['username'] . '"');
+                $this->getDI()['session']->set('auth', $user->id);
                 $this->getDI()['session']->set('user', $userModel);
-                $this->user = $userModel;
+                self::$user = $user;
                 jsonResponse($user);
             } else {
                 http_response_code(401);
