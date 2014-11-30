@@ -1,4 +1,8 @@
 'use strict';
+
+app.CurrentUser = Backbone.Model.extend({
+    url: 'user/currentUser'
+});
 app.Auth = Backbone.Model.extend({
     url: "user/login",
     defaults: {
@@ -25,7 +29,6 @@ app.LoginView = Backbone.Marionette.ItemView.extend({
     template: '#login-tpl',
     model: new app.Auth,
     initialize: function () {
-
         Backbone.Validation.bind(this);
     },
     events: {
@@ -50,6 +53,5 @@ app.LoginView = Backbone.Marionette.ItemView.extend({
             }
         });
     }
-    // Re-render the titles of the post item.
 });
 

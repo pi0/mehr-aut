@@ -1,5 +1,9 @@
+<form action="lab.php">
+    <input type="" name="x[]"/>
+    <input type="" name="x[]"/>
+    <input type="" name="x[]"/>
+    <input type="submit" value=""/>
+</form>
+
 <?php
-session_start();
-//$_SESSION['x']=3;
-var_dump($_SESSION);
-//session_unset();
+var_dump($_REQUEST);

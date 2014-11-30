@@ -7,7 +7,7 @@ class BaseApi extends Phalcon\DI\Injectable
         return $query = $this->modelsManager->createBuilder()->from($table);
     }
 
-    public function extFilter($query, $params = [], $blackList = [], $extraFilter = [])
+    static public function extFilter($query, $params = [], $blackList = [], $extraFilter = [])
     {
         $params = array_merge([
                 'start' => 0,
@@ -22,7 +22,6 @@ class BaseApi extends Phalcon\DI\Injectable
             $extraFilter = array_merge($extraFilter, json_decode($params['filter'], true));
         }
 
-
         foreach ($extraFilter as $filter) {
             if (!preg_match('#[a-zA-Z]#u', $filter['field']) or in_array($filter['field'], $blackList)) {
                 echo 'Error: Invalid: ' . $filter['field'];;
@@ -30,24 +29,24 @@ class BaseApi extends Phalcon\DI\Injectable
             }
             switch ($filter['type']) {
                 case 'string' :
-                    $query->where($filter['field'] . ' like ?0', ['%' . $filter['value'] . '%']);
+                    $query->andWhere($filter['field'] . ' like ?0', ['%' . $filter['value'] . '%']);
                     Break;
                 case 'list' :
                     $query->inWhere($filter['field'], $filter['value']);
                     Break;
                 case 'boolean' :
-                    $query->where($filter['field'] . ' = ?0', [$filter['value']]);
+                    $query->andWhere($filter['field'] . ' = ?0', [$filter['value']]);
                     Break;
                 case 'numeric' :
                     switch ($filter['comparison']) {
                         case 'eq' :
-                            $query->where($filter['field'] . ' = ?0', [$filter['value']]);
+                            $query->andWhere($filter['field'] . ' = ?0', [$filter['value']]);
                             Break;
                         case 'lt' :
-                            $query->where($filter['field'] . ' < ?0', [$filter['value']]);
+                            $query->andWhere($filter['field'] . ' < ?0', [$filter['value']]);
                             Break;
                         case 'gt' :
-                            $query->where($filter['field'] . ' > ?0', [$filter['value']]);
+                            $query->andWhere($filter['field'] . ' > ?0', [$filter['value']]);
                             Break;
                     }
                     Break;
@@ -55,13 +54,13 @@ class BaseApi extends Phalcon\DI\Injectable
                     $date = date('Y-m-d', strtotime($filter['value']));
                     switch ($filter['comparison']) {
                         case 'eq' :
-                            $query->where($filter['field'] . ' = ?0', [$date]);
+                            $query->andWhere($filter['field'] . ' = ?0', [$date]);
                             Break;
                         case 'lt' :
-                            $query->where($filter['field'] . ' < ?0', [$date]);
+                            $query->andWhere($filter['field'] . ' < ?0', [$date]);
                             Break;
                         case 'gt' :
-                            $query->where($filter['field'] . ' > ?0', [$date]);
+                            $query->andWhere($filter['field'] . ' > ?0', [$date]);
                             Break;
                     }
                     Break;

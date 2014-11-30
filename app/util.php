@@ -28,7 +28,7 @@ function toJsArray(array $arr)
 {
     $result = [];
     foreach ($arr as $k => $v) {
-        $vv=array_values($v);
+        $vv = array_values($v);
         $result[] = '["' . $vv[0] . '","' . $vv[1] . '"]';
     }
     return '[' . implode(',', $result) . ']';
@@ -148,7 +148,7 @@ function paginator($query, $params, $type = null)
 function jsonResponse($response, $type = 'application/json')
 {
     header('Content-Type: ' . $type);
-    echo json_encode($response,JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
 function ellipsis($text, $max = 500, $append = '…')
@@ -164,5 +164,34 @@ function ellipsis($text, $max = 500, $append = '…')
     return mb_substr($text, 0, $max) . $append;
 }
 
-//echo ellipsis('سیشبشسی بشسیم بسشکیب سیکب ', 10);
-
+function applyAudience(&$query, $audience)
+{
+    $aud = array_filter(unserialize($audience));
+    foreach ($aud as $k => $v) {
+        if ($v <> [''] and $v) {
+            switch ($k) {
+                case 'sex':
+                    if ($v == 'm' or $v == 'f') $query->andWhere('sex=:sex:', ['sex' => $v]);
+                    break;
+                case 'entityMember':
+                    $query->join('EntityMember', 'EntityMember.userId=User.id');
+                    $query->inWhere('entityId', $v);
+                    break;
+                case 'educationStatus':
+                    if ($v == 'current')
+                        $query->where('endTerm is null');
+                    if ($v == 'finished')
+                        $query->where('endTerm is not null');
+                    break;
+                case 'religion':
+                case 'nationality':
+                case 'degree':
+                case 'course':
+                case 'college':
+                case 'department':
+                    $query->inWhere($k, $v);
+                    break;
+            }
+        }
+    }
+}

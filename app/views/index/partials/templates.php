@@ -221,25 +221,13 @@
                         <td class="name">وضعیت :</td>
                         <td>{{def executionStatusText}}</td>
                     </tr>
+
                     <tr>
                         <td class="name">مکان برگزاری:</td>
                         <td>{{def location}}</td>
                     </tr>
                     <tr class="buttons">
-                        <td colspan="2">
-                            {{#is status 'enroll'}}
-                            <a href="#program/{{id}}" class="button">ثبت‌نام</a>
-                            {{/is}}
-                            {{#is status 'reserve'}}
-                            <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
-                            {{/is}}
-                            {{#is status 'notValid'}}
-                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
-                            {{/is}}
-                            {{#is status 'past'}}
-                            این برنامه برگزار شده است.
-                            {{/is}}
-                        </td>
+                        <td colspan="2"></td>
                     </tr>
                 </table>
             </div>
@@ -249,6 +237,31 @@
             <p class="details">{{details}}</p>
 
 
+            {{#is status 'ok'}}
+                <div class="program-actions alert alert-info">
+                    <a href="#program/{{id}}" class="button">ثبت‌نام</a>
+                </div>
+            {{/is}}
+            {{#is status 'reserve'}}
+                <div class="program-actions alert alert-info">
+                    <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
+                </div>
+            {{/is}}
+            {{#is status 'notEligible'}}
+                <div class="program-actions alert alert-warning">
+                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+                </div>
+            {{/is}}
+            {{#is status 'past'}}
+                <div class="program-actions alert alert-info">
+                این برنامه برگزار شده است.
+                </div>
+            {{/is}}
+            {{#is status 'enrollmentInFuture'}}
+                <div class="program-actions alert alert-info">
+                نام‌نویسی این برنامه‌ هنوز آغاز نشده است.
+                </div>
+            {{/is}}
         </div>
 
     </div>

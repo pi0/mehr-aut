@@ -4,32 +4,10 @@ class ApiController extends ControllerBase
 {
     private function inAudience($id, $audience)
     {
-        $audiences = array_filter($audience);
-        foreach ($audiences as $k => $v) {
-            switch ($k) {
-                case 'sex':
-                    if ($v == 'm' or $v == 'f') $query->where('sex=?0', [$v]);
-                    break;
-                case 'entityMember':
-                    $query->join('EntityMember', 'EntityMember.userId=UserList.id');
-                    $query->inWhere('entityId', $v);
-                    break;
-                case 'educationStatus':
-                    if ($v == 'current')
-                        $query->where('endTerm is null');
-                    if ($v == 'finished')
-                        $query->where('endTerm is not null');
-                    break;
-                case 'religion':
-                case 'nationality':
-                case 'degree':
-                case 'course':
-                case 'college':
-                case 'department':
-                    $extraFilter[] = ['type' => 'list', 'field' => $k, 'value' => $v];
-                    break;
-            }
-        }
+        $query = $this->modelsManager->createBuilder()->from('User')->columns('User.id');
+        $query->andWhere('User.id=:id:', ['id' => $id]);
+        applyAudience($query, $audience);
+        return $result = $query->getQuery()->execute()->count();
     }
 
     protected function initialize()
@@ -43,7 +21,6 @@ class ApiController extends ControllerBase
         $app->setDI($this->di);
         $app->get('/api/post', function ($id = null) use ($app) {
             $filter = $_REQUEST;
-//            var_dump($filter);die();
             @$filter['postType'] || $filter['postType'] = 'program';
             $table = ucfirst($filter['postType']);
             $query = $this->modelsManager->createBuilder()
@@ -51,14 +28,14 @@ class ApiController extends ControllerBase
                 ->orderBy('executionStartDate desc');
 
             if (isset($filter['text']) && $filter['text'] != null)
-                $query->where($table . '.details like :s: OR name like :t:',
+                $query->andWhere($table . '.details like :s: OR name like :t:',
                     ['s' => '%' . $filter['text'] . '%', 't' => '%' . $filter['text'] . '%']);
 
             if (isset($filter['subject']) && $filter['subject'] != null) {
-                $query->where($table . '.subject = :s:', ['s' => $filter['subject']]);
+                $query->andWhere($table . '.subject = :s:', ['s' => $filter['subject']]);
             }
             if (isset($filter['type']) && $filter['type'] != null) {
-                $query->where($table . '.type = :s:', ['s' => $filter['type']]);
+                $query->andWhere($table . '.type = :s:', ['s' => $filter['type']]);
             }
 
             $data = $query->getQuery()->execute()->toArray();
@@ -69,13 +46,6 @@ class ApiController extends ControllerBase
             } catch (\Phalcon\Exception $e) {
                 var_dump($e);
             }
-
-//            var_dump($data);
-//            die();
-
-//        $resultset->to
-//            var_dump($resultset->toArray());
-//            die();
 
             if ($filter['postType'] == 'program') {
 //                $data = $this->di['db']->fetchAll('select * from program', Phalcon\Db::FETCH_ASSOC);
@@ -105,18 +75,31 @@ class ApiController extends ControllerBase
                 ->where('userId=?0', [$this->user->id]);
             var_dump($this->user->id);
 //            $data = $this->di['db']->fetchAll('select * from programenroller', Phalcon\Db::FETCH_ASSOC);
-            jsonResponse($data);
+//            jsonResponse($data);
         });
         $app->get('/api/program/{id}', function ($id = null) {
-            $data = $this->di['db']->fetchOne('SELECT * FROM programList WHERE id=:id', Phalcon\Db::FETCH_ASSOC, ['id' => $id]);
-            $pApi = new ProgramApi;
-            if (isset($this->di['session'])) {
-                $data['status'] = 'guest'; // need to log in
-            } else {
-                die($this->inAudience($this->di['session']['user']->id,$id));
-//                $data['status'] = $pApi->canEnroll($this->di['session']['user']->id, $id);
+            $program = ProgramList::findFirstById($id);
+            $uid = $this->di['session']['auth'];
+            if ($program->executionStatus == 'p') {
+                $program->status = 'executed';
+            } elseif ($program->enrollmentStatus == 'f') {
+                $program->status = 'enrollmentInFuture';
+            } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus = 'p' and $program->executoinStatus = 'f')) {
+                if (!isset($this->di['session']['auth'])) {
+                    $program->status = 'guest'; // need to log in
+                } elseif ($this->inAudience($uid, $program->audience)) {
+                    if ($program->enrollmentStatus == 'c') {
+                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
+                            $program->status = 'full';
+                        } else {
+                            $program->status = 'ok';
+                        }
+                    } else {
+                        $program->status = 'notEligible';
+                    }
+                }
             }
-            jsonResponse($data);
+            jsonResponse($program);
         });
 
         $app->notFound(function () use ($app) {
@@ -126,7 +109,8 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 
-    public function membershipAction()
+    public
+    function membershipAction()
     {
         $app = new Phalcon\Mvc\Micro();
         $app->setDI($this->di);
