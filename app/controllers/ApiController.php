@@ -21,40 +21,43 @@ class ApiController extends ControllerBase
         $app->setDI($this->di);
         $app->get('/api/post', function ($id = null) use ($app) {
             $filter = $_REQUEST;
-            @$filter['postType'] || $filter['postType'] = 'program';
-            $table = ucfirst($filter['postType']);
+            $type = @$filter['postType'] ? $filter['postType'] : 'program';
+
             $query = $this->modelsManager->createBuilder()
-                ->from($table)
-                ->orderBy('executionStartDate desc');
+                ->orderBy('cDate desc');
 
-            if (isset($filter['text']) && $filter['text'] != null)
-                $query->andWhere($table . '.details like :s: OR name like :t:',
-                    ['s' => '%' . $filter['text'] . '%', 't' => '%' . $filter['text'] . '%']);
-
-            if (isset($filter['subject']) && $filter['subject'] != null) {
-                $query->andWhere($table . '.subject = :s:', ['s' => $filter['subject']]);
+            switch ($type) {
+                case 'program':
+                    $query->from('ProgramList');
+                    if (isset($filter['text']) && $filter['text'] != null)
+                        $query->andWhere('.details like :s: OR name like :t:',
+                            ['s' => '%' . $filter['text'] . '%', 't' => '%' . $filter['text'] . '%']);
+                    if (isset($filter['subject']) && $filter['subject'] != null) {
+                        $query->andWhere('.subject = :s:', ['s' => $filter['subject']]);
+                    }
+                    if (isset($filter['type']) && $filter['type'] != null) {
+                        $query->andWhere('.type = :s:', ['s' => $filter['type']]);
+                    }
+                    break;
+                case 'entity':
+                    $query->from('EntityList');
+                    break;
+                case 'news':
+                    $query->from('News');
+                    break;
+                default:
+                    die("Error!");
             }
-            if (isset($filter['type']) && $filter['type'] != null) {
-                $query->andWhere($table . '.type = :s:', ['s' => $filter['type']]);
-            }
 
-            $data = $query->getQuery()->execute()->toArray();
             try {
+                $data = $query->getQuery()->execute()->toArray();
                 foreach ($data as $k => $v) {
                     $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 }
+                jsonResponse($data);
             } catch (\Phalcon\Exception $e) {
-                var_dump($e);
+                echo $e;
             }
-
-            if ($filter['postType'] == 'program') {
-//                $data = $this->di['db']->fetchAll('select * from program', Phalcon\Db::FETCH_ASSOC);
-            } elseif ($filter['postType'] == 'membership') {
-
-            } elseif ($filter['postType'] == 'election') {
-
-            }
-            jsonResponse($data);
         });
         $app->get('/api/post/{id}', function ($id = null) {
             echo "<h1>Welcome $id!</h1>";
@@ -101,7 +104,6 @@ class ApiController extends ControllerBase
             }
             jsonResponse($program);
         });
-
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
             echo 'This is crazy, but this page was not found!';
@@ -109,8 +111,7 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 
-    public
-    function membershipAction()
+    public function membershipAction()
     {
         $app = new Phalcon\Mvc\Micro();
         $app->setDI($this->di);

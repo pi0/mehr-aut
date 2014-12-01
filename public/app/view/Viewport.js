@@ -103,6 +103,13 @@ Ext.create("Ext.toolbar.Toolbar", {
                 },
 
                 {
+                    text: 'دوره‌های نهادها',
+                    icon: icon('users'),
+                    handler: function () {
+                        Ext.create('Mehr.view.council.List');
+                    }
+                },
+                {
                     text: 'نشریه‌ها',
                     icon: icon('newspaper'),
                     handler: function () {
@@ -189,12 +196,18 @@ Ext.create("Ext.toolbar.Toolbar", {
             menu: [
                 {
                     text: 'خبرها',
-                    icon: icon('newspaper')
+                    icon: icon('newspaper'),
+                    handler:function(){
+                        Ext.create('Mehr.view.news.List');
+                    }
                 },
 
                 {
                     text: 'خبر نو',
-                    icon: icon('add')
+                    icon: icon('add'),
+                    handler: function () {
+                        Ext.create('Mehr.view.news.Edit');
+                    }
                 }
             ]
         },

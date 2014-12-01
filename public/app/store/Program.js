@@ -1,6 +1,5 @@
-    Ext.define('Mehr.store.Program', {
+Ext.define('Mehr.store.Program', {
     extend: 'Ahura.store.Direct',
-//    storeId:'program',
     fields: [
         "id",
         "name",

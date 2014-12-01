@@ -101,7 +101,7 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'شماره ملی',
                                     emptyText: "تنها شماره وارد نمایید.",
                                     name: 'nid',
-                                    xtype: 'integer',
+                                    xtype: 'textfield',
                                     minLength: 10,
                                     maxLength: 10,
                                     enforceMaxLength: true

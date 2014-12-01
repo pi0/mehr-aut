@@ -10,28 +10,21 @@ class CouncilApi extends BaseApi
             $data = $this->db->fetchOne("SELECT * FROM council WHERE id=:id", Phalcon\Db::FETCH_ASSOC, ['id' => $params['id']]);
             return (['data' => fromDB($data), 'success' => true]);
         } else {
-            if (!isset($params['userId']) and !isset($params['entityId'])) {
-                return ['success' => 'false', 'errors' => ['Incomplete Request']];
-            }
             $whitList = [];
             $query = $this->queryBuilder('CouncilList');
             if (isset($params['userId'])) {
                 $query->join('CouncilMember', ' CouncilList.id=entityId ')->where('CouncilList.userId=?0', [$params['userId']]);
-            } else {
+            } elseif (isset($params['userId'])) {
                 $query->where('entityId=?0', [$params['entityId']]);
             };
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);
-//            $data =  $this->db->fetchAll("select * from councillist where  entityId=:entityId   ", Phalcon\Db::FETCH_ASSOC, ['entityId' => $params->entityId]);
-//            $total = $this->db->fetchAll("select count(*) from Council  where entityId=:entityId", Phalcon\Db::FETCH_NUM, ['entityId' => $params->entityId]);
-//            return (['data' => $data, 'total' => $total[0][0]]);
         }
     }
 
     function create()
     {
         $data = $_REQUEST;
-//        print_r($data);
         formPreProcess($data);
         $p = new Council();
         if ($p->save($data)) {

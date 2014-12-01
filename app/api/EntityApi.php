@@ -78,4 +78,6 @@ class EntityApi extends BaseApi
         $data = $this->db->fetchAll("SELECT id ,concat(typeText,' ',name) AS text FROM entitylist WHERE fullName LIKE :query LIMIT 20", Phalcon\Db::FETCH_ASSOC, ['query' => '%' . $params->query . '%']);
         return ($data);
     }
+
+    function destroy(){}
 }

@@ -36,6 +36,10 @@ Ext.application({
 });
 
 Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.ux.grid.FiltersFeature',
+    'Ext.toolbar.Paging',
     'Ext.ux.Jalali',
     'Ext.ux.JalaliDate',
     'Ext.ux.JalaliDatePlugin',
@@ -109,7 +113,6 @@ Ahura.button.SaveForm = {
                 params: {
                 },
                 success: function (form, action) {
-//                            Ext.Msg.alert('Success', action.result.message);
                     Ext.MessageBox.show({
                         scope: win,
                         rtl: true,

@@ -85,14 +85,14 @@
             <form>
                 <div class="filter-main-entity">
                     <span>نمایش: </span>
+                    <input type="radio" value="all" checked name="postType" id="all"/>
+                    <label for="all">همه</label>
                     <input type="radio" value="news" checked name="postType" id="news"/>
                     <label for="news">اخبار</label>
                     <input type="radio" value="program" checked name="postType" id="program"/>
                     <label for="program">برنامه‌ها</label>
-                    <input type="radio" value="membership" name="postType" id="membership"/>
-                    <label for="membership">عضویت‌ها</label>
-                    <input type="radio" value="election" name="postType" id="election"/>
-                    <label for="election">انتخابات‌ها</label>
+                    <input type="radio" value="entity" name="postType" id="entity"/>
+                    <label for="entity">نهادها و تشکل‌ها</label>
                 </div>
                 <div class="post-filter-box">
                     <div class="filter-options">
