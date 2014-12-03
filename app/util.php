@@ -11,7 +11,6 @@ require_once '../app/config/services.php';
 function extJson($success = true, array $data = null, $errors = [])
 {
     $extError = [];
-//    var_dumpf($errors);die();
 
     foreach ($errors as $k => $e) {
         if ($e instanceof Phalcon\Mvc\Model\MessageInterface) {
@@ -79,7 +78,6 @@ function formPostProcess(&$data)
 
 function formPreProcess(&$data)
 {
-//    print_r($data);
     $audience = [];
     foreach ($data as $k => $v) {
         if ($v === '') {

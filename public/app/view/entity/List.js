@@ -83,6 +83,5 @@
             grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
             grid.getStore().load();
         }
-
     });
 })()

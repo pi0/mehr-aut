@@ -332,7 +332,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                     text: "وبگاه شرکت",
                     icon: icon('world'),
                     handler: function (b, e) {
-                        window.location = 'http://www.ahurait.com';
+                        window.open('http://www.ahurait.com','_blank') ;
                     }
                 },
                 {
@@ -376,7 +376,5 @@ Ext.create("Ext.toolbar.Toolbar", {
 
 Ext.define('Mehr.view.Viewport', {
     itemId: 'vp',
-    //    layout: 'fit',
-    //layout: 'border',
     items: []
 });

@@ -5,7 +5,9 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
         template: '#empty-post-tpl'
     }),
     childViewContainer: '.post-models',
-    model: new Backbone.Model({store: Ahura.store}),
+    model: new Backbone.Model({
+        store: Ahura.store
+    }),
     initialize: function (param) {
 //        var me = this;
 //        me.collection = new app.Posts;
@@ -17,12 +19,8 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
     },
     'filterEntity': function (e) {
         var type = $(e.target).attr('value');
-        if (type == 'program') {
-            $('.post-filter-box').slideDown();
-        } else {
-            $('.post-filter-box').slideUp();
-        }
-        this.filterSubmit(e);
+
+        Backbone.history.navigate(type, {trigger: true});
     },
     'filterSubmit': function (e) {
         e.preventDefault();

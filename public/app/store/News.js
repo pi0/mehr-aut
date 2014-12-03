@@ -1,13 +1,13 @@
-Ext.define('Mehr.model.News', {
-    extend: 'Ext.data.Model',
-    fields: ['id','title','subject','name','desc'],
-    proxy: {
-        type: 'direct',
-        api: {
-            read: 'RPC.NewsApi.read',
-            destroy: 'RPC.NewsApi.destroy',
-            create: 'RPC.NewsApi.create',
-            update: 'RPC.NewsApi.create'
+Ext.define('Mehr.store.News', {
+        extend: 'Ext.data.Store',
+        autoLoad: true,
+        autoSync: true,
+        batchUpdateMode: 'complete',
+        model: 'Mehr.model.News',
+        reader: {
+            type: 'json',
+            root: 'data',
+            totalProperty: 'total'
         }
     }
-});
+);

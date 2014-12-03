@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../config/services.php';
 
 class NewsApi extends BaseApi
@@ -20,9 +19,9 @@ class NewsApi extends BaseApi
             return (['data' => $data, 'success' => true]);
         } else {
             $whitList = [];
-            $query = $this->queryBuilder('NewsList');
+            $query = $this->queryBuilder('News');
             if (isset($params['userId'])) {
-                $query->join('NewsMember', ' NewsList.id=newsId ')
+                $query->join('NewsMember', ' News.id=newsId ')
                     ->where('userId=?0', [$params['userId']]);
             };
             $response = $this->extFilter($query, $params, $whitList);
@@ -33,7 +32,7 @@ class NewsApi extends BaseApi
     function create()
     {
         $data = $_REQUEST;
-        formPreProcess($data);
+//        formPreProcess($data);
         $news = new News();
         if ($news->save($data)) {
             return extJson(true, $news->toArray());
@@ -41,7 +40,8 @@ class NewsApi extends BaseApi
             return extJson(false, $news->toArray(), extErrors($news->getMessages()));
         }
     }
-    function destroy(){
+
+    function destroy($params){
 
     }
 }

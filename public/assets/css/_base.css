@@ -434,7 +434,7 @@ body, input, textarea, button, select {
   font-size: 12px; }
 
 body {
-  background: url("../img/bg/03.JPG");
+  background: url("../../03.jpg");
   background-size: 100%;
   background-attachment: fixed;
   background-repeat: repeat-y; }

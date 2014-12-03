@@ -7,36 +7,21 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
-    models: ['User', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    stores: ['User', 'News', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    models: ['User','News', 'Enroller', 'CouncilMember', 'Council', 'Member'],
     autoCreateViewport: true,
     paths: {
         'Ahura': BASE + 'ahura',
         'Ext.ux': BASE + 'vendor/ext-ux'
     },
     controllers: [
-//        'Users',
-//        'Audiences'
     ],
     launch: function () {
-//        Ext.create('Mehr.view.user.Edit');
-        Ext.create('Mehr.view.program.List');
-//        var win = Ext.create('Mehr.view.user.Role');
-//        var win = Ext.create("Mehr.view.program.Edit", {
-//            info: {
-//                get: function () {
-//                    return 9;
-//                }
-//            }
-//        });
-
-
+        Ext.create('Mehr.view.news.List');
     }
-
 });
 
 Ext.require([
-    'Ext.grid.*',
     'Ext.data.*',
     'Ext.ux.grid.FiltersFeature',
     'Ext.toolbar.Paging',

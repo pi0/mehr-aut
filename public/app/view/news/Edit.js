@@ -6,12 +6,13 @@
         width: 800,
         items: {
             xtype: 'form',
+            layout: 'form',
             submitEmptyText: false,
             paramsAsHash: true,
             jsonSubmit: true,
             api: {
-                load: RPC.NewsApi.read,
-                submit: RPC.NewsApi.create
+                submit: 'RPC.NewsApi.create',
+                load: 'RPC.NewsApi.read'
             },
             items: [
                 {
@@ -36,10 +37,9 @@
                 {
                     fieldLabel: 'متن',
                     name: 'desc',
-                    xtype: 'htmleditor'
+                    xtype: 'fa-editor'
                 }
-            ],
-            layout: 'form'
+            ]
         },
         buttons: [
             Ahura.button.SaveForm,

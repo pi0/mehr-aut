@@ -1,76 +1,49 @@
 (function () {
     var columns = [
         {
-            xtype: 'actioncolumn',
-            width: 50,
-            items: [
-                {
-                    icon: icon('pencil'),                // Use a URL in the icon config
-                    tooltip: 'ویرایش برنامه',
-                    handler: function (grid, rowIndex, colIndex) {
-                        var id = grid.getStore().getAt(rowIndex).getId();
-                        var panel = Ext.create('Mehr.view.program.Edit');
-                        panel.down('form').getForm().load({params: {id: id}});
-                    }
-                },
-                {
-                    icon: icon('groupAdd'),                // Use a URL in the icon config
-                    tooltip: 'مدیریت نام نوشتگان',
-                    handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                        var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
-                    }
-                }
-            ]
-
+            header: "تاریخ",
+            width: 100,
+            filterable: true,
+            dataIndex: "cDate"
         },
         {
             header: "عنوان",
-            flex: 1,
+            width: 100,
             filterable: true,
             dataIndex: "name"
 
         },
         {
-            header: "تاریخ",
+            header: "متن",
+            flex: 1,
             filterable: true,
-            dataIndex: "cDate"
-        },
-        {
-            header: "موضوع",
-            hidden: true,
-            filter: {
-                type: 'list',
-                store: Ahura.store.ProgramSubject
-            },
-            dataIndex: "subjectText"
+            dataIndex: "name"
         }
     ];
-    Ext.define("Mehr.view.program.Grid", {
+    Ext.define("Mehr.view.news.Grid", {
         extend: "Ahura.grid.Base",
-        xtype: "programsGrid",
+        xtype: "newsGrid",
         columns: columns,
-
         initComponent: function () {
-            this.store = 'Program';
+            this.store = 'News';
             this.callParent(arguments);
             this.down('pagingtoolbar').bindStore(this.store);
         }
     });
 
-    Ext.define("Mehr.view.program.List", {
+    Ext.define("Mehr.view.news.List", {
         extend: "Ahura.window.Grid",
-        alias: "widget.programs",
+        alias: "widget.news",
+        title: 'اخبار',
         info: [],
         items: [
-            {xtype: 'programsGrid'}
+            {xtype: 'newsGrid'}
         ],
         initComponent: function () {
-            this.title = this.info.title || 'برنامه‌ها';
             this.callParent(arguments);
-            var grid = this.down('grid');
-//        this.down('pagingtoolbar').bindStore(grid.getStore());
-            grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
-            grid.getStore().load();
+            //var grid = this.down('grid');
+            //grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+            //grid.getStore().load();
         }
     });
 
