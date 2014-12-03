@@ -20,7 +20,7 @@ Ext.application({
     ],
     launch: function () {
 //        Ext.create('Mehr.view.user.Edit');
-        Ext.create('Mehr.view.program.List');
+        Ext.create('Mehr.view.setting.SystemSettings');
 //        var win = Ext.create('Mehr.view.user.Role');
 //        var win = Ext.create("Mehr.view.program.Edit", {
 //            info: {

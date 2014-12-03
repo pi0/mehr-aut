@@ -289,18 +289,19 @@ Ext.create("Ext.toolbar.Toolbar", {
                     text: 'سامانه',
                     icon: icon('gear'),
                     handler: function (btn) {
-                    },
-                    menu: [
-                        {
-                            text: 'پرداخت الکترونیک',
-                            icon: icon('money')
-                        },
-
-                        {
-                            text: 'سامانه پیامک',
-                            icon: icon('email')
-                        }
-                    ]
+                        Ext.create('Mehr.view.setting.SystemSettings');
+                    }
+                    //, menu: [
+                    //    {
+                    //        text: 'پرداخت الکترونیک',
+                    //        icon: icon('money')
+                    //    },
+                    //
+                    //    {
+                    //        text: 'سامانه پیامک',
+                    //        icon: icon('email')
+                    //    }
+                    //]
 
                 }
             ]
