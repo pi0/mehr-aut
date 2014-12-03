@@ -79,13 +79,18 @@ Ext.define('Mehr.view.entity.Edit', {
                                     name: 'subscription',
                                     inputValue: 1,
                                     xtype: 'checkbox'
+                                },
+                                {
+                                    xtype:'fielfield',
+                                    name:'image',
+                                    fieldLabel:'تصویر تزئینی'
                                 }
                             ]
                         },
                         {
                             frame: false,
                             border: false,
-                            title: 'اساس‌نامه',
+                            title: 'اساسنامه',
                             layout: 'fit',
                             autoScroll: true,
                             items: [

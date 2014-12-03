@@ -253,7 +253,9 @@ SET character_set_client = utf8;
  1 AS `birthdayDate`,
  1 AS `zip`,
  1 AS `provinceId`,
- 1 AS `departmentId`,
+ 1 AS `department`,
+ 1 AS `college`,
+ 1 AS `course`,
  1 AS `startTerm`,
  1 AS `endTerm`,
  1 AS `religion`,
@@ -301,6 +303,7 @@ CREATE TABLE `entity` (
   `type` varchar(3) COLLATE utf8_persian_ci DEFAULT NULL,
   `manager` bigint(20) DEFAULT NULL,
   `cDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `uDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `details` text COLLATE utf8_persian_ci,
   `audience` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
   `councilMembers` int(11) DEFAULT NULL,
@@ -308,7 +311,7 @@ CREATE TABLE `entity` (
   `subscription` tinyint(4) DEFAULT NULL,
   `charter` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,6 +391,28 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table `news`
+--
+
+DROP TABLE IF EXISTS `news`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `news` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `entityId` int(20) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_persian_ci NOT NULL,
+  `type` int(11) DEFAULT NULL,
+  `cDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `uDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `subject` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
+  `audience` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
+  `details` text COLLATE utf8_persian_ci,
+  `image` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6655 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Temporary view structure for view `post`
 --
 
@@ -396,9 +421,11 @@ DROP TABLE IF EXISTS `post`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `post` AS SELECT 
+ 1 AS `tid`,
  1 AS `id`,
  1 AS `type`,
- 1 AS `cDate`*/;
+ 1 AS `cDate`,
+ 1 AS `name`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -504,32 +531,34 @@ SET character_set_client = utf8;
  1 AS `id`,
  1 AS `entityId`,
  1 AS `name`,
- 1 AS `image`,
  1 AS `manager`,
  1 AS `type`,
  1 AS `cDate`,
- 1 AS `enrollmentMethod`,
+ 1 AS `uDate`,
  1 AS `enrollmentStartDate`,
  1 AS `enrollmentEndDate`,
- 1 AS `executionStartDate`,
+ 1 AS `enrollmentMethod`,
  1 AS `executionEndDate`,
+ 1 AS `executionStartDate`,
  1 AS `minCapacity`,
  1 AS `maxCapacity`,
+ 1 AS `cost`,
  1 AS `registerFee`,
  1 AS `paymentMethod`,
- 1 AS `level`,
  1 AS `subject`,
+ 1 AS `level`,
  1 AS `audienceLevel`,
  1 AS `audience`,
  1 AS `planId`,
  1 AS `sessions`,
  1 AS `prerequisites`,
  1 AS `details`,
+ 1 AS `image`,
  1 AS `location`,
- 1 AS `cost`,
  1 AS `projectedCost`,
  1 AS `income`,
- 1 AS `projectedIncome`*/;
+ 1 AS `projectedIncome`,
+ 1 AS `enrollerCount`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -560,7 +589,7 @@ CREATE TABLE `resource` (
   `resourceType` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   `level` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -606,8 +635,10 @@ CREATE TABLE `user` (
   `role_id` bigint(20) DEFAULT NULL,
   `birthdayDate` date DEFAULT NULL,
   `zip` char(13) COLLATE utf8_persian_ci DEFAULT NULL,
-  `provinceId` bigint(20) DEFAULT NULL,
-  `departmentId` bigint(20) DEFAULT NULL,
+  `provinceId` int(11) DEFAULT NULL,
+  `department` int(11) DEFAULT NULL,
+  `college` int(11) DEFAULT NULL,
+  `course` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `startTerm` bigint(20) DEFAULT NULL,
   `endTerm` bigint(20) DEFAULT NULL,
   `religion` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
@@ -621,7 +652,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `user_id` (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `users_ibfk_4` (`provinceId`),
-  KEY `users_ibfk_1` (`departmentId`),
+  KEY `users_ibfk_1` (`department`),
   KEY `users_ibfk_3` (`endTerm`),
   KEY `users_ibfk_2` (`startTerm`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8833812338 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
@@ -657,7 +688,9 @@ SET character_set_client = utf8;
  1 AS `birthdayDate`,
  1 AS `zip`,
  1 AS `provinceId`,
- 1 AS `departmentId`,
+ 1 AS `department`,
+ 1 AS `college`,
+ 1 AS `course`,
  1 AS `startTerm`,
  1 AS `endTerm`,
  1 AS `religion`,
@@ -841,7 +874,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `enrollerlist` AS select `enroller`.`userId` AS `userId`,`enroller`.`programId` AS `programId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `enrollmentDate`,`userlist`.`fullName` AS `fullName`,`userlist`.`id` AS `id`,`userlist`.`username` AS `username`,`userlist`.`password` AS `password`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`nid` AS `nid`,`userlist`.`sid` AS `sid`,`userlist`.`cDate` AS `cDate`,`userlist`.`lastLoginDate` AS `lastLoginDate`,`userlist`.`fatherName` AS `fatherName`,`userlist`.`sex` AS `sex`,`userlist`.`address` AS `address`,`userlist`.`phone` AS `phone`,`userlist`.`mobile` AS `mobile`,`userlist`.`email` AS `email`,`userlist`.`email2` AS `email2`,`userlist`.`role_id` AS `role_id`,`userlist`.`birthdayDate` AS `birthdayDate`,`userlist`.`zip` AS `zip`,`userlist`.`provinceId` AS `provinceId`,`userlist`.`departmentId` AS `departmentId`,`userlist`.`startTerm` AS `startTerm`,`userlist`.`endTerm` AS `endTerm`,`userlist`.`religion` AS `religion`,`userlist`.`dormitory_al` AS `dormitory_al`,`userlist`.`active` AS `active`,`userlist`.`user_type` AS `user_type`,`userlist`.`job_title` AS `job_title`,`userlist`.`countryId` AS `countryId`,`userlist`.`nationality` AS `nationality`,`userlist`.`departemntText` AS `departemntText`,`userlist`.`collegeText` AS `collegeText`,`constant`.`text` AS `statusText` from ((`userlist` join `enroller` on((`userlist`.`id` = `enroller`.`userId`))) left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
+/*!50001 VIEW `enrollerlist` AS select `enroller`.`userId` AS `userId`,`enroller`.`programId` AS `programId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `enrollmentDate`,`userlist`.`fullName` AS `fullName`,`userlist`.`id` AS `id`,`userlist`.`username` AS `username`,`userlist`.`password` AS `password`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`nid` AS `nid`,`userlist`.`sid` AS `sid`,`userlist`.`cDate` AS `cDate`,`userlist`.`lastLoginDate` AS `lastLoginDate`,`userlist`.`fatherName` AS `fatherName`,`userlist`.`sex` AS `sex`,`userlist`.`address` AS `address`,`userlist`.`phone` AS `phone`,`userlist`.`mobile` AS `mobile`,`userlist`.`email` AS `email`,`userlist`.`email2` AS `email2`,`userlist`.`role_id` AS `role_id`,`userlist`.`birthdayDate` AS `birthdayDate`,`userlist`.`zip` AS `zip`,`userlist`.`provinceId` AS `provinceId`,`userlist`.`department` AS `department`,`userlist`.`college` AS `college`,`userlist`.`course` AS `course`,`userlist`.`startTerm` AS `startTerm`,`userlist`.`endTerm` AS `endTerm`,`userlist`.`religion` AS `religion`,`userlist`.`dormitory_al` AS `dormitory_al`,`userlist`.`active` AS `active`,`userlist`.`user_type` AS `user_type`,`userlist`.`job_title` AS `job_title`,`userlist`.`countryId` AS `countryId`,`userlist`.`nationality` AS `nationality`,`userlist`.`departemntText` AS `departemntText`,`userlist`.`collegeText` AS `collegeText`,`constant`.`text` AS `statusText` from ((`userlist` join `enroller` on((`userlist`.`id` = `enroller`.`userId`))) left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -926,12 +959,12 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `post` AS select `program`.`id` AS `id`,'program' AS `type`,`program`.`cDate` AS `cDate` from `program` union select `entity`.`id` AS `id`,'entity' AS `type`,`entity`.`cDate` AS `d` from `entity` order by `cDate` desc */;
+/*!50001 VIEW `post` AS (select concat(cast(unix_timestamp(now()) as char charset utf8mb4),cast((floor((1 + (rand() * 900))) + 100) as char charset utf8mb4)) AS `tid`,`program`.`id` AS `id`,'program' AS `type`,`program`.`cDate` AS `cDate`,`program`.`name` AS `name` from `program`) union (select concat(cast(unix_timestamp(now()) as char charset utf8mb4),cast((floor((1 + (rand() * 900))) + 100) as char charset utf8mb4)) AS `tid`,`entity`.`id` AS `id`,'entity' AS `type`,`entity`.`cDate` AS `d`,`entity`.`name` AS `name` from `entity`) union (select concat(cast(unix_timestamp(now()) as char charset utf8mb4),cast((floor((1 + (rand() * 900))) + 100) as char charset utf8mb4)) AS `tid`,`news`.`id` AS `id`,'news' AS `type`,`news`.`cDate` AS `d`,`news`.`name` AS `name` from `news`) order by `cDate` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -967,7 +1000,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `programuserlist` AS select `program`.`id` AS `id`,`program`.`entityId` AS `entityId`,`program`.`name` AS `name`,`program`.`image` AS `image`,`program`.`manager` AS `manager`,`program`.`type` AS `type`,`program`.`cDate` AS `cDate`,`program`.`enrollmentMethod` AS `enrollmentMethod`,`program`.`enrollmentStartDate` AS `enrollmentStartDate`,`program`.`enrollmentEndDate` AS `enrollmentEndDate`,`program`.`executionStartDate` AS `executionStartDate`,`program`.`executionEndDate` AS `executionEndDate`,`program`.`minCapacity` AS `minCapacity`,`program`.`maxCapacity` AS `maxCapacity`,`program`.`registerFee` AS `registerFee`,`program`.`paymentMethod` AS `paymentMethod`,`program`.`level` AS `level`,`program`.`subject` AS `subject`,`program`.`audienceLevel` AS `audienceLevel`,`program`.`audience` AS `audience`,`program`.`planId` AS `planId`,`program`.`sessions` AS `sessions`,`program`.`prerequisites` AS `prerequisites`,`program`.`details` AS `details`,`program`.`location` AS `location`,`program`.`cost` AS `cost`,`program`.`projectedCost` AS `projectedCost`,`program`.`income` AS `income`,`program`.`projectedIncome` AS `projectedIncome` from ((`program` left join `enroller` on((`program`.`id` = `enroller`.`programId`))) left join `user` on((`user`.`id` = `enroller`.`userId`))) where ((`user`.`id` = 821662215) or isnull(`user`.`id`)) */;
+/*!50001 VIEW `programuserlist` AS select `program`.`id` AS `id`,`program`.`entityId` AS `entityId`,`program`.`name` AS `name`,`program`.`manager` AS `manager`,`program`.`type` AS `type`,`program`.`cDate` AS `cDate`,`program`.`uDate` AS `uDate`,`program`.`enrollmentStartDate` AS `enrollmentStartDate`,`program`.`enrollmentEndDate` AS `enrollmentEndDate`,`program`.`enrollmentMethod` AS `enrollmentMethod`,`program`.`executionEndDate` AS `executionEndDate`,`program`.`executionStartDate` AS `executionStartDate`,`program`.`minCapacity` AS `minCapacity`,`program`.`maxCapacity` AS `maxCapacity`,`program`.`cost` AS `cost`,`program`.`registerFee` AS `registerFee`,`program`.`paymentMethod` AS `paymentMethod`,`program`.`subject` AS `subject`,`program`.`level` AS `level`,`program`.`audienceLevel` AS `audienceLevel`,`program`.`audience` AS `audience`,`program`.`planId` AS `planId`,`program`.`sessions` AS `sessions`,`program`.`prerequisites` AS `prerequisites`,`program`.`details` AS `details`,`program`.`image` AS `image`,`program`.`location` AS `location`,`program`.`projectedCost` AS `projectedCost`,`program`.`income` AS `income`,`program`.`projectedIncome` AS `projectedIncome`,count(`enroller`.`userId`) AS `enrollerCount` from (`program` left join `enroller` on((`program`.`id` = `enroller`.`programId`))) group by `program`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -985,7 +1018,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `userlist` AS select concat(`user`.`firstName`,' ',`user`.`lastName`) AS `fullName`,`user`.`id` AS `id`,`user`.`username` AS `username`,`user`.`password` AS `password`,`user`.`firstName` AS `firstName`,`user`.`lastName` AS `lastName`,`user`.`nid` AS `nid`,`user`.`sid` AS `sid`,`user`.`cDate` AS `cDate`,`user`.`lastLoginDate` AS `lastLoginDate`,`user`.`fatherName` AS `fatherName`,`user`.`sex` AS `sex`,`user`.`address` AS `address`,`user`.`phone` AS `phone`,`user`.`mobile` AS `mobile`,`user`.`email` AS `email`,`user`.`email2` AS `email2`,`user`.`role_id` AS `role_id`,`user`.`birthdayDate` AS `birthdayDate`,`user`.`zip` AS `zip`,`user`.`provinceId` AS `provinceId`,`user`.`departmentId` AS `departmentId`,`user`.`startTerm` AS `startTerm`,`user`.`endTerm` AS `endTerm`,`user`.`religion` AS `religion`,`user`.`dormitory_al` AS `dormitory_al`,`user`.`active` AS `active`,`user`.`user_type` AS `user_type`,`user`.`job_title` AS `job_title`,`user`.`countryId` AS `countryId`,`user`.`nationality` AS `nationality`,`department`.`name` AS `departemntText`,`college`.`name` AS `collegeText` from ((`user` left join `department` on((`department`.`id` = `user`.`departmentId`))) left join `college` on((`college`.`id` = `department`.`collegeId`))) */;
+/*!50001 VIEW `userlist` AS select concat(`user`.`firstName`,' ',`user`.`lastName`) AS `fullName`,`user`.`id` AS `id`,`user`.`username` AS `username`,`user`.`password` AS `password`,`user`.`firstName` AS `firstName`,`user`.`lastName` AS `lastName`,`user`.`nid` AS `nid`,`user`.`sid` AS `sid`,`user`.`cDate` AS `cDate`,`user`.`lastLoginDate` AS `lastLoginDate`,`user`.`fatherName` AS `fatherName`,`user`.`sex` AS `sex`,`user`.`address` AS `address`,`user`.`phone` AS `phone`,`user`.`mobile` AS `mobile`,`user`.`email` AS `email`,`user`.`email2` AS `email2`,`user`.`role_id` AS `role_id`,`user`.`birthdayDate` AS `birthdayDate`,`user`.`zip` AS `zip`,`user`.`provinceId` AS `provinceId`,`user`.`department` AS `department`,`user`.`college` AS `college`,`user`.`course` AS `course`,`user`.`startTerm` AS `startTerm`,`user`.`endTerm` AS `endTerm`,`user`.`religion` AS `religion`,`user`.`dormitory_al` AS `dormitory_al`,`user`.`active` AS `active`,`user`.`user_type` AS `user_type`,`user`.`job_title` AS `job_title`,`user`.`countryId` AS `countryId`,`user`.`nationality` AS `nationality`,`department`.`name` AS `departemntText`,`college`.`name` AS `collegeText` from ((`user` left join `department` on((`department`.`id` = `user`.`department`))) left join `college` on((`college`.`id` = `department`.`collegeId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -999,4 +1032,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-27  9:45:21
+-- Dump completed on 2014-12-03 17:51:22
