@@ -2,12 +2,12 @@ Ext.define('Mehr.model.Member', {
     extend: 'Ext.data.Model',
     fields: ['id','entityId', 'userId', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'role','roleText'],
     proxy: {
-        reader: {
+        type: 'direct',
+                reader: {
             type: 'json',
             root: 'data',
             totalProperty: 'total'
         },
-        type: 'direct',
         api: {
             read: 'RPC.MemberApi.read',
             destroy: 'RPC.MemberApi.destroy',
@@ -16,3 +16,4 @@ Ext.define('Mehr.model.Member', {
         }
     }
 });
+

@@ -67,7 +67,7 @@
             </p>
 
             <div class="buttons">
-                <a class="button" href="#program/{{id}}">مشاهده جزئیات</a>
+                <a class="button" href="#{{postType}}/{{id}}">مشاهده جزئیات</a>
             </div>
         </div>
     </div>
@@ -85,14 +85,14 @@
             <form>
                 <div class="filter-main-entity">
                     <span>نمایش: </span>
-                    <input type="radio" value="news" checked name="postType" id="news"/>
+                    <input type="radio" value=""  name="postType" id="all"/>
+                    <label for="all">همه</label>
+                    <input type="radio" value="news"  name="postType" id="news"/>
                     <label for="news">اخبار</label>
-                    <input type="radio" value="program" checked name="postType" id="program"/>
+                    <input type="radio" value="program"  name="postType" id="program"/>
                     <label for="program">برنامه‌ها</label>
-                    <input type="radio" value="membership" name="postType" id="membership"/>
-                    <label for="membership">عضویت‌ها</label>
-                    <input type="radio" value="election" name="postType" id="election"/>
-                    <label for="election">انتخابات‌ها</label>
+                    <input type="radio" value="entity" name="postType" id="entity"/>
+                    <label for="entity">نهادها و تشکل‌ها</label>
                 </div>
                 <div class="post-filter-box">
                     <div class="filter-options">
@@ -221,25 +221,13 @@
                         <td class="name">وضعیت :</td>
                         <td>{{def executionStatusText}}</td>
                     </tr>
+
                     <tr>
                         <td class="name">مکان برگزاری:</td>
                         <td>{{def location}}</td>
                     </tr>
                     <tr class="buttons">
-                        <td colspan="2">
-                            {{#is status 'enroll'}}
-                            <a href="#program/{{id}}" class="button">ثبت‌نام</a>
-                            {{/is}}
-                            {{#is status 'reserve'}}
-                            <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
-                            {{/is}}
-                            {{#is status 'notValid'}}
-                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
-                            {{/is}}
-                            {{#is status 'isPast'}}
-                            این برنامه برگزار شده است.
-                            {{/is}}
-                        </td>
+                        <td colspan="2"></td>
                     </tr>
                 </table>
             </div>
@@ -249,6 +237,31 @@
             <p class="details">{{details}}</p>
 
 
+            {{#is status 'ok'}}
+                <div class="program-actions alert alert-info">
+                    <a href="#program/{{id}}" class="button">ثبت‌نام</a>
+                </div>
+            {{/is}}
+            {{#is status 'reserve'}}
+                <div class="program-actions alert alert-info">
+                    <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
+                </div>
+            {{/is}}
+            {{#is status 'notEligible'}}
+                <div class="program-actions alert alert-warning">
+                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+                </div>
+            {{/is}}
+            {{#is status 'past'}}
+                <div class="program-actions alert alert-info">
+                این برنامه برگزار شده است.
+                </div>
+            {{/is}}
+            {{#is status 'enrollmentInFuture'}}
+                <div class="program-actions alert alert-info">
+                نام‌نویسی این برنامه‌ هنوز آغاز نشده است.
+                </div>
+            {{/is}}
         </div>
 
     </div>

@@ -5,7 +5,9 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
         template: '#empty-post-tpl'
     }),
     childViewContainer: '.post-models',
-    model: new Backbone.Model({store: Ahura.store}),
+    model: new Backbone.Model({
+        store: Ahura.store
+    }),
     initialize: function (param) {
 //        var me = this;
 //        me.collection = new app.Posts;
@@ -16,24 +18,14 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
         'submit  form': 'filterSubmit'
     },
     'filterEntity': function (e) {
-//        e.preventDefault();
-//        this.collection.fetch({data: {id: 3}});
-//        console.log(form);
-
         var type = $(e.target).attr('value');
-        if (type == 'program') {
-            $('.post-filter-box').slideDown();
-        } else {
-            $('.post-filter-box').slideUp();
-        }
-        this.filterSubmit(e);
-    },
 
+        Backbone.history.navigate(type, {trigger: true});
+    },
     'filterSubmit': function (e) {
         e.preventDefault();
         var form = this.$el.find('form').serializeObject()
         this.collection.reset();
         this.collection.fetch({reset: true, data: form});
     }
-
 })

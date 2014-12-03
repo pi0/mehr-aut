@@ -2,8 +2,6 @@
 
 class UserController extends ControllerBase
 {
-    public $user = null;
-
     public function initialize()
     {
         $this->view->setTemplateAfter('main');
@@ -25,8 +23,6 @@ class UserController extends ControllerBase
             return (['data' => $data, 'success' => true]);
         } else {
             $query = $u->query();
-//            $data = $u->getModelsManager()->createBuilder()->where('firstName like :q: ')->bind(['q' => ($params->query) . '%'])->orderBy($sort)->execute();
-//            echo $data = $u->query()->where('firstName like "علی"')->bind(['q'=>($params->query)])->limit($params->limit,$params->start)->orderBy($sort)->getPhql();
             return paginator($query, $params, 'user');
         }
     }
@@ -46,22 +42,33 @@ class UserController extends ControllerBase
 //        var_dump($P->getModelsMetaData()->getAttributes($P));
     }
 
+    function currentUserAction()
+    {
+        $this->view->disable();
+        if ($this->session['auth']) {
+            $user = User::findFirst($this->session['auth']);
+            jsonResponse($user);
+        }
+        else{
+            jsonResponse('Please log in!');
+        }
+    }
+
     function loginAction()
     {
         $this->view->disable();
         {
             $request = (array)$this->request->getJsonRawBody();
-            $data = $this->di['db']->fetchOne(
-                'SELECT id, password,active FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC, ['username' => $request['username']]
-            );
-
-            if (password_verify($request['password'], $data['password'])) {
-                $user = $this->di['db']->fetchOne('SELECT id,firstName,lastName FROM user WHERE username=:username', Phalcon\Db::FETCH_ASSOC,
-                    ['username' => $request['username']]);
-                $userModel = User::findFirst('username="'.$request['username'].'"');
-                $this->getDI()['session']->set('auth', $user['id']);
-                $this->getDI()['session']->set('user', $userModel);
-                $this->user = $userModel;
+            if (isset($request['username'])) {
+                $user = User::findFirstByUsername($request['username']);
+                if ($user && password_verify($request['password'], $user->password)) {
+                    $this->getDI()['session']->set('auth', $user->id);
+                    $this->getDI()->setShared('user', function () use ($user) {
+                        return User::findFirst($user->id);
+                    });
+                }
+            }
+            if ($this->session['auth']) {
                 jsonResponse($user);
             } else {
                 http_response_code(401);
@@ -82,8 +89,6 @@ class UserController extends ControllerBase
         $request = $this->request->getJsonRawBody();
         $this->view->disable();
         $new = $request->newPassword;
-//        var_dump($request);
-//        var_dump($user->toArray());
         if (!password_verify($request->password, $user->password)) {
             http_response_code(422);
             jsonResponse(['message' => 'گذرواژه فعلی درست نیست.']);

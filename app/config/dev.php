@@ -9,7 +9,7 @@ $config = array(
         'host' => '127.0.0.1',
         'username' => 'root',
         'password' => '',
-        'name' => 'mehr3',
+        'name' => 'mehr',
     ],
     'mongodb' =>
     [

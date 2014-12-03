@@ -3,7 +3,6 @@ Ext.define('Mehr.model.User',
         extend: 'Ext.data.Model',
         proxy: {
             type: 'direct',
-//        paramsAsHash: true,
             api: {
                 read: 'RPC.UserApi.read',
                 destroy: 'RPC.UserApi.destroy',
@@ -49,4 +48,3 @@ Ext.define('Mehr.model.User',
             'lastDepartment'
         ]
     });
-

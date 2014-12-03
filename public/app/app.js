@@ -7,35 +7,24 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
-    models: ['User', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    stores: ['User', 'News', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    models: ['User','News', 'Enroller', 'CouncilMember', 'Council', 'Member'],
     autoCreateViewport: true,
     paths: {
         'Ahura': BASE + 'ahura',
         'Ext.ux': BASE + 'vendor/ext-ux'
     },
     controllers: [
-//        'Users',
-//        'Audiences'
     ],
     launch: function () {
-//        Ext.create('Mehr.view.user.Edit');
-        Ext.create('Mehr.view.setting.SystemSettings');
-//        var win = Ext.create('Mehr.view.user.Role');
-//        var win = Ext.create("Mehr.view.program.Edit", {
-//            info: {
-//                get: function () {
-//                    return 9;
-//                }
-//            }
-//        });
-
-
+        Ext.create('Mehr.view.news.List');
     }
-
 });
 
 Ext.require([
+    'Ext.data.*',
+    'Ext.ux.grid.FiltersFeature',
+    'Ext.toolbar.Paging',
     'Ext.ux.Jalali',
     'Ext.ux.JalaliDate',
     'Ext.ux.JalaliDatePlugin',
@@ -109,7 +98,6 @@ Ahura.button.SaveForm = {
                 params: {
                 },
                 success: function (form, action) {
-//                            Ext.Msg.alert('Success', action.result.message);
                     Ext.MessageBox.show({
                         scope: win,
                         rtl: true,

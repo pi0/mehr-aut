@@ -114,8 +114,13 @@ $(function () {
 
     app.layout = new app.Layout;
     Backbone.history.start();
-    if (Mehr.user.id) {
-        app.layout.topbar.show(new app.TopbarView({model: new app.Auth(Mehr.user)}));
+    if (Mehr.user) {
+        var current = new app.CurrentUser();
+        current.fetch({
+            success: function (model, response, options) {
+                app.layout.topbar.show(new app.TopbarView({model: model}));
+            }
+        })
     } else {
         app.layout.topbar.show(new app.TopbarView());
     }

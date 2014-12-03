@@ -14,5 +14,6 @@ class IndexController extends ControllerBase
 
     public function jsAction()
     {
+        $this->view->user = $this->session['auth'] ? 'true' : 'false';
     }
 }

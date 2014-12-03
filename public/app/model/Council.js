@@ -1,17 +1,20 @@
 Ext.define('Mehr.model.Council', {
     extend: 'Ext.data.Model',
+    fields: ['userId', 'councilId', 'role', 'name', 'entityId', 'entityFullName'],
     proxy: {
         type: 'direct',
-        extraParams:{
-          'foo':'bar'
+                reader: {
+            type: 'json',
+            root: 'data',
+            totalProperty: 'total'
         },
-//        paramsAsHash: true,
         api: {
             read: 'RPC.CouncilApi.read',
             destroy: 'RPC.CouncilApi.destroy',
             create: 'RPC.CouncilApi.create',
             update: 'RPC.CouncilApi.create'
         }
-    },
-    fields: ['userId','councilId','role','name','entityId','entityFullName']
+    }
 });
+
+

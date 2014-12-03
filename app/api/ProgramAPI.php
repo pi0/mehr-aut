@@ -20,8 +20,6 @@ class ProgramApi extends BaseApi
 
         $departments = $db->query('SELECT * FROM department');
         $departments = $departments->fetchAll();
-
-
         $data = [];
         foreach ($colleges as $c) {
             foreach ($departments as $k => $d)
@@ -37,38 +35,12 @@ class ProgramApi extends BaseApi
 
     function canEnroll($userId,$programId){
         $program = ProgramList::findFirst("id=$programId");
-
         if($program->executionStatus!='f'){
             return 'isPast' . $program->executionStatus;
         }
         $audience = $program->audience;
         $query = $this->queryBuilder('UserList')->columns(['UserList.id']);
-        $audience = unserialize($audience);
-        foreach ($audience as $k => $v) {
-            switch ($k) {
-                case 'entityMember':
-                    $query->join('EntityMember', 'EntityMember.userId=UserList.id');
-                    $query->inWhere('entityId', $v);
-                    break;
-                case 'sex':
-                    if ($v == 'm' or $v == 'f') {$query->andWhere('sex=?0', [$v]);}
-                    break;
-                case 'educationStatus':
-                    if ($v == 'current')
-                        $query->andWhere('endTerm is null');
-                    if ($v == 'finished')
-                        $query->andWhere('endTerm is not null');
-                    break;
-                case 'religion':
-                case 'nationality':
-                case 'degree':
-                case 'course':
-                case 'college':
-                case 'department':
-                    $extraFilter[] = ['type' => 'list', 'field' => $k, 'value' => $v];
-                    break;
-            }
-        }
+        applyAudience($query,$audience);
         $query->andWhere('UserList.id=?0',[$userId]);
         if($query->getQuery()->execute()->count() == 0)
             return 'notValid';

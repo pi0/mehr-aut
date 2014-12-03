@@ -1,6 +1,8 @@
+file-server/
 .DS_Store*
 ehthumbs.db
 Icon?
+*-temp*
 Thumbs.db
 .project
 .settings
@@ -8,11 +10,9 @@ Thumbs.db
 *.komodoproject
 *.sublime-project
 *.sublime-workspace
-.idea/
 .sass-cache/
-public/vendor/
-*-temp*
+.idea/
 vendor/
-public/assets/img/bg/
-public/assets/program-img/
+public/lab
+public/vendor/
 temp/

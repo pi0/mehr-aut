@@ -1,11 +1,8 @@
 Ext.define('Mehr.store.Council', {
+        extend: 'Ext.data.Store',
         autoLoad: false,
-        extend: 'Ahura.store.Direct',
-        model: 'Mehr.model.Council',
-        constructor: function () {
-            this.callParent(arguments);
-            this.getProxy().api.read = RPC.CouncilApi.read;
-        }
+        autoSync: true,
+        batchUpdateMode: 'complete',
+        model: 'Mehr.model.Council'
     }
-)
-;
+);

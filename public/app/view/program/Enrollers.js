@@ -122,7 +122,6 @@ Ext.define("Mehr.view.program.Enrollers", {
     extend: "Ahura.window.Grid",
     alias: "widget.enrollers",
     title: 'نام نوشتگان',
-//    title:'نام نوشتگان)برنامه:'+Mehr.v.program_id+"(",
     items: [
         {xtype: 'enrollersGrid'}
     ],

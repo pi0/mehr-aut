@@ -32,32 +32,37 @@ class UserApi extends BaseApi
                 if (isset($formValues['audience'])) {
                     $audiences = array_filter($formValues['audience']);
                     foreach ($audiences as $k => $v) {
-                        switch ($k) {
-                            case 'sex':
-                                if ($v == 'm' or $v == 'f') $query->where('sex=?0', [$v]);
-                                break;
-                            case 'entityMember':
-                                $query->join('EntityMember', 'EntityMember.userId=UserList.id');
-                                $query->inWhere('entityId', $v);
-                                break;
-                            case 'educationStatus':
-                                if ($v == 'current')
-                                    $query->where('endTerm is null');
-                                if ($v == 'finished')
-                                    $query->where('endTerm is not null');
-                                break;
-                            case 'religion':
-                            case 'nationality':
-                            case 'degree':
-                            case 'course':
-                            case 'college':
-                            case 'department':
-                                $extraFilter[] = ['type' => 'list', 'field' => $k, 'value' => $v];
-                                break;
+                        if ($v <> [''] and $v) {
+                            switch ($k) {
+                                case 'sex':
+                                    if ($v == 'm' or $v == 'f') $query->andWhere('sex=?0', [$v]);
+                                    break;
+                                case 'entityMember':
+                                    $query->join('EntityMember', 'EntityMember.userId=User.id');
+                                    $query->inWhere('entityId', $v);
+                                    break;
+                                case 'educationStatus':
+                                    if ($v == 'current')
+                                        $query->where('endTerm is null');
+                                    if ($v == 'finished')
+                                        $query->where('endTerm is not null');
+                                    break;
+                                case 'religion':
+                                case 'nationality':
+                                case 'degree':
+                                case 'course':
+                                case 'college':
+                                case 'department':
+                                    $query->inWhere($k, $v);
+                                    break;
+                            }
+
                         }
                     }
                 }
             }
+//            var_dump($query->getPhql());
+//            var_dump($query->limit(4)->columns('UserList.id')->getQuery()->execute()->toArray());
             $response = $this->extFilter($query, $params, [], $extraFilter);
             return $response;
 //            return paginator($query, $params, 'user');

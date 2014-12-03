@@ -22,7 +22,7 @@ class MehrController extends ControllerBase
         ExtDirect::$debug = true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
         ExtDirect::$form_handlers = array('ProgramApi::create', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create');
-        ExtDirect::provide(['UserController', 'ProgramApi', 'UserApi', 'EntityApi', 'EnrollerApi', 'CouncilMemberApi', 'MemberApi', 'CouncilApi']);
+        ExtDirect::provide(['UserController', 'ProgramApi','NewsApi', 'UserApi', 'EntityApi', 'EnrollerApi', 'CouncilMemberApi', 'MemberApi', 'CouncilApi']);
     }
 
     public function jsAction()

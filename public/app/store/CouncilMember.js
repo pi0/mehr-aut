@@ -1,3 +1,4 @@
+
 Ext.define('Mehr.store.CouncilMember', {
         extend: 'Ext.data.Store',
         autoLoad: false,
