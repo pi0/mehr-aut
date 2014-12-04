@@ -92,9 +92,9 @@ class UserController extends ControllerBase
         } elseif ($request->newPassword !== $request->confirmPassword) {
             http_response_code(422);
             jsonResponse(['message' => 'گذرواژه جدید به تایید آن برابر نیست!']);
-//        } elseif (strlen($new) < 6) {
-//            http_response_code(422);
-//            jsonResponse(['message' => 'گذرواژه انتخابی به اندازه کافی قوی نیست!']);
+        } elseif (strlen($new) < 6) {
+            http_response_code(422);
+            jsonResponse(['message' => 'لطفا گذرواژه پیچیده‌تری با حداقل شش نویسه(حرف یا عدد) وارد نمایید.']);
         } else {
             $user->password = password_hash($new, PASSWORD_BCRYPT);
             $user->save();

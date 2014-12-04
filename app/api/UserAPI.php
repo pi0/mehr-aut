@@ -76,7 +76,10 @@ class UserApi extends BaseApi
         if ($data['id']) {
             $user = User::findFirst($data['id']);
         }
+        // Processing password
         if ($data['password'] == '') unset($data['password']);
+        elseif ($data['password'] === $data['passwordVerify']) $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
         formPreProcess($data);
         if ($user->save($data)) {
             $this->db->delete('resource', 'userId=?', [$user->id]);

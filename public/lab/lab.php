@@ -1,10 +1,9 @@
+<form action="lab.php">
+    <input type="" name="x[]"/>
+    <input type="" name="x[]"/>
+    <input type="" name="x[]"/>
+    <input type="submit" value=""/>
+</form>
+
 <?php
-
-
-12;
-
-echo 's';
-
-echo 2;
-
-?>
+var_dump($_REQUEST);

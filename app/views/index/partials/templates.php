@@ -180,8 +180,8 @@
                     </tr>
                     <tr>
                         <td class="name">هزینه:</td>
-                        <td>{{#is cost '>' 0}}
-                            {{cost}}
+                        <td>{{#is registerFee '>' 0}}
+                            {{registerFee}}
                             تومان
                             {{else}}
                             <b style="color: green">رایگان</b>
@@ -239,7 +239,13 @@
 
             {{#is status 'ok'}}
                 <div class="program-actions alert alert-info">
-                    <a href="#program/{{id}}" class="button">ثبت‌نام</a>
+                    <a href="#program/{{id}}" class="button">
+                        {{#is registerFee}}
+                            پرداخت هزینه و ثبت‌نام
+                        {{else}}
+                 ثبت‌نام
+                        {{/is}}
+                    </a>
                 </div>
             {{/is}}
             {{#is status 'reserve'}}
@@ -250,6 +256,12 @@
             {{#is status 'notEligible'}}
                 <div class="program-actions alert alert-warning">
                             شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+                </div>
+            {{/is}}
+            {{#is status 'guest'}}
+                <div class="program-actions alert alert-warning">
+                    <a href="#login">برای ثبت‌نام در این برنامه لطفا وارد شوید.
+                    </a>
                 </div>
             {{/is}}
             {{#is status 'past'}}
