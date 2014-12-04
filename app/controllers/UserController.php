@@ -63,9 +63,6 @@ class UserController extends ControllerBase
                 $user = User::findFirstByUsername($request['username']);
                 if ($user && password_verify($request['password'], $user->password)) {
                     $this->getDI()['session']->set('auth', $user->id);
-                    $this->getDI()->setShared('user', function () use ($user) {
-                        return User::findFirst($user->id);
-                    });
                 }
             }
             if ($this->session['auth']) {

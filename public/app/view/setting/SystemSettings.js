@@ -1,11 +1,7 @@
 'use strict';
 (function(){
-    var banks = ({
-        type: 'array',
-        fields: 'name',
-    });
 
-    var win =  Ext.define('Mehr.view.setting.SystemSettings',{
+    Ext.define('Mehr.view.setting.SystemSettings',{
         extend: 'Ahura.window.Base',
         title: 'تنظیمات سامانه',
         width: 800,
@@ -14,6 +10,11 @@
         items: {
             xtype: 'form',
             layout: 'fit',
+            paramsAsHash: true,
+            api: {
+                submit: RPC.SystemApi.update,
+                load: RPC.SystemApi.read
+            },
             items:{
                 xtype: 'tabpanel',
                 tabPosition: 'top',
@@ -24,55 +25,62 @@
                         bodyStyle: 'padding: 5px',
                         items: [
                             {
+                                name: 'bank',
                                 xtype: 'combo',
                                 fieldLabel: 'بانک مورد نظر',
                                 store: [
                                     ['1','ملی'],
                                     ['2','ملت'],
                                     ['3','تجارت'],
-                                    ['4','صادرات'],
+                                    ['4','صادرات']
                                 ]
 
                             },
                             {
+                                name:'username',
                                 xtype: 'textfield',
                                 fieldLabel: 'شناسه کاربری'
 
                             },
                             {
+                                name: 'password',
                                 xtype: 'textfield',
                                 inputType: 'password',
                                 fieldLabel: 'رمز عبور'
 
                             },
                             {
+                                name: 'terminalId',
                                 xtype: 'textfield',
                                 fieldLabel: 'شناسه پذیرنده'
-                            },
+                            }
                         ]
                     },
                     {
-                        title: 'سامانه پیامک',
-
+                        title: 'سامانه پیامک'
                     },
                     {
                         title: 'تنظیمات ظاهری',
                         layout: 'form',
                         items: [
                             {
-                                xtype: 'fileField',
-                                fieldLabel: 'تصویر پس زمینه',
-
+                                xtype: 'panel',
+                                bodyStyle: 'text-align: center',
+                                html: 'فرمت عکس باید jpg باشد.'
+                            },
+                            {
+                                name:'background',
+                                xtype: 'filefield',
+                                fieldLabel: 'تصویر پس زمینه'
                             }
                         ]
-
                     },
                     {
-                        title: 'سیستم درون برد',
+                        title: 'سیستم درون برد'
 
                     }
                 ]
             }
         }
     });
-})()
+})();

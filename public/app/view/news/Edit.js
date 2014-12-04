@@ -32,7 +32,7 @@
                 {
                     fieldLabel: 'پوستر/تصویر',
                     name: 'image',
-                    xtype: 'textfield'
+                    xtype: 'filefield'
                 },
                 {
                     fieldLabel: 'متن',

@@ -78,4 +78,58 @@ class BaseApi extends Phalcon\DI\Injectable
         return ['data' => $page->items->toArray(), 'total' => $page->total_items];
 
     }
+
+
+    /*
+     * moves the file from the temporary folder to the destination in public/file-server
+     * if the hash was set, it will be moved to the folder named that hash
+     * otherwise, it will be moved to the file-server itself
+     */
+    function moveFile( $fileVar , $name = null , $hash = null ){
+        if(!$name)
+            $name = $_FILES[$fileVar]['name'];
+
+        if($_FILES[$fileVar]['error'] == UPLOAD_ERR_OK){
+            $fs =  __DIR__ . '/../../public/file-server/';
+
+            if($hash){
+                mkdir($fs . $hash);
+                $name = $hash . DIRECTORY_SEPARATOR . $name;
+            }
+
+            move_uploaded_file($_FILES[$fileVar]['tmp_name'],$fs.$name);
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    /*
+     * gets the name of the variable in the $_FILES array and saves it in the file and the database.
+     * returns the hash of the file or false on failure
+     */
+    function handleUpload($fileVar){
+        if($_FILES[$fileVar]['error'] == UPLOAD_ERR_OK){
+            $name = $_FILES[$fileVar]['name'];
+            $owner =$this->user->id;
+            $size = $_FILES[$fileVar]['size'];
+            $type = mime_content_type($_FILES[$fileVar]['tmp_name']);
+            $hash = hash_file('md5',$_FILES[$fileVar]['tmp_name']);
+
+            $file = new File;
+            $vars = ['name','owner','size','type','hash'];
+            foreach($vars as $var)
+                $file->$var = $$var;
+
+            $file->save();
+
+            $this->moveFile($fileVar,$name,$hash);
+            return $file->hash;
+        } else {
+            die($_FILES[$fileVar]['error'] . 'err');
+            return false;
+        }
+    }
 }
