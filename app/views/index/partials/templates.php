@@ -60,7 +60,7 @@
         <div class="body">
             <div class="name">{{name}}</div>
             {{#if image}}
-            <img class="poster" src="assets/program-img/{{image}}.jpg" alt=""/>
+            <img class="poster" src="file-server/{{image}}" alt=""/>
             {{/if}}
             <p class="details">
                 {{details}}

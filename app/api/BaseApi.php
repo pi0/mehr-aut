@@ -112,24 +112,19 @@ class BaseApi extends Phalcon\DI\Injectable
      */
     function handleUpload($fileVar){
         if($_FILES[$fileVar]['error'] == UPLOAD_ERR_OK){
-            $name = $_FILES[$fileVar]['name'];
-            $owner =$this->user->id;
-            $size = $_FILES[$fileVar]['size'];
-            $type = mime_content_type($_FILES[$fileVar]['tmp_name']);
-            $hash = hash_file('md5',$_FILES[$fileVar]['tmp_name']);
-
             $file = new File;
-            $vars = ['name','owner','size','type','hash'];
-            foreach($vars as $var)
-                $file->$var = $$var;
+            $file->name = $_FILES[$fileVar]['name'];
+            $file->owner =$this->user->id;
+            $file->size = $_FILES[$fileVar]['size'];
+            $file->type = $_FILES[$fileVar]['type'];
+            $file->hash = hash_file('md5',$_FILES[$fileVar]['tmp_name']);
 
-            $file->save();
+            if(!$file->save())
+                print_r($file->getMessages());
 
-            $this->moveFile($fileVar,$name,$hash);
+            $this->moveFile($fileVar,$file->name,$file->hash);
             return $file->hash;
-        } else {
-            die($_FILES[$fileVar]['error'] . 'err');
+        } else
             return false;
-        }
     }
 }
