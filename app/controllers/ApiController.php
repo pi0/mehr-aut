@@ -196,34 +196,17 @@ class ApiController extends ControllerBase
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
+                if(isset($v['image']))
+                    $data[$k]['image'] = $v['image'] .'/'. File::getName($v['image']);
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'news';
             }
             jsonResponse($data);
         });
-        $app->get('/api/entity/{id}', function ($id = null) {
-            $program = ProgramList::findFirstById($id);
-            $uid = $this->di['session']['auth'];
-            if ($program->executionStatus == 'p') {
-                $program->status = 'executed';
-            } elseif ($program->enrollmentStatus == 'f') {
-                $program->status = 'enrollmentInFuture';
-            } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus = 'p' and $program->executoinStatus = 'f')) {
-                if (!isset($this->di['session']['auth'])) {
-                    $program->status = 'guest'; // need to log in
-                } elseif ($this->inAudience($uid, $program->audience)) {
-                    if ($program->enrollmentStatus == 'c') {
-                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
-                            $program->status = 'full';
-                        } else {
-                            $program->status = 'ok';
-                        }
-                    } else {
-                        $program->status = 'notEligible';
-                    }
-                }
-            }
-            jsonResponse($program);
+        $app->get('/api/news/{id}', function ($id = null) {
+            $news = News::findFirst($id);
+            $news->image = $news->image . '/' . File::getName($news->image);
+            jsonResponse($news);
         });
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
