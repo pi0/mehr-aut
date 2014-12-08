@@ -182,7 +182,7 @@
                         <td class="name">هزینه:</td>
                         <td>{{#is registerFee '>' 0}}
                             {{registerFee}}
-                            تومان
+                            ریال
                             {{else}}
                             <b style="color: green">رایگان</b>
                             {{/is}}
@@ -237,10 +237,10 @@
             <p class="details">{{details}}</p>
 
 
-            {{#is status 'ok'}}
+            {{#is userEnrollmentStatus 'ok'}}
                 <div class="program-actions alert alert-info">
-                    <a href="#program/{{id}}" class="button">
-                        {{#is registerFee}}
+                    <a class="button enroll">
+                        {{#is registerFee '>' 0}}
                             پرداخت هزینه و ثبت‌نام
                         {{else}}
                  ثبت‌نام
@@ -248,32 +248,50 @@
                     </a>
                 </div>
             {{/is}}
-            {{#is status 'reserve'}}
+            {{#is userEnrollmentStatus 'reserve'}}
                 <div class="program-actions alert alert-info">
                     <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
                 </div>
             {{/is}}
-            {{#is status 'notEligible'}}
+            {{#is userEnrollmentStatus 'enrolled'}}
+                    <div class="program-actions alert alert-success">
+                        شما در تاریخ
+                        {{toJ enroller.cDate}}
+                        در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
+                        {{cnst 'enrollmentStatus' enroller.status}}
+                        است.
+                        {{#is registerFee 0}}
+                        <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>
+                        {{/is}}
+                    </div>
+            {{/is}}
+            {{#is userEnrollmentStatus 'notEligible'}}
                 <div class="program-actions alert alert-warning">
                             شما واجد شرایط نام‌نویسی در این برنامه نیستید.
                 </div>
             {{/is}}
-            {{#is status 'guest'}}
+            {{#is userEnrollmentStatus 'guest'}}
                 <div class="program-actions alert alert-warning">
                     <a href="#login">برای ثبت‌نام در این برنامه لطفا وارد شوید.
                     </a>
                 </div>
             {{/is}}
-            {{#is status 'past'}}
+            {{#is userEnrollmentStatus 'executed'}}
                 <div class="program-actions alert alert-info">
                 این برنامه برگزار شده است.
                 </div>
             {{/is}}
-            {{#is status 'enrollmentInFuture'}}
+            {{#is userEnrollmentStatus 'enrollmentInFuture'}}
                 <div class="program-actions alert alert-info">
                 نام‌نویسی این برنامه‌ هنوز آغاز نشده است.
                 </div>
             {{/is}}
+            {{#is userEnrollmentStatus 'unknown'}}
+                <div class="program-actions alert alert-info">
+فرآیند ثبت‌نام برای این برنامه مشخص نشده است.
+                </div>
+            {{/is}}
+            {{userEnrollmentStatus}}
         </div>
 
     </div>

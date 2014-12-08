@@ -1,16 +1,7 @@
-function is(vr) {
-    vr.split('.');
-}
-
-x = {
-    title: 'مسئولیت‌ها',
-    xtype: 'base-form',
-    items: [
-        {
-            xtype: 'entity-combo',
-            labelField: 'کارشناس'
+Mehr.cnst = function (c, v) {
+    _.find(Mehr.constants, function (val) {
+        if (val['c'] == c && val['v'] == v) {
+            return val[t];
         }
-    ]
-}
-
-
+    })
+};

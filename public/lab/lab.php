@@ -7,3 +7,8 @@
 
 <?php
 var_dump($_REQUEST);
+
+if(true){
+    echo "Hi";
+    echo "Bye";
+}

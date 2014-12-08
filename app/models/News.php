@@ -1,5 +1,5 @@
 <?php
 
-class News extends Phalcon\Mvc\Model{
+class News extends BaseModel{
 
 }

@@ -197,7 +197,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                 {
                     text: 'خبرها',
                     icon: icon('newspaper'),
-                    handler:function(){
+                    handler: function () {
                         Ext.create('Mehr.view.news.List');
                     }
                 },
@@ -223,13 +223,6 @@ Ext.create("Ext.toolbar.Toolbar", {
                     }
                 },
 
-                {
-                    text: 'پیامهای دریافت شده',
-                    icon: icon('phone'),
-                    handler: function () {
-                        Mehr.window.Messages.show();
-                    }
-                },
 
                 {
                     text: 'پیامهای ارسال شده',
@@ -238,12 +231,20 @@ Ext.create("Ext.toolbar.Toolbar", {
                         Mehr.window.Messages.show();
                     }
                 },
-
                 {
-                    text: 'دفترچه تماس',
-                    icon: icon('vcard')
-                }
+                    text: 'پیامهای دریافت شده',
+                    icon: icon('phone'),
+                    handler: function () {
+                        Mehr.window.Messages.show();
+                    }
+                },
 
+                /*
+                 {
+                 text: 'دفترچه تماس',
+                 icon: icon('vcard')
+                 }
+                 */
             ]
         },
         {
@@ -257,28 +258,29 @@ Ext.create("Ext.toolbar.Toolbar", {
                         Ext.create('Mehr.view.email.Edit');
                     }
                 },
-
-                {
-                    text: 'پیامهای دریافت شده',
-                    icon: icon('email'),
-                    handler: function () {
-                        Mehr.window.Messages.show();
-                    }
-                },
-
                 {
                     text: 'پیامهای ارسال شده',
                     icon: icon('email-go'),
                     handler: function () {
                         Mehr.window.Messages.show();
                     }
-                },
-
-                {
-                    text: 'دفترچه تماس',
-                    icon: icon('vcard')
                 }
+                /*,
 
+                 {
+                 text: 'پیامهای دریافت شده',
+                 icon: icon('email'),
+                 handler: function () {
+                 Mehr.window.Messages.show();
+                 }
+                 },
+
+
+                 {
+                 text: 'دفترچه تماس',
+                 icon: icon('vcard')
+                 }
+                 */
             ]
         },
         {
@@ -333,7 +335,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                     text: "وبگاه شرکت",
                     icon: icon('world'),
                     handler: function (b, e) {
-                        window.open('http://www.ahurait.com','_blank') ;
+                        window.open('http://www.ahurait.com', '_blank');
                     }
                 },
                 {

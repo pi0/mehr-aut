@@ -10,6 +10,39 @@ class ApiController extends ControllerBase
         return $result = $query->getQuery()->execute()->count();
     }
 
+    protected function programEnrollmentStatus($program, $uid)
+    {
+        $status = null;
+        if ($program->executionStatus == 'p') {
+            $status = 'executed';
+        } elseif ($program->enrollmentStatus == 'f') {
+            $status = 'enrollmentInFuture';
+        } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus == 'p' and $program->executoinStatus == 'f')) {
+            if (!isset($this->di['session']['auth'])) {
+                $status = 'guest'; // need to log in
+            } else {
+                $enroller = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program->id]]);
+                if ($enroller) {
+                    $status = 'enrolled';
+                    $program->enroller = $enroller->toArray();
+                } elseif ($this->inAudience($uid, $program->audience)) {
+                    if ($program->enrollmentStatus == 'c') {
+                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
+                            $status = 'full';
+                        } else {
+                            $status = 'ok';
+                        }
+                    }
+                } else {
+                    $status = 'notEligible';
+                }
+            }
+        } elseif ($program->enrollmentStatus == null) {
+            $status = 'unknown';
+        }
+        return $status;
+    }
+
     protected function initialize()
     {
         $this->view->setVar('BASE', $this->url->getBaseUri());
@@ -45,7 +78,9 @@ class ApiController extends ControllerBase
                 ->orderBy('cDate desc')
                 ->inWhere('id', $ids)
                 ->from($tables[$p])
-                ->getQuery()->execute()->toArray();
+                ->getQuery()
+                ->execute()
+                ->toArray();
             $items = array_map(function ($v) use ($p) {
                 $v['postType'] = $p;
                 return $v;
@@ -54,7 +89,7 @@ class ApiController extends ControllerBase
             $posts = array_merge($posts, $items);
         }
 
-        $tid = 1; // temp id
+        $tid = 1; // temp id()
         foreach ($posts as &$p) {
             $p['tic'] = $tid++;
         }
@@ -94,26 +129,42 @@ class ApiController extends ControllerBase
         $app->get('/api/program/{id}', function ($id = null) {
             $program = ProgramList::findFirstById($id);
             $uid = $this->di['session']['auth'];
-            if ($program->executionStatus == 'p') {
-                $program->status = 'executed';
-            } elseif ($program->enrollmentStatus == 'f') {
-                $program->status = 'enrollmentInFuture';
-            } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus = 'p' and $program->executoinStatus = 'f')) {
-                if (!isset($this->di['session']['auth'])) {
-                    $program->status = 'guest'; // need to log in
-                } elseif ($this->inAudience($uid, $program->audience)) {
-                    if ($program->enrollmentStatus == 'c') {
-                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
-                            $program->status = 'full';
-                        } else {
-                            $program->status = 'ok';
-                        }
+            $programArray = $program->toArray();
+            $programArray['userEnrollmentStatus'] = $this->programEnrollmentStatus($program, $uid);
+            if ($programArray['userEnrollmentStatus'] == 'enrolled') {
+                $programArray['enroller'] = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program->id]]);
+            }
+            jsonResponse($programArray);
+        });
+        $app->patch('/api/program/{id}', function ($id = null) {
+            $request = $this->request->getJsonRawBody();
+            $program = ProgramList::findFirstById($id);
+            $uid = $this->di['session']['auth'];
+            $userEnrollmentStatus = $this->programEnrollmentStatus($program, $uid);
+            $programArray = $program->toArray();
+            $programArray['userEnrollmentStatus'] = $userEnrollmentStatus;
+            if (isset($request->unenroll) && $userEnrollmentStatus == 'enrolled') {
+                $enroller = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program->id]]);
+                $enroller->delete();
+                $programArray['userEnrollmentStatus'] = $this->programEnrollmentStatus($program, $uid);
+                jsonResponse($programArray);
+            } elseif (isset($request->enroll) && in_array($userEnrollmentStatus, ['ok', 'full'])) {
+                if ($program->registerFee > 0) {
+
+                } else {
+                    $enroller = new Enroller();
+                    $enroller->userId = $uid;
+                    $enroller->programId = $id;
+                    $enroller->status = ($userEnrollmentStatus == 'ok') ? 'final' : 'reserved';
+                    if ($enroller->save()) {
+                        $programArray['userEnrollmentStatus'] = $this->programEnrollmentStatus($program, $uid);
+                        $programArray['enroller'] = $enroller->toArray();
+                        jsonResponse($programArray);
                     } else {
-                        $program->status = 'notEligible';
+                        jsonResponse($enroller->getMessages());
                     }
                 }
             }
-            jsonResponse($program);
         });
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
@@ -147,28 +198,7 @@ class ApiController extends ControllerBase
             jsonResponse($data);
         });
         $app->get('/api/entity/{id}', function ($id = null) {
-            $program = ProgramList::findFirstById($id);
-            $uid = $this->di['session']['auth'];
-            if ($program->executionStatus == 'p') {
-                $program->status = 'executed';
-            } elseif ($program->enrollmentStatus == 'f') {
-                $program->status = 'enrollmentInFuture';
-            } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus = 'p' and $program->executoinStatus = 'f')) {
-                if (!isset($this->di['session']['auth'])) {
-                    $program->status = 'guest'; // need to log in
-                } elseif ($this->inAudience($uid, $program->audience)) {
-                    if ($program->enrollmentStatus == 'c') {
-                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
-                            $program->status = 'full';
-                        } else {
-                            $program->status = 'ok';
-                        }
-                    } else {
-                        $program->status = 'notEligible';
-                    }
-                }
-            }
-            jsonResponse($program);
+//            jsonResponse($program);
         });
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
@@ -196,8 +226,8 @@ class ApiController extends ControllerBase
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
-                if(isset($v['image']))
-                    $data[$k]['image'] = $v['image'] .'/'. File::getName($v['image']);
+                if (isset($v['image']))
+                    $data[$k]['image'] = $v['image'] . '/' . File::getName($v['image']);
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'news';
             }
@@ -234,5 +264,3 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 }
-
-

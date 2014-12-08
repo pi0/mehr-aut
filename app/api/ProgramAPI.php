@@ -2,22 +2,13 @@
 
 require_once __DIR__ . '/../config/services.php';
 
-class Enroller extends Phalcon\Mvc\Model
-{
-}
-
-
-
 class ProgramApi extends BaseApi
 {
     function audience()
     {
-
         $db = $this->getDI()['db'];
-
         $colleges = $db->query('SELECT * FROM college');
         $colleges = $colleges->fetchAll();
-
         $departments = $db->query('SELECT * FROM department');
         $departments = $departments->fetchAll();
         $data = [];

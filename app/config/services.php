@@ -10,18 +10,20 @@ $configFile = (php_uname('s') == 'Windows NT') ? 'dev.php' : 'pro.php';
 $config = new Phalcon\Config(include_once __DIR__ . '/' . $configFile);
 $loader = new \Phalcon\Loader();
 
-$di->setShared('user', function () use ($di) {
-    if(isset($di->session->auth))
-        return User::findFirst($di->session->auth);
-    else
-        return false;
-});
+
 
 //Start the session the first time when some component request the session service
 $di->setShared('session', function() {
     $session = new Phalcon\Session\Adapter\Files();
     $session->start();
     return $session;
+});
+
+$di->setShared('user', function () use ($di) {
+    if(isset($di->session['auth']))
+        return User::findFirst($di->session->auth);
+    else
+        return false;
 });
 
 /**

@@ -7,6 +7,6 @@
 //]);
 //$di->set('db',$db);
 
-class Entity extends Phalcon\Mvc\Model{
+class Entity extends BaseModel{
 
 }

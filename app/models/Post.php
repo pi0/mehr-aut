@@ -1,5 +1,5 @@
 <?php
 
-class Post extends Phalcon\Mvc\Model{
+class Post extends BaseModel{
 
 }

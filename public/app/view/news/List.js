@@ -24,6 +24,7 @@
         extend: "Ahura.grid.Base",
         xtype: "newsGrid",
         columns: columns,
+        store:'News',
         initComponent: function () {
             this.store = 'News';
             this.callParent(arguments);
@@ -33,7 +34,7 @@
 
     Ext.define("Mehr.view.news.List", {
         extend: "Ahura.window.Grid",
-        alias: "widget.news",
+        //alias: "widget.news",
         title: 'اخبار',
         info: [],
         items: [

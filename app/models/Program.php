@@ -7,6 +7,6 @@
 //]);
 //$di->set('db',$db);
 
-class Program extends Phalcon\Mvc\Model{
+class Program extends BaseModel{
 
 }

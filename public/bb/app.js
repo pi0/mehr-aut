@@ -9,6 +9,11 @@ Handlebars.registerHelper('def', function (x, def) {
     }
     return x;
 });
+
+// A helper to convert constants to human-readable text.
+Handlebars.registerHelper('cnst', function (cat, val) {
+    return Mehr.cnst(cat, val);
+});
 Handlebars.registerHelper('toJ', function (date) {
     if (date == null) {
         return new Handlebars.SafeString('<span class="unknown">نامشخص</span> ');
@@ -126,3 +131,17 @@ $(function () {
     }
     app.start();
 });
+
+Mehr.cnst = function (c, v) {
+    var r = _.find(Mehr.constants, function (val) {
+        if (val['c'] == c && val['v'] == v) {
+            return true;
+        }
+    })
+    if (r) {
+        return r['t']
+    }
+    else {
+        console.error("Constant not found: "+c+' '+v);
+    }
+};

@@ -16,7 +16,7 @@
                     </b>
                 </li>
                 <li>
-                    <a href="mehr" title="">
+                    <a href="mehr" target="_blank" title="">
                         <i class="fa fa-gears"></i>
                         سامانه مدریت
                     </a>

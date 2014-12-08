@@ -1,5 +1,5 @@
 <?php
-class ProgramList extends Phalcon\Mvc\Model
+class ProgramList extends BaseModel
 {
     public function getSource()
     {

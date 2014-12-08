@@ -121,7 +121,7 @@ Ext.define("Mehr.view.program.Edit",
                         items: [
 
                             {
-                                fieldLabel: "هزینه نام‌نویسی (تومان)",
+                                fieldLabel: 'هزینه نام‌نویسی (ریال)',
                                 xtype: 'integer',
                                 name: 'registerFee',
                                 listeners: {

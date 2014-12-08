@@ -1,57 +1,60 @@
 <?php
 $config = array(
     'stage' =>
-    [
-        'production' => false,
+        [
+            'production' => false,
+        ],
+    'setting' => [
+        'path' => __DIR__ . '/setting.json'
     ],
     'database' =>
-    [
-        'host' => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'name' => 'mehr3',
-    ],
+        [
+            'host' => '127.0.0.1',
+            'username' => 'root',
+            'password' => '',
+            'name' => 'mehr',
+        ],
     'mongodb' =>
-    [
-        'host' => 'localhost',
-        'db' => 'v',
-        'user' => 'root',
-        'password' => 'burun',
-    ],
+        [
+            'host' => 'localhost',
+            'db' => 'v',
+            'user' => 'root',
+            'password' => 'burun',
+        ],
     'phalcon' =>
-    [
-        'controllersDir' => '/../app/controllers/',
-        'modelsDir' => '/../app/models/',
-        'viewsDir' => '/../../app/views/',
-        'pluginsDir' => '/../app/plugins/',
-        'libraryDir' => '/../app/library/',
-        'apiDir' => '/../app/api/',
-        'baseUri' => '/aut/',
-    ],
+        [
+            'controllersDir' => '/../app/controllers/',
+            'modelsDir' => '/../app/models/',
+            'viewsDir' => '/../../app/views/',
+            'pluginsDir' => '/../app/plugins/',
+            'libraryDir' => '/../app/library/',
+            'apiDir' => '/../app/api/',
+            'baseUri' => '/aut/',
+        ],
     'metadata' =>
-    [
-        'adapter' => 'Apc',
-        'timezone' => 'IR/Asia',
-        'debug' => '1',
-        'metadata' =>
         [
             'adapter' => 'Apc',
-            'path' => '/app/var/metadata/',
-            'suffix' => 'my-suffix',
-            'lifetime' => '3600',
+            'timezone' => 'IR/Asia',
+            'debug' => '1',
+            'metadata' =>
+                [
+                    'adapter' => 'Apc',
+                    'path' => '/app/var/metadata/',
+                    'suffix' => 'my-suffix',
+                    'lifetime' => '3600',
+                ],
         ],
-    ],
     'locale' =>
-    [
-        'name' => 'fa_IR',
-        'domain' => 'default',
-        'path' => '/app/var/locale/',
-        'charset' => 'UTF-8',
-    ],
+        [
+            'name' => 'fa_IR',
+            'domain' => 'default',
+            'path' => '/app/var/locale/',
+            'charset' => 'UTF-8',
+        ],
     'ddos' =>
-    [
-        'threshold' => '20',
-    ],
+        [
+            'threshold' => '20',
+        ],
 );
 
 return $config;

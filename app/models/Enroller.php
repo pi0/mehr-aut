@@ -1,13 +1,13 @@
 <?php
-//$di = new Phalcon\DI\FactoryDefault();
-//$db=new Phalcon\Db\Adapter\Pdo\Mysql([
-//    'dbname'=>'mehr2',
-//    'username'=>'root',
-//    'password'=>'1111'
-//]);
-//$di->set('db',$db);
+require_once __DIR__ . '/../config/services.php';
+require_once __DIR__ . '/BaseModel.php';
 
-class Enroller extends BaseModel{
+class Enroller extends BaseModel
+{
 }
 
-
+//$x=new Enroller();
+//$x->userId=3;
+//$x->programId=333;
+//$x->save();
+//print_r($x->getMessages());
