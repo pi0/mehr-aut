@@ -51,6 +51,10 @@
     <script src="bb/model/membership.js"></script>
     <script src="bb/view/membership.js"></script>
     <script src="bb/view/password.js"></script>
+    <script src="bb/view/news.js"></script>
+    <script src="bb/model/news.js"></script>
+    <script src="bb/view/entity.js"></script>
+    <script src="bb/model/entity.js"></script>
 <?php else: ?>
     <script src='app/app.merged.min.js'></script>
 <?php endif; ?>

@@ -13,7 +13,8 @@
                         openUserEditWindow(id);
                     }
                 }
-            ]    },
+            ]
+        },
         {
             header: "# دانشجوی",
             dataIndex: "sid",

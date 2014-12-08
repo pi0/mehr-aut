@@ -91,6 +91,8 @@ class ApiController extends ControllerBase
 
         $tid = 1; // temp id()
         foreach ($posts as &$p) {
+            if(isset($p['details']))
+                $p['details'] = ellipsis($p['details']);
             $p['tic'] = $tid++;
         }
 
@@ -192,13 +194,16 @@ class ApiController extends ControllerBase
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
+                $data[$k]['image'] = ($data[$k]['image']!=null)?File::getHashName($data[$k]['image']):false;
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'entity';
             }
             jsonResponse($data);
         });
         $app->get('/api/entity/{id}', function ($id = null) {
-//            jsonResponse($program);
+            $entity = EntityList::findFirst(['id'=>$id]);
+            $entity->image = ($entity->image!=null)?File::getHashName($entity->image):false;
+            jsonResponse($entity);
         });
         $app->notFound(function () use ($app) {
             $app->response->setStatusCode(404, "Not Found")->sendHeaders();
@@ -227,7 +232,7 @@ class ApiController extends ControllerBase
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
                 if (isset($v['image']))
-                    $data[$k]['image'] = $v['image'] . '/' . File::getName($v['image']);
+                    $data[$k]['image'] =($data[$k]['image'] != null) ? ($data[$k]['image'] . '/' . File::getName($data[$k]['image'])) : 0;
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'news';
             }
@@ -235,7 +240,7 @@ class ApiController extends ControllerBase
         });
         $app->get('/api/news/{id}', function ($id = null) {
             $news = News::findFirst($id);
-            $news->image = $news->image . '/' . File::getName($news->image);
+            $news->image = ($news->image != null) ? (File::getHashName($news->image)) : 0;
             jsonResponse($news);
         });
         $app->notFound(function () use ($app) {

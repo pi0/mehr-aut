@@ -8,4 +8,7 @@ class File extends BaseModel{
     static function getName($hash){
         return scandir(dirname(__FILE__) . '\..\..\public\file-server\\'.$hash)[2];
     }
+    static function getHashName($hash){
+        return $hash . '/' . self::getName($hash);
+    }
 }

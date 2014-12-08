@@ -1,4 +1,3 @@
-تاریخ عضویت
 عضویت پیش‌فرض
 وضعیت در لیست
 عضویت‌ها
@@ -13,3 +12,10 @@ TODO:
  _ reserved enrollment
  _ Program Filter
  _ Display enrollment date in grid
+
+
+Masoud:
+======
+
+_ Warn user if there's an error uploading background image
+_

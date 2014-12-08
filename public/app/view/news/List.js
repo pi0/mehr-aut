@@ -25,6 +25,13 @@
         xtype: "newsGrid",
         columns: columns,
         store:'News',
+        listeners: {
+            itemdblclick: function(view,record,item,index,e){
+               var id = record.data.id;
+                var editPanel = Ext.create('Mehr.view.news.Edit');
+                editPanel.down('form').getForm().load({params: {id: id}})
+            }
+        },
         initComponent: function () {
             this.store = 'News';
             this.callParent(arguments);

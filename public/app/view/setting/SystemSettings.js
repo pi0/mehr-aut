@@ -7,6 +7,10 @@
         width: 800,
         height: 400,
         fbar: [Ahura.button.CancelForm, Ahura.button.SaveForm],
+        //initComponent: function(){
+        //    this.callParent(arguments);
+        //    this.down('form').getForm().load();
+        //},
         items: {
             xtype: 'form',
             layout: 'fit',

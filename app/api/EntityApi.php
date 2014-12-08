@@ -59,7 +59,7 @@ class EntityApi extends BaseApi
         $data = $_REQUEST;
         formPreProcess($data);
         $data['audience'] = serialize($data['audience']);
-
+        $data['image'] = $this->handleUpload('image');
         $p = new Entity();
         if ($p->save($data)) {
             return extJson(true, $p->toArray());

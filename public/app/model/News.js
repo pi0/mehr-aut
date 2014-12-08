@@ -1,6 +1,6 @@
 Ext.define('Mehr.model.News', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'title', 'subject', 'name', 'desc'],
+    fields: ['id', 'title', 'subject', 'name', 'details'],
     proxy: {
         type: 'direct',
         reader: {

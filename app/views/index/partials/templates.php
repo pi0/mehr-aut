@@ -72,6 +72,67 @@
         </div>
     </div>
 </script>
+<script type="text/html" id="news-tpl">
+    <div class="component post-container">
+        <div class="header">
+            خبر
+
+        </div>
+        <div class="body">
+            <div class="name">{{name}}</div>
+            {{#if image}}
+            <img class="poster" src="file-server/{{image}}" alt=""/>
+            {{/if}}
+            <p class="details">
+                {{{details}}}
+            </p>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="entity-tpl">
+    <div class="component post-container">
+        <div class="header">
+            نهاد یا تشکل
+
+        </div>
+        <div class="body">
+            <div class="name">{{fullName}}</div>
+            {{#if image}}
+            <img class="poster" src="file-server/{{image}}" alt=""/>
+            {{/if}}
+
+            <div class="info float-far">
+                <table>
+                    <tr>
+                        <td class="group" colspan="2">
+                            اعضاء
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name">تعداد اعضاء:</td>
+                        <td>{{memberCount}} نفر</td>
+                    </tr>
+                    <tr>
+                        <td class="name">اعضای شورای مرکزی:</td>
+                        <td>{{councilMembers}} نفر</td>
+                    </tr>
+                    <tr>
+                        <td class="name"> اعضای علل بدل:</td>
+                        <td>{{understudyCouncilMembers}} نفر</td>
+                    </tr>
+                    <tr>
+                        <td class="name">تعداد دوره های شورای مرکزی:</td>
+                        <td>{{councilCount}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p class="details">
+                {{details}}
+            </p>
+        </div>
+    </div>
+</script>
 <script type="text/html" id="empty-post-tpl">
     <div class="component post-container">
         <div class="body">

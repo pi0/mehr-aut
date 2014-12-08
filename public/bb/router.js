@@ -9,7 +9,8 @@ app.MainRouter = Backbone.Router.extend({
         'entity(/)': 'home',
         'account/password': 'password',
         'login': 'login',
-        'account/membership': 'membership'
+        'account/membership': 'membership',
+        'news/:id': 'news'
     },
     home: function () {
         var p = new app.Posts();
@@ -51,9 +52,19 @@ app.MainRouter = Backbone.Router.extend({
         });
     },
     'entity': function (id, url) {
-        app.router.navigate(url);
+        new app.Entity({id: id}).fetch({
+            success: function(model){
+                app.layout.content.show(new app.EntityView({model: model}));
+            }
+        })
+    },
+    news:function(id){
+        new app.News({id: id}).fetch({
+            success: function (model) {
+                app.layout.content.show(new app.NewsView({model: model}));
+            }
+        });
     }
-
 
 });
 app.router = new app.MainRouter();
