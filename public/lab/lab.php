@@ -1,2 +1,3 @@
 <?php
-var_dump(null=='');
+
+echo json_encode('جدول');

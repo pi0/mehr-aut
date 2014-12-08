@@ -7,13 +7,11 @@
         height: 500,
         items: {
             xtype: 'form',
-            layout: 'anchor',
-            defaults: {
-                anchor: '100%'
-            },
+            layout: 'form',
             submitEmptyText: false,
             paramsAsHash: true,
             jsonSubmit: true,
+            bodyStyle: 'padding: 5px',
             api: {
                 submit: 'RPC.NewsApi.create',
                 load: 'RPC.NewsApi.read'
@@ -41,7 +39,9 @@
                     fieldLabel: 'متن',
                     name: 'details',
                     xtype: 'tinymce_field',
+                    height: 300,
                     tinyMCEConfig:{
+                        plugins: 'image media table',
                         language: 'fa_IR',
                         directionality : 'rtl'
                     },
