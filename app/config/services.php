@@ -137,6 +137,14 @@ $di->set('config', function () use ($config) {
     return $config;
 });
 
+//Mellat Payment
+$di->set('bank', function () use ($config) {
+    $bank = $config->bank;
+    if ($bank->brand == 'mellat') {
+        require_once __DIR__ . '/../../vendor/Ahura/Payment/Mellat.php';
+        return new Mellat($bank->terminalId, $bank->username, $bank->password, $bank->callbackUrl);
+    }
+});
 ///**
 // * Router
 // */

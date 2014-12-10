@@ -1,10 +1,13 @@
+TODO:
+
+Reza:
+=====
 عضویت پیش‌فرض
 وضعیت در لیست
 عضویت‌ها
 فیلتر کردن
 نقش
-
-TODO:
+ - Open comboboxes on focus
  _ Filter Preview
  _ Program Status
  _ Council roles
@@ -14,8 +17,10 @@ TODO:
  _ Display enrollment date in grid
 
 
+
 Masoud:
 ======
-
+- Importing users data
+- Adding not found config.
 _ Warn user if there's an error uploading background image
-_
+_ Display user image on the user edit panel and on the top bar.

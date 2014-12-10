@@ -2,7 +2,6 @@
 
 class Security extends Phalcon\Mvc\User\Plugin
 {
-
     /**
      * @var Phalcon\Acl\Adapter\Memory
      */
@@ -19,7 +18,6 @@ class Security extends Phalcon\Mvc\User\Plugin
             try {
                 $acl = new Phalcon\Acl\Adapter\Memory();
 
-//                $acl->setDefaultAction(Phalcon\Acl::ALLOW);
                 $acl->setDefaultAction(Phalcon\Acl::DENY);
 
                 //Register roles
@@ -72,8 +70,6 @@ class Security extends Phalcon\Mvc\User\Plugin
      */
     public function beforeDispatch(Phalcon\Events\Event $event, Phalcon\Mvc\Dispatcher $dispatcher)
     {
-//        var_dump($this->session->auth);
-//        die();
         if ($this->session->auth and !isset($this->currentUser)) {
             $this->getDI()->setShared('currentUser', function () {
                 $user = User::findFirst($this->session->auth);

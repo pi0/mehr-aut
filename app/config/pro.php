@@ -1,56 +1,61 @@
 <?php
 $config = array(
     'stage' =>
-    [
-        'production' => true,
+        [
+            'production' => false,
+        ],
+    'setting' => [
+        'path' => __DIR__ . '/setting.json'
     ],
     'database' =>
-    [
-        'host' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'name' => 'vajje',
-    ],
-    'mongodb' =>
-    [
-        'host' => 'localhost',
-        'db' => 'newvajje',
-        'user' => 'myroot',
-        'password' => 'burun2',
-    ],
+        [
+            'host' => '127.0.0.1',
+            'username' => 'root',
+            'password' => '',
+            'name' => 'pgu',
+        ],
+
     'phalcon' =>
-    [
-        'controllersDir' => '/../app/controllers/',
-        'modelsDir' => '/../app/models/',
-        'viewsDir' => '/../../app/views/',
-        'pluginsDir' => '/../app/plugins/',
-        'libraryDir' => '/../app/library/',
-        'baseUri' => '/vajje/',
-    ],
+        [
+            'controllersDir' => '/../app/controllers/',
+            'modelsDir' => '/../app/models/',
+            'viewsDir' => '/../../app/views/',
+            'pluginsDir' => '/../app/plugins/',
+            'libraryDir' => '/../app/library/',
+            'apiDir' => '/../app/api/',
+            'baseUri' => '/pgu/',
+        ],
     'metadata' =>
-    [
-        'adapter' => 'Apc',
-        'timezone' => 'IR/Asia',
-        'debug' => '1',
-        'metadata' =>
         [
             'adapter' => 'Apc',
-            'path' => '/app/var/metadata/',
-            'suffix' => 'my-suffix',
-            'lifetime' => '3600',
+            'timezone' => 'IR/Asia',
+            'debug' => '1',
+            'metadata' =>
+                [
+                    'adapter' => 'Apc',
+                    'path' => '/app/var/metadata/',
+                    'suffix' => 'my-suffix',
+                    'lifetime' => '3600',
+                ],
         ],
-    ],
     'locale' =>
-    [
-        'name' => 'fa_IR',
-        'domain' => 'default',
-        'path' => '/app/var/locale/',
-        'charset' => 'UTF-8',
-    ],
+        [
+            'name' => 'fa_IR',
+            'domain' => 'default',
+            'path' => '/app/var/locale/',
+            'charset' => 'UTF-8',
+        ],
     'ddos' =>
-    [
-        'threshold' => '20',
-    ],
+        [
+            'threshold' => '20',
+        ],
+    'bank' => [
+        'brand' => 'mellat',
+        'terminalId' => 1581085,
+        'username' => 'ahura773',
+        'password' => 23060009,
+        'callbackUrl' => 'http://192.69.208.194/pgu/index/payment'
+    ]
 );
 
 return $config;

@@ -1,12 +1,10 @@
 <?php
 
 date_default_timezone_set('Asia/Tehran');
-//error_reporting(E_ALL);
 error_reporting(E_ALL ^ E_DEPRECATED);
+ini_set("log_errors", 1);
+ini_set("error_log", __DIR__."/../log/error.log");
 
-//require_once 'FB/fb.php';
-//require_once 'firelogger.php';
-//require_once '../vendor/jdf.php';
 require_once '../vendor/IntlDateTime/IntlDateTime.php';
 require_once "../vendor/Ahura/Util.php";
 require_once '../app/util.php';
