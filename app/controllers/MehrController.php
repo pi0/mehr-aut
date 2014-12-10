@@ -62,6 +62,8 @@ class MehrController extends ControllerBase
         $nationality = toJsArray($db->query('select `id` as value,name as text from country')->fetchAll());
         $this->view->nationality = $nationality;
 
+        $this->view->maritalStatus = toJsArray($db->query('select `value`,text from constant where category="maritalStatus"')->fetchAll());
+
         $this->view->userType = toJsArray($db->query('select `value`,text from constant where category="userType"')->fetchAll());;
         $this->view->department = toJsArray($db->query('select id,name from department')->fetchAll());;
         $this->view->college = toJsArray($db->query('select id,name from college')->fetchAll());;

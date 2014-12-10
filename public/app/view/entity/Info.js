@@ -29,8 +29,21 @@ Ext.define('Mehr.view.entity.Info', {
 //            text: 'مخاطبان',
 //            icon: icon('users')
 //        },
-        {text: 'برنامه‌ها',
-            icon: icon('microphone')},
+        {
+            text: 'برنامه‌ها',
+            icon: icon('microphone'),
+            handler: function(){
+                var row = this.up('window').model;
+                console.log(row);
+                var programs = Ext.create('Mehr.view.program.List', {
+                    info: {
+                        title: 'برنامه‌های: ' + row.get('name'),
+                        row: row,
+                        caller: 'entity'
+                    }
+                });
+            }
+        },
         {
             xtype: 'splitbutton',
             'text': 'دوره‌ها',

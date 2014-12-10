@@ -150,7 +150,8 @@
                             var programs = Ext.create('Mehr.view.program.List', {
                                 info: {
                                     title: 'برنامه‌های: ' + Ahura.window.Base.userWindowTitle(row),
-                                    row: row
+                                    row: row,
+                                    caller: 'user'
                                 }
                             });
                         }

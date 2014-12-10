@@ -46,12 +46,12 @@ var menu = Ext.create('Ext.menu.Menu', {
                 text: 'درون‌برد از فایل',
                 scale: 'small'
             },
-            {
-                colspan: 2,
-                icon: icon('db-export'),
-                text: 'برون‌برد به فایل',
-                scale: 'small'
-            }
+            //{
+            //    colspan: 2,
+            //    icon: icon('db-export'),
+            //    text: 'برون‌برد به فایل',
+            //    scale: 'small'
+            //}
 //            {
 //                colspan: 2,
 //                icon: icon('userSuit'),

@@ -143,7 +143,10 @@
             this.callParent(arguments);
             var grid = this.down('grid');
 //        this.down('pagingtoolbar').bindStore(grid.getStore());
-            grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+            if(this.info.caller == 'user')
+                grid.getStore().getProxy().setExtraParam('userId',  (this.info.row) ? this.info.row.getId() : this.tid);
+            else if(this.info.caller == 'entity')
+                grid.getStore().getProxy().setExtraParam('entityId',(this.info.row) ? this.info.row.getId() : this.tid);
             grid.getStore().load();
         }
     });

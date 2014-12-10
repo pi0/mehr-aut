@@ -4,5 +4,5 @@ Ext.define("Ahura.form.combo.Nationality",{
     store:Ahura.store.Nationality,
     value:'IR',
     name:"nationality",
-    fieldLabel: 'ملیت',
+    fieldLabel: 'ملیت'
 });

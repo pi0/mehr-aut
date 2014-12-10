@@ -5,6 +5,6 @@ Ext.define("Ahura.form.combo.MaritalStatus",{
     name: 'maritalStatus',
     displayField: 'title',
     width: 200,
-    store: ['تجرد', 'تأهل', 'طلاق', 'فوت همسر'],
+    store: Ahura.store.MaritalStatus,
     labelWidth:80
 });

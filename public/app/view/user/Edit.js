@@ -107,6 +107,14 @@ Ext.define('Mehr.view.user.Edit',
                                     enforceMaxLength: true
                                 },
                                 {
+                                    fieldLabel: 'نام لاتین',
+                                    name: 'latinFirstName'
+                                },
+                                {
+                                    fieldLabel: 'نام خانوادگی لاتین',
+                                    name: 'latinLastName'
+                                },
+                                {
                                     fieldLabel: 'نام پدر',
                                     name: 'fatherName'
                                 }
@@ -146,25 +154,47 @@ Ext.define('Mehr.view.user.Edit',
                                     name: 'sid'
                                 },
                                 {
-                                    xtype: 'department-combo'
+                                    fieldLabel: 'واحد های اخذ شده',
+                                    xtype: 'integer',
+                                    name: 'takenUnits'
                                 },
                                 {
-                                    xtype: 'course-combo'
+                                    fieldLabel: 'واحد های پاس شده',
+                                    xtype: 'integer',
+                                    name: 'passedUnits'
                                 },
                                 {
-                                    xtype: 'degree-combo'
+                                    fieldLabel: 'میانگین',
+                                    xtype: 'numberfield',
+                                    decimalPrecision: 2,
+                                    allowDecimals: true,
+                                    name: 'average'
                                 },
-                                {
-                                    xtype: 'term-combo',
-                                    fieldLabel: 'ترم ورود',
-                                    name: 'startTerm'
-                                }
-                                ,
-                                {
-                                    xtype: 'term-combo',
-                                    fieldLabel: 'ترم خروج',
-                                    name: 'endTerm'
-                                }
+                                //{
+                                //    fieldLabel: 'ترم های مشروطی',
+                                //    xtype: 'integer',
+                                //    name: 'conditionalTerms'
+                                //},
+                                //{
+                                //    xtype: 'department-combo'
+                                //},
+                                //{
+                                //    xtype: 'course-combo'
+                                //},
+                                //{
+                                //    xtype: 'degree-combo'
+                                //},
+                                //{
+                                //    xtype: 'term-combo',
+                                //    fieldLabel: 'ترم ورود',
+                                //    name: 'startTerm'
+                                //}
+                                //,
+                                //{
+                                //    xtype: 'term-combo',
+                                //    fieldLabel: 'ترم خروج',
+                                //    name: 'endTerm'
+                                //}
                             ]
 
                         },
@@ -229,7 +259,7 @@ Ext.define('Mehr.view.user.Edit',
                                     xtype: 'combo',
                                     store: Ahura.store.Provinces,
                                     fieldLabel: 'استان',
-                                    name: "term"
+                                    name: "provinceId"
                                 },
                                 {
                                     fieldLabel: 'شماره پستی',
