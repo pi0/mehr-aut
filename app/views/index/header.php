@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome-ie7.min.css">
     <![endif]-->
     <link rel="stylesheet" href="assets/css/_base.css"/>
+	<base href=''/>
 
 
 </head>

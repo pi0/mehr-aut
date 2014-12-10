@@ -12,14 +12,7 @@ $config = array(
             'host' => '127.0.0.1',
             'username' => 'root',
             'password' => '',
-            'name' => 'mehr3',
-        ],
-    'mongodb' =>
-        [
-            'host' => 'localhost',
-            'db' => 'v',
-            'user' => 'root',
-            'password' => 'burun',
+            'name' => 'mehr',
         ],
     'phalcon' =>
         [
@@ -55,6 +48,13 @@ $config = array(
         [
             'threshold' => '20',
         ],
+    'bank' => [
+        'brand' => 'mellat',
+        'terminalId' => 1581085,
+        'username' => 'ahura773',
+        'password' => 23060009,
+        'callbackUrl' => 'http://192.69.208.194/pgu/index/payment'
+    ]
 );
 
 return $config;

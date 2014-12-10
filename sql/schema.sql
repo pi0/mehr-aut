@@ -213,8 +213,8 @@ CREATE TABLE `enroller` (
   `userId` int(10) unsigned NOT NULL,
   `status` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `cDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `uDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `totalPayment` int(11) DEFAULT NULL,
+  `uDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `payment` int(11) DEFAULT NULL,
   PRIMARY KEY (`programId`,`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -283,7 +283,7 @@ SET character_set_client = utf8;
  1 AS `userId`,
  1 AS `status`,
  1 AS `cDate`,
- 1 AS `totalPayment`,
+ 1 AS `payment`,
  1 AS `id`,
  1 AS `text`,
  1 AS `value`,
@@ -409,7 +409,29 @@ CREATE TABLE `news` (
   `details` text COLLATE utf8_persian_ci,
   `image` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6655 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6657 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `refId` char(16) COLLATE utf8_persian_ci DEFAULT '0',
+  `resCode` smallint(6) DEFAULT '0',
+  `saleOrderId` int(11) DEFAULT '0',
+  `saleReferenceId` int(11) DEFAULT '0',
+  `cardHolderInfo` char(64) COLLATE utf8_persian_ci DEFAULT '0',
+  `cardHolderPan` char(14) COLLATE utf8_persian_ci DEFAULT '0',
+  `amount` int(10) unsigned DEFAULT '0',
+  `additionalData` varchar(1000) COLLATE utf8_persian_ci DEFAULT '0',
+  `payerId` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -451,7 +473,7 @@ CREATE TABLE `program` (
   `minCapacity` int(4) unsigned DEFAULT NULL,
   `maxCapacity` int(4) unsigned DEFAULT NULL,
   `cost` bigint(3) unsigned DEFAULT NULL,
-  `registerFee` bigint(3) unsigned DEFAULT NULL,
+  `registerFee` bigint(3) unsigned DEFAULT '0',
   `paymentMethod` char(1) COLLATE utf8_persian_ci DEFAULT NULL,
   `subject` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
   `level` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
@@ -589,7 +611,7 @@ CREATE TABLE `resource` (
   `resourceType` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   `level` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -887,12 +909,12 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `enrollerview` AS select `enroller`.`programId` AS `programId`,`enroller`.`userId` AS `userId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `cDate`,`enroller`.`totalPayment` AS `totalPayment`,`constant`.`id` AS `id`,`constant`.`text` AS `text`,`constant`.`value` AS `value`,`constant`.`category` AS `category` from (`enroller` left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
+/*!50001 VIEW `enrollerview` AS select `enroller`.`programId` AS `programId`,`enroller`.`userId` AS `userId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `cDate`,`enroller`.`payment` AS `payment`,`constant`.`id` AS `id`,`constant`.`text` AS `text`,`constant`.`value` AS `value`,`constant`.`category` AS `category` from (`enroller` left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1032,4 +1054,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-03 17:51:22
+-- Dump completed on 2014-12-09 16:35:38

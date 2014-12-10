@@ -30,7 +30,6 @@
     <script src="vendor/backbone.marionette/backbone.marionette.js"></script>
     <script src="vendor/backbone-validation.js"></script>
     <script src="vendor/jquery-ui/js/jquery-ui.js"></script>
-    <script src="vendor/lightbox/js/lightbox.js"></script>
     <!--App scripts-->
     <script type="text/javascript">
         app = new Backbone.Marionette.Application();

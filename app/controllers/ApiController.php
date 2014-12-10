@@ -91,7 +91,7 @@ class ApiController extends ControllerBase
 
         $tid = 1; // temp id()
         foreach ($posts as &$p) {
-            if(isset($p['details']))
+            if (isset($p['details']))
                 $p['details'] = ellipsis($p['details']);
             $p['tic'] = $tid++;
         }
@@ -152,7 +152,11 @@ class ApiController extends ControllerBase
                 jsonResponse($programArray);
             } elseif (isset($request->enroll) && in_array($userEnrollmentStatus, ['ok', 'full'])) {
                 if ($program->registerFee > 0) {
-
+                    $payment = new Payment();
+                    $payment->save();
+                    $bank = $this->di['bank'];
+                    $redirect = $bank->redirect($program->registerFee, $payment->id);
+                    jsonResponse($redirect);
                 } else {
                     $enroller = new Enroller();
                     $enroller->userId = $uid;
@@ -194,15 +198,15 @@ class ApiController extends ControllerBase
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
-                $data[$k]['image'] = ($data[$k]['image']!=null)?File::getHashName($data[$k]['image']):false;
+                $data[$k]['image'] = ($data[$k]['image'] != null) ? File::getHashName($data[$k]['image']) : false;
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'entity';
             }
             jsonResponse($data);
         });
         $app->get('/api/entity/{id}', function ($id = null) {
-            $entity = EntityList::findFirst(['id'=>$id]);
-            $entity->image = ($entity->image!=null)?File::getHashName($entity->image):false;
+            $entity = EntityList::findFirst(['id' => $id]);
+            $entity->image = ($entity->image != null) ? File::getHashName($entity->image) : false;
             jsonResponse($entity);
         });
         $app->notFound(function () use ($app) {
@@ -232,7 +236,7 @@ class ApiController extends ControllerBase
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
                 if (isset($v['image']))
-                    $data[$k]['image'] =($data[$k]['image'] != null) ? ($data[$k]['image'] . '/' . File::getName($data[$k]['image'])) : 0;
+                    $data[$k]['image'] = ($data[$k]['image'] != null) ? ($data[$k]['image'] . '/' . File::getName($data[$k]['image'])) : 0;
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'news';
             }

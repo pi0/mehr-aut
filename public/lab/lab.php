@@ -1,3 +1,3 @@
 <?php
 
-echo json_encode('جدول');
+file_put_contents(__DIR__.'/../../log/error.log','adfasdf');
