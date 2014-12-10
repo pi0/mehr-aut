@@ -11,17 +11,16 @@ $config = new Phalcon\Config(include_once __DIR__ . '/' . $configFile);
 $loader = new \Phalcon\Loader();
 
 
-
 //Start the session the first time when some component request the session service
-$di->setShared('session', function() {
+$di->setShared('session', function () {
     $session = new Phalcon\Session\Adapter\Files();
     $session->start();
     return $session;
 });
 
-$di->setShared('user', function () use ($di) {
-    if(isset($di->session['auth']))
-        return User::findFirst($di->session->auth);
+$di->setShared('currentUser', function () use ($di) {
+    if (isset($di['session']['auth']))
+        return User::findFirst($di['session']->auth);
     else
         return false;
 });
@@ -39,6 +38,23 @@ $di->set('dispatcher', function () use ($di) {
      * We listen for events in the dispatcher using the Security plugin
      */
     $eventsManager->attach('dispatch', $security);
+
+    $eventsManager->attach(
+        "dispatch:beforeException",
+        function ($event, $dispatcher, $exception) {
+            switch ($exception->getCode()) {
+                case \Phalcon\Mvc\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                case \Phalcon\Mvc\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                    $dispatcher->forward(
+                        array(
+                            'controller' => 'index',
+                            'action' => 'notFound',
+                        )
+                    );
+                    return false;
+            }
+        }
+    );
 
     $dispatcher = new Phalcon\Mvc\Dispatcher();
     $dispatcher->setEventsManager($eventsManager);

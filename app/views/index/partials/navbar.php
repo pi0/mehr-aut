@@ -15,12 +15,14 @@
                 {{firstName}} {{lastName}}:
                     </b>
                 </li>
+                {{#if admin}}
                 <li>
                     <a href="mehr" target="_blank" title="">
                         <i class="fa fa-gears"></i>
                         سامانه مدریت
                     </a>
                 </li>
+                {{/if}}
                 <li>
                     <a href="#account/password" title="">
                         <i class="fa fa-key"></i>
