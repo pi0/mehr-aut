@@ -16,6 +16,11 @@
                     icon: icon('groupAdd'),                // Use a URL in the icon config
                     tooltip: 'شورای مرکزی',
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
+                        var record = {};
+                        record.get = function(d){
+                            return this.id;
+                        }
+                        record.id = 63;
                         var win = Ext.create('Mehr.view.council.Member', {
                             info: record
                         });
@@ -55,8 +60,8 @@
         items: [
             {xtype: 'councilGrid'}
         ],
-        initComponent: function () {
-            this.title = this.info.title || 'شوراها';
+        initComponent: function () {console.log(this.info);
+            this.title = this.info.title || this.info.row.data.typeText || 'شوراها';
             this.callParent(arguments);
             var grid = this.down('grid');
             var type = (this.info.for == 'user') ? 'userId' : 'entityId';

@@ -18,7 +18,7 @@ Reza:
  - panel should be displayed for user.
 
 
-Masood:
+Masoud:
 ======
 - GENERAL: use font-awesome in extjs: http://extjs.eu/using-font-icons-in-ext-fontawesome/
 - Importing users data
@@ -26,3 +26,5 @@ _ Warn user if there's an error uploading background image
 _ Display user image on the user edit panel and on the top bar.
 _ (done) Delete news
 _ List of candidates
+_ add default state of submission in the councils
+_ add three fields to the audience of all models

@@ -8,5 +8,4 @@
 //$di->set('db',$db);
 
 class Entity extends BaseModel{
-
 }

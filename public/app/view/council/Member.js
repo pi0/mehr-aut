@@ -1,118 +1,136 @@
-Ext.require('Mehr.model.CouncilMember');
-var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-    clicksToMoveEditor: 1,
-    autoCancel: false
-});
-var termColumns = [
+Ext.require('Ahura.form.combo.User');
+var columns = Ext.clone(Ahura.userColumns);
+var statusCol = {
+    header: 'وضعیت',
+    dataIndex: 'statusText',
+    width: 80
+};
+var delCol = {
+    menuDisabled: true,
+    header: "",
+    xtype: 'actioncolumn',
+    icon: icon('delete'),
+    tooltip: "حدف کاربر از فهرست شرکت‌کننده‌گان",
+    width: 22,
+    handler: function (grid, rowIndex, colIndex, item, event, record, row) {
+        var id = record.getId();
+        record.destroy();
+//        var panel = Ext.create('Mehr.view.user.Edit');
+//        panel.down('form').getForm().load({params: {id: id}});
+    },
+    handler1: function (g, ri, ci) {
+        var rec = Mehr.store.Enrollers.getAt(ri);
+        Ext.Ajax.request({
+                url: '/program/json-unsubscribe-user',
+                params: {
+                    user_id: rec.get('user_id'),
+                    program_id: Mehr.v.program_id
+                }
+            }
+        );
+        Mehr.grid.Enrollers.getStore().reload();
+    }
+};
+columns.splice(1, 0, delCol, statusCol);
+var tbar = [
+    'افزودن:', ' ',
     {
-        header: '# دانشجویی',
-        dataIndex: 'sid',
-        width: 100
+        xtype: 'user-combo',
+        fieldLabel: ''
+    },
+    'وضعیت نام‌نویسی:',
+    {
+        xtype: 'combo',
+        name: 'status',
+        value: 'final',
+        store: Ahura.store.EnrollmentStatus
     },
     {
-        header: 'نام',
-        dataIndex: 'fullName',
-        flex: 1,
-        editor: {
-            xtype: 'user-combo',
-            fieldLabel: null,
-            allowBlank: false,
-            name: 'userId',
-            displayTpl: Ext.create('Ext.XTemplate',
-                '<tpl for=".">',
-                '{firstName} {lastName}',
-                '</tpl>'
-            )
+        xtype: 'button',
+        icon: icon('userAdd'),
+        tooltip: "افزودن کاربر انتخاب شده",
+        handler: function (button, event) {
+            var id = this.up().down('user-combo').getValue();
+            var status = this.up().down('[name=status]').getValue();
+            if (id) {
+                var grid = button.up('grid');
+                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.up('window').info.get('id'), id: id, status: status});
+                enroll.save({
+                    failure: function (record, operation) {
+                        Ext.MessageBox.show({
+                            rtl: true,
+                            title: 'خطا',
+                            msg: operation.request.proxy.reader.jsonData.errors,
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                        });
 
+                    }});
+                grid.down('combo').reset();
+                grid.getStore().load();
+            }
         }
     },
+    '-',
     {
-        header: 'نقش',
-        dataIndex: 'roleText',
-        width: 150,
-        editor: {
-            name: 'role',
-            xtype: 'combo',
-            forceSelection: true,
-            typeAhead: true,
-            displayField: 'text',
-            valueField: 'value',
-            allowBlank: false,
-            value:'councillor',
-            store: Ahura.store.CouncilMembership
+        xtype: 'button',
+//        icon: icon('userAdd'),
+        text: "تغییر وضعیت",
+//        tooltip:'برای تغییر وضعیت، یک یا چند کاربر را از جدول برگزینید و پس از تعیین وضعیت از منوی کناری، روی این دکمه کلیک کنید.',
+        handler: function (button, event) {
+            var status = this.up().down('[name=status]').getValue();
 
+            if (status) {
+                var grid = button.up('grid');
+                var selection = grid.getSelectionModel().getSelection();
+                selection.forEach(function (e) {
+                    e.set('status', status);
+                    e.save({
+                        failure: function (record, operation) {
+                            Ext.MessageBox.show({
+                                rtl: true,
+                                title: 'خطا',
+                                msg: operation.request.proxy.reader.jsonData.errors,
+                                buttons: Ext.MessageBox.OK,
+                                icon: Ext.MessageBox.ERROR
+                            });
+//
+                        }
+                    });
+                    grid.getStore().load();
+                })
+            }
         }
     }
 ];
-Ext.define('Mehr.view.entity.TermCouncilGrid', {
-    extend: 'Ahura.grid.Base',
-    emptyText:'هیچ عضوی تعریف نشده است.',
-    xtype: 'council-member-grid',
-    plugins: [
-        rowEditing
-//        {
-//            ptype:'rowediting',
-//            clicksToEdit: 1
-//        }
-    ],
-    columns: termColumns,
-    tbar: [
-        {
-            text: 'افزودن',
-            icon: icon('userAdd'),
-            handler: function () {
-                rowEditing.cancelEdit();
-                this.up('council-member-grid').getStore().insert(0, [
-                    []
-                ]);
-                rowEditing.startEdit(0, 0);
-            }
-        },
-        {
-            itemId: 'removeUserBtn',
-            text: 'حذف',
-            icon: icon('userDelete'),
-            handler: function () {
-                var sm = this.up('grid').getSelectionModel();
-                var store = this.up('grid').getStore();
-                rowEditing.cancelEdit();
-                store.remove(sm.getSelection());
-                if (store.getCount() > 0) {
-                    sm.select(0);
-                }
-            },
-            disabled: true
-        }
-    ],
-    initComponent: function () {
-        this.store = 'CouncilMember';
-        this.callParent(arguments);
-        this.down('pagingtoolbar').bindStore(this.store);
-    },
-    listeners: {
-        beforeedit: function (editor, context, eOpt) {
-            context.record.set('councilId', context.grid.up('window').info.get('id'));
-        },
-        'selectionchange': function (view, records) {
-            this.down('#removeUserBtn').setDisabled(!records.length);
-        }
-
-    }
-})
-Ext.define('Mehr.view.council.Member', {
-    extend: 'Ahura.window.Base',
-    requires: 'Ahura.form.combo.User',
-    title: 'ویرایش/ایجاد دوره',
-    width: 500,
-    items: [
-        {xtype: 'council-member-grid'}
-    ],
-    initComponent: function () {
-        this.title = (this.info) ? 'شورای مرکزی: ' + this.info.get('name') : "شورای مرکزی";
-        this.callParent(arguments);
-        var grid = this.down('grid');
-        grid.getStore().getProxy().setExtraParam('councilId', (this.info) ? this.info.get('id') : this.tid);
-        grid.getStore().load();
-    }
-
+Ext.define("Mehr.view.council.Member", {
+    extend: "Ext.grid.Panel",
+    //alias: "widget.councilMembersGrid",
+    //selModel: {model: 'MULTI'},
+    //multiSelect: true,
+    //require: 'Ahura.form.combo.SID',
+    ////columns: columns,
+    ////tbar: tbar,
+    ////initComponent: function () {
+    ////    var me = this;
+    ////    me.store = 'Council'
+    ////    me.callParent(arguments);
+    ////    me.down('pagingtoolbar').bindStore(me.store);
+    ////}
 });
+Ext.define("Mehr.view.council.Member", {
+    extend: "Ahura.window.Grid",
+    alias: "widget.members",
+    title: 'اعضای شورای مرکزی',
+    items: [
+        {xtype: 'councilMembersGrid'}
+    ],
+    //initComponent: function () {
+    //
+    //    this.title = 'نام‌نوشتگان در:' + ' ' + 'asdf';
+    //    this.callParent(arguments);
+    //    var grid = this.down('grid');
+    //    grid.getStore().getProxy().setExtraParam('programId',63);
+    //    grid.getStore().load();
+    //}
+})

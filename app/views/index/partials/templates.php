@@ -130,6 +130,31 @@
                     </tr>
                 </table>
             </div>
+            {{#unless autoRender}}
+                {{#is membershipStatus 'canJoin'}}
+                <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+                        <a class="button submit">
+                            عضویت در این نهاد/تشکل
+                        </a>
+                </div>
+                {{/is}}
+                {{#is membershipStatus 'applied'}}
+                <div class="program-actions alert alert-warning" style="clear:both;text-align:center">
+                        قبلا برای عضویت در این نهاد/تشکل اقدام کرده اید.
+                </div>
+                {{/is}}
+                {{#is membershipStatus 'in' 'notAllowed,canceled'}}
+                <div class="program-actions alert alert-danger" style="clear:both;text-align:center">
+                    متاسفانه امکان عضویت شما در این گروه وجود ندارد.
+                </div>
+                {{/is}}
+            {{/unless}}
+            {{#if autoRender}}
+                <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+                        شما {{cnst 'membership' membershipStatus}} این گروه هستید.
+
+                </div>
+            {{/if}}
 
             <p class="details">
                 {{details}}
