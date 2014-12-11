@@ -33,12 +33,12 @@ Ext.define('Mehr.view.entity.Info', {
             text: 'برنامه‌ها',
             icon: icon('microphone'),
             handler: function(){
-                var row = this.up('window').model;
-                console.log(row);
+                var entity = this.up('window').entity;
+                console.log(entity);
                 var programs = Ext.create('Mehr.view.program.List', {
                     info: {
-                        title: 'برنامه‌های: ' + row.get('name'),
-                        row: row,
+                        title: 'برنامه‌های: ' + entity.typeText + ' ' + entity.name,
+                        row: entity,
                         caller: 'entity'
                     }
                 });

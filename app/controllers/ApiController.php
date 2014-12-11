@@ -206,6 +206,7 @@ class ApiController extends ControllerBase
         });
         $app->get('/api/entity/{id}', function ($id = null) {
             $entity = EntityList::findFirst(['id' => $id]);
+            $entity->postType = 'entity';
             $entity->image = ($entity->image != null) ? File::getHashName($entity->image) : false;
             jsonResponse($entity);
         });
@@ -244,6 +245,7 @@ class ApiController extends ControllerBase
         });
         $app->get('/api/news/{id}', function ($id = null) {
             $news = News::findFirst($id);
+            $news->postType = 'news';
             $news->image = ($news->image != null) ? (File::getHashName($news->image)) : 0;
             jsonResponse($news);
         });

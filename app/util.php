@@ -154,7 +154,6 @@ function ellipsis($text, $max = 500, $append = '…')
 //    if (strlen($text) <= $max) return $text;
 //    $str = explode("\n", wordwrap($text, $max));
 //    return $str = $str[0] . '...';
-    $text .= 'something';
     $text = strip_tags($text);
 
     if (strlen($text) <= $max)

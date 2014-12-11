@@ -54,8 +54,7 @@
 <script type="text/html" id="post-tpl">
     <div class="component post-container">
         <div class="header">
-            برنامه
-            : {{typeText}}
+            {{cnst 'postType' postType}}
         </div>
         <div class="body">
             <div class="name">{{name}}</div>
@@ -75,6 +74,7 @@
 <script type="text/html" id="news-tpl">
     <div class="component post-container">
         <div class="header">
+            <i class="fa fa-newspaper-o"></i>
             خبر
 
         </div>
@@ -86,6 +86,10 @@
             <p class="details">
                 {{{details}}}
             </p>
+        </div>
+        <div class="footer">
+            <i class="fa fa-user"></i>
+            ارسال شده توسط مدیر سایت در تاریخ {{toJ cDate}}
         </div>
     </div>
 </script>
