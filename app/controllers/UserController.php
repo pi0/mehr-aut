@@ -67,7 +67,10 @@ class UserController extends ControllerBase
                 }
             }
             if ($this->session['auth']) {
-                jsonResponse($user);
+                $user = $this->currentUser;
+                $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
+                if ($user->type == 'a') $view['admin'] = true;
+                jsonResponse($view);
             } else {
                 http_response_code(401);
                 jsonResponse(['message' => 'شناسه و/یا گذرواژه وارد شده معتبر نمی‌باشد. ']);
@@ -101,6 +104,11 @@ class UserController extends ControllerBase
             $user->save();
             jsonResponse([]);
         }
+    }
+
+    private function safeUserDate()
+    {
+
     }
 
 }

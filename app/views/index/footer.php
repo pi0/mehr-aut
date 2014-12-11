@@ -46,7 +46,7 @@
     <script src="bb/model/program.js"></script>
     <script src="bb/view/program.js"></script>
     <script src="bb/view/login.js"></script>
-    <script src="bb/view/changePassword.js"></script>
+    <script src="bb/view/changepassword.js"></script>
     <script src="bb/model/membership.js"></script>
     <script src="bb/view/membership.js"></script>
     <script src="bb/view/password.js"></script>

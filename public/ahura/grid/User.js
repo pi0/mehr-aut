@@ -207,5 +207,4 @@
         var panel = Ext.create('Mehr.view.user.Edit');
         panel.down('form').getForm().load({params: {id: id}});
     }
-
 })()
