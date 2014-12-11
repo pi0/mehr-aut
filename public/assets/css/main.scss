@@ -42,6 +42,14 @@ $padding: 30px;
   }
 }
 
+.busy-box {
+  position: fixed;
+  bottom:20px;
+  right: 20px;
+  opacity: .85;
+  margin-bottom: 0;
+}
+
 .date {
   direction: ltr;
   unicode-bidi: embed;

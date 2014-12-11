@@ -375,6 +375,13 @@ th {
     background-color: #f2dede;
     border-color: #ebccd1; }
 
+.busy-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: .85;
+  margin-bottom: 0; }
+
 .date {
   direction: ltr;
   unicode-bidi: embed; }

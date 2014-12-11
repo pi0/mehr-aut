@@ -46,10 +46,11 @@ class UserController extends ControllerBase
     {
         $this->view->disable();
         if ($this->session['auth']) {
-            $user = User::findFirst($this->session['auth']);
-            jsonResponse($user);
-        }
-        else{
+            $user = $this->currentUser;
+            $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
+            if ($user->type == 'a') $view['admin'] = true;
+            jsonResponse($view);
+        } else {
             jsonResponse('Please log in!');
         }
     }
@@ -100,7 +101,6 @@ class UserController extends ControllerBase
             $user->save();
             jsonResponse([]);
         }
-//        $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
     }
 
 }

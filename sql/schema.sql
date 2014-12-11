@@ -44,7 +44,7 @@ CREATE TABLE `constant` (
   `value` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `category` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,10 @@ SET character_set_client = utf8;
  1 AS `username`,
  1 AS `password`,
  1 AS `firstName`,
+ 1 AS `latinFirstName`,
  1 AS `lastName`,
+ 1 AS `latinLastName`,
+ 1 AS `image`,
  1 AS `nid`,
  1 AS `sid`,
  1 AS `cDate`,
@@ -251,20 +254,30 @@ SET character_set_client = utf8;
  1 AS `email2`,
  1 AS `role_id`,
  1 AS `birthdayDate`,
+ 1 AS `birthdayPlace`,
  1 AS `zip`,
  1 AS `provinceId`,
  1 AS `department`,
  1 AS `college`,
+ 1 AS `takenUnits`,
+ 1 AS `passedUnits`,
+ 1 AS `average`,
+ 1 AS `conditionalTerms`,
  1 AS `course`,
  1 AS `startTerm`,
  1 AS `endTerm`,
+ 1 AS `educationalStatus`,
  1 AS `religion`,
- 1 AS `dormitory_al`,
+ 1 AS `maritalStatus`,
+ 1 AS `dormitory`,
  1 AS `active`,
  1 AS `user_type`,
  1 AS `job_title`,
  1 AS `countryId`,
  1 AS `nationality`,
+ 1 AS `lastUniversity`,
+ 1 AS `lastDepartment`,
+ 1 AS `lastDegree`,
  1 AS `departemntText`,
  1 AS `collegeText`,
  1 AS `statusText`*/;
@@ -310,6 +323,7 @@ CREATE TABLE `entity` (
   `understudyConcuilMembers` int(11) DEFAULT NULL,
   `subscription` tinyint(4) DEFAULT NULL,
   `charter` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
+  `image` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -344,13 +358,14 @@ SET character_set_client = utf8;
  1 AS `details`,
  1 AS `audience`,
  1 AS `councilMembers`,
- 1 AS `understudyConcuilMembers`,
+ 1 AS `understudyCouncilMembers`,
  1 AS `subscription`,
  1 AS `charter`,
  1 AS `typeText`,
  1 AS `councilCount`,
  1 AS `memberCount`,
- 1 AS `fullName`*/;
+ 1 AS `fullName`,
+ 1 AS `image`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -642,7 +657,10 @@ CREATE TABLE `user` (
   `username` varchar(255) COLLATE utf8_persian_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_persian_ci NOT NULL,
   `firstName` varchar(45) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'نام',
+  `latinFirstName` varchar(45) COLLATE utf8_persian_ci DEFAULT NULL,
   `lastName` varchar(45) COLLATE utf8_persian_ci NOT NULL COMMENT 'فامیل',
+  `latinLastName` varchar(45) COLLATE utf8_persian_ci DEFAULT NULL,
+  `image` varchar(45) COLLATE utf8_persian_ci DEFAULT NULL,
   `nid` char(50) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'کدملی',
   `sid` char(20) COLLATE utf8_persian_ci DEFAULT NULL,
   `cDate` datetime DEFAULT NULL,
@@ -656,20 +674,30 @@ CREATE TABLE `user` (
   `email2` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `role_id` bigint(20) DEFAULT NULL,
   `birthdayDate` date DEFAULT NULL,
+  `birthdayPlace` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `zip` char(13) COLLATE utf8_persian_ci DEFAULT NULL,
   `provinceId` int(11) DEFAULT NULL,
   `department` int(11) DEFAULT NULL,
   `college` int(11) DEFAULT NULL,
+  `takenUnits` tinyint(4) DEFAULT NULL,
+  `passedUnits` tinyint(4) DEFAULT NULL,
+  `average` float DEFAULT NULL,
+  `conditionalTerms` float DEFAULT NULL COMMENT 'ترم های مشروطی',
   `course` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `startTerm` bigint(20) DEFAULT NULL,
   `endTerm` bigint(20) DEFAULT NULL,
+  `educationalStatus` tinyint(4) DEFAULT NULL COMMENT 'وضعیت تحصیلی دانشجو',
   `religion` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
-  `dormitory_al` tinyint(4) DEFAULT '1',
+  `maritalStatus` char(2) COLLATE utf8_persian_ci DEFAULT NULL,
+  `dormitory` int(11) DEFAULT '1',
   `active` tinyint(4) DEFAULT '1',
   `user_type` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
   `job_title` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
   `countryId` int(11) DEFAULT NULL COMMENT 'کدکشور ملیت',
   `nationality` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
+  `lastUniversity` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
+  `lastDepartment` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
+  `lastDegree` char(2) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`id`),
   UNIQUE KEY `username` (`username`),
@@ -694,7 +722,10 @@ SET character_set_client = utf8;
  1 AS `username`,
  1 AS `password`,
  1 AS `firstName`,
+ 1 AS `latinFirstName`,
  1 AS `lastName`,
+ 1 AS `latinLastName`,
+ 1 AS `image`,
  1 AS `nid`,
  1 AS `sid`,
  1 AS `cDate`,
@@ -708,20 +739,30 @@ SET character_set_client = utf8;
  1 AS `email2`,
  1 AS `role_id`,
  1 AS `birthdayDate`,
+ 1 AS `birthdayPlace`,
  1 AS `zip`,
  1 AS `provinceId`,
  1 AS `department`,
  1 AS `college`,
+ 1 AS `takenUnits`,
+ 1 AS `passedUnits`,
+ 1 AS `average`,
+ 1 AS `conditionalTerms`,
  1 AS `course`,
  1 AS `startTerm`,
  1 AS `endTerm`,
+ 1 AS `educationalStatus`,
  1 AS `religion`,
- 1 AS `dormitory_al`,
+ 1 AS `maritalStatus`,
+ 1 AS `dormitory`,
  1 AS `active`,
  1 AS `user_type`,
  1 AS `job_title`,
  1 AS `countryId`,
  1 AS `nationality`,
+ 1 AS `lastUniversity`,
+ 1 AS `lastDepartment`,
+ 1 AS `lastDegree`,
  1 AS `departemntText`,
  1 AS `collegeText`*/;
 SET character_set_client = @saved_cs_client;
@@ -896,7 +937,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `enrollerlist` AS select `enroller`.`userId` AS `userId`,`enroller`.`programId` AS `programId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `enrollmentDate`,`userlist`.`fullName` AS `fullName`,`userlist`.`id` AS `id`,`userlist`.`username` AS `username`,`userlist`.`password` AS `password`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`nid` AS `nid`,`userlist`.`sid` AS `sid`,`userlist`.`cDate` AS `cDate`,`userlist`.`lastLoginDate` AS `lastLoginDate`,`userlist`.`fatherName` AS `fatherName`,`userlist`.`sex` AS `sex`,`userlist`.`address` AS `address`,`userlist`.`phone` AS `phone`,`userlist`.`mobile` AS `mobile`,`userlist`.`email` AS `email`,`userlist`.`email2` AS `email2`,`userlist`.`role_id` AS `role_id`,`userlist`.`birthdayDate` AS `birthdayDate`,`userlist`.`zip` AS `zip`,`userlist`.`provinceId` AS `provinceId`,`userlist`.`department` AS `department`,`userlist`.`college` AS `college`,`userlist`.`course` AS `course`,`userlist`.`startTerm` AS `startTerm`,`userlist`.`endTerm` AS `endTerm`,`userlist`.`religion` AS `religion`,`userlist`.`dormitory_al` AS `dormitory_al`,`userlist`.`active` AS `active`,`userlist`.`user_type` AS `user_type`,`userlist`.`job_title` AS `job_title`,`userlist`.`countryId` AS `countryId`,`userlist`.`nationality` AS `nationality`,`userlist`.`departemntText` AS `departemntText`,`userlist`.`collegeText` AS `collegeText`,`constant`.`text` AS `statusText` from ((`userlist` join `enroller` on((`userlist`.`id` = `enroller`.`userId`))) left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
+/*!50001 VIEW `enrollerlist` AS select `enroller`.`userId` AS `userId`,`enroller`.`programId` AS `programId`,`enroller`.`status` AS `status`,`enroller`.`cDate` AS `enrollmentDate`,`userlist`.`fullName` AS `fullName`,`userlist`.`id` AS `id`,`userlist`.`username` AS `username`,`userlist`.`password` AS `password`,`userlist`.`firstName` AS `firstName`,`userlist`.`latinFirstName` AS `latinFirstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`latinLastName` AS `latinLastName`,`userlist`.`image` AS `image`,`userlist`.`nid` AS `nid`,`userlist`.`sid` AS `sid`,`userlist`.`cDate` AS `cDate`,`userlist`.`lastLoginDate` AS `lastLoginDate`,`userlist`.`fatherName` AS `fatherName`,`userlist`.`sex` AS `sex`,`userlist`.`address` AS `address`,`userlist`.`phone` AS `phone`,`userlist`.`mobile` AS `mobile`,`userlist`.`email` AS `email`,`userlist`.`email2` AS `email2`,`userlist`.`role_id` AS `role_id`,`userlist`.`birthdayDate` AS `birthdayDate`,`userlist`.`birthdayPlace` AS `birthdayPlace`,`userlist`.`zip` AS `zip`,`userlist`.`provinceId` AS `provinceId`,`userlist`.`department` AS `department`,`userlist`.`college` AS `college`,`userlist`.`takenUnits` AS `takenUnits`,`userlist`.`passedUnits` AS `passedUnits`,`userlist`.`average` AS `average`,`userlist`.`conditionalTerms` AS `conditionalTerms`,`userlist`.`course` AS `course`,`userlist`.`startTerm` AS `startTerm`,`userlist`.`endTerm` AS `endTerm`,`userlist`.`educationalStatus` AS `educationalStatus`,`userlist`.`religion` AS `religion`,`userlist`.`maritalStatus` AS `maritalStatus`,`userlist`.`dormitory` AS `dormitory`,`userlist`.`active` AS `active`,`userlist`.`user_type` AS `user_type`,`userlist`.`job_title` AS `job_title`,`userlist`.`countryId` AS `countryId`,`userlist`.`nationality` AS `nationality`,`userlist`.`lastUniversity` AS `lastUniversity`,`userlist`.`lastDepartment` AS `lastDepartment`,`userlist`.`lastDegree` AS `lastDegree`,`userlist`.`departemntText` AS `departemntText`,`userlist`.`collegeText` AS `collegeText`,`constant`.`text` AS `statusText` from ((`userlist` join `enroller` on((`userlist`.`id` = `enroller`.`userId`))) left join `constant` on(((`constant`.`value` = `enroller`.`status`) and (`constant`.`category` = 'enrollmentStatus')))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -950,7 +991,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyConcuilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`userId`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entityId`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
+/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyCouncilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`userId`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName`,`entity`.`image` AS `image` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entityId`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1040,7 +1081,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `userlist` AS select concat(`user`.`firstName`,' ',`user`.`lastName`) AS `fullName`,`user`.`id` AS `id`,`user`.`username` AS `username`,`user`.`password` AS `password`,`user`.`firstName` AS `firstName`,`user`.`lastName` AS `lastName`,`user`.`nid` AS `nid`,`user`.`sid` AS `sid`,`user`.`cDate` AS `cDate`,`user`.`lastLoginDate` AS `lastLoginDate`,`user`.`fatherName` AS `fatherName`,`user`.`sex` AS `sex`,`user`.`address` AS `address`,`user`.`phone` AS `phone`,`user`.`mobile` AS `mobile`,`user`.`email` AS `email`,`user`.`email2` AS `email2`,`user`.`role_id` AS `role_id`,`user`.`birthdayDate` AS `birthdayDate`,`user`.`zip` AS `zip`,`user`.`provinceId` AS `provinceId`,`user`.`department` AS `department`,`user`.`college` AS `college`,`user`.`course` AS `course`,`user`.`startTerm` AS `startTerm`,`user`.`endTerm` AS `endTerm`,`user`.`religion` AS `religion`,`user`.`dormitory_al` AS `dormitory_al`,`user`.`active` AS `active`,`user`.`user_type` AS `user_type`,`user`.`job_title` AS `job_title`,`user`.`countryId` AS `countryId`,`user`.`nationality` AS `nationality`,`department`.`name` AS `departemntText`,`college`.`name` AS `collegeText` from ((`user` left join `department` on((`department`.`id` = `user`.`department`))) left join `college` on((`college`.`id` = `department`.`collegeId`))) */;
+/*!50001 VIEW `userlist` AS select concat(`user`.`firstName`,' ',`user`.`lastName`) AS `fullName`,`user`.`id` AS `id`,`user`.`username` AS `username`,`user`.`password` AS `password`,`user`.`firstName` AS `firstName`,`user`.`latinFirstName` AS `latinFirstName`,`user`.`lastName` AS `lastName`,`user`.`latinLastName` AS `latinLastName`,`user`.`image` AS `image`,`user`.`nid` AS `nid`,`user`.`sid` AS `sid`,`user`.`cDate` AS `cDate`,`user`.`lastLoginDate` AS `lastLoginDate`,`user`.`fatherName` AS `fatherName`,`user`.`sex` AS `sex`,`user`.`address` AS `address`,`user`.`phone` AS `phone`,`user`.`mobile` AS `mobile`,`user`.`email` AS `email`,`user`.`email2` AS `email2`,`user`.`role_id` AS `role_id`,`user`.`birthdayDate` AS `birthdayDate`,`user`.`birthdayPlace` AS `birthdayPlace`,`user`.`zip` AS `zip`,`user`.`provinceId` AS `provinceId`,`user`.`department` AS `department`,`user`.`college` AS `college`,`user`.`takenUnits` AS `takenUnits`,`user`.`passedUnits` AS `passedUnits`,`user`.`average` AS `average`,`user`.`conditionalTerms` AS `conditionalTerms`,`user`.`course` AS `course`,`user`.`startTerm` AS `startTerm`,`user`.`endTerm` AS `endTerm`,`user`.`educationalStatus` AS `educationalStatus`,`user`.`religion` AS `religion`,`user`.`maritalStatus` AS `maritalStatus`,`user`.`dormitory` AS `dormitory`,`user`.`active` AS `active`,`user`.`user_type` AS `user_type`,`user`.`job_title` AS `job_title`,`user`.`countryId` AS `countryId`,`user`.`nationality` AS `nationality`,`user`.`lastUniversity` AS `lastUniversity`,`user`.`lastDepartment` AS `lastDepartment`,`user`.`lastDegree` AS `lastDegree`,`department`.`name` AS `departemntText`,`college`.`name` AS `collegeText` from ((`user` left join `department` on((`department`.`id` = `user`.`department`))) left join `college` on((`college`.`id` = `department`.`collegeId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1054,4 +1095,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-09 16:35:38
+-- Dump completed on 2014-12-10 17:50:00

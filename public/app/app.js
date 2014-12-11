@@ -1,5 +1,4 @@
 'use strict';
-
 Ext.Loader.setConfig({
     enabled: true
 });

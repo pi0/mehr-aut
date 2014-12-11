@@ -14,6 +14,8 @@ class IndexController extends ControllerBase
 
     public function notFoundAction()
     {
+        $this->response->setStatusCode(404, 'Not Found');
+//        $this->view->pick('404/404');
     }
 
     public function jsAction()
