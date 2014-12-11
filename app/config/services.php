@@ -20,8 +20,8 @@ $di->setShared('session', function() {
 });
 
 $di->setShared('user', function () use ($di) {
-    if(isset($di->session['auth']))
-        return User::findFirst($di->session->auth);
+    if(isset($di['session']['auth']))
+        return User::findFirst($di['session']['auth']);
     else
         return false;
 });

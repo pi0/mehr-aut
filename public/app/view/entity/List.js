@@ -13,6 +13,7 @@
                         var panel = Ext.create('Mehr.view.entity.Info', {
                             info: record,
                             entityId: data.id,
+                            entity: data,
                             items: {
                                 itemId: "info",
                                 data: data,

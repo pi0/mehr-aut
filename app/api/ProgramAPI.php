@@ -67,6 +67,7 @@ class ProgramApi extends BaseApi
                 $query->join('Enroller', 'ProgramList.id=programId')->where('userId=?0', [$params['userId']]);
 //                $params[] = ['type' => 'numeric', 'value' => $params['userId'], 'comparison' => 'eq', 'field' => 'userId'];
             } else if(isset($params['entityId']))
+                $query->where('entityId=?0',[$params['entityId']]);
 
             $response = $this->extFilter($query, $params);
             return ($response);
