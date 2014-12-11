@@ -101,7 +101,6 @@ class UserController extends ControllerBase
             $user->save();
             jsonResponse([]);
         }
-//        $data = $this->di['db']->fetchOne('select id, password,active from user where username=:username', Phalcon\Db::FETCH_ASSOC,
     }
 
 }

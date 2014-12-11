@@ -29,12 +29,12 @@ class Security extends Phalcon\Mvc\User\Plugin
                 $permission = [
                     'guest' => [
                         'index' => ['index', 'login', 'js'],
-                        'user' => ['login'],
+                        'user' => ['login','logout'],
                         'mehr' => ['js'],
                         'api' => ['post', 'program'],
                     ],
                     'member' => [
-                        'user' => ['password', 'currentUser']
+                        'user' => '*'
                     ],
                     'staff' => [
                         'mehr' => '*',

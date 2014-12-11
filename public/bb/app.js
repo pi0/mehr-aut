@@ -65,10 +65,10 @@ Backbone.Validation.configure({
 $(function () {
     $('[title]').tooltip({show: {effect: 'slideIn'}});
     $(document).ajaxStart(function () {
-        $('.busy-box').show().find('.message').text('در حال انجام پردازش');
+        $('.busy-box').fadeIn().find('.message').text('در حال انجام پردازش');
     });
     $(document).ajaxStop(function () {
-        $('.busy-box').hide();
+        $('.busy-box').fadeOut();
     });
     $(document).ajaxError(function (e, xhr) {
         if (typeof xhr.responseJSON == 'object' && xhr.status == 422) {
