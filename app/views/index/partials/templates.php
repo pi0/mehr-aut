@@ -74,7 +74,7 @@
 <script type="text/html" id="news-tpl">
     <div class="component post-container">
         <div class="header">
-            <i class="fa fa-newspaper-o"></i>
+            <i class="fa fa-file-text-o"></i>
             خبر
 
         </div>

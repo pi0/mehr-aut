@@ -23,3 +23,5 @@ Masoud:
 - Importing users data
 _ Warn user if there's an error uploading background image
 _ Display user image on the user edit panel and on the top bar.
+_ (done) Delete news
+_ List of candidates
