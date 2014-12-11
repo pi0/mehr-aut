@@ -1,0 +1,214 @@
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+  .alert.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6; }
+  .alert.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1; }
+  .alert.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc; }
+  .alert.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1; }
+
+.date {
+  direction: ltr;
+  unicode-bidi: embed; }
+
+textarea, input, select {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */ }
+
+a, :visited, :hover, :link, :active, button {
+  text-decoration: none;
+  color: inherit; }
+
+ul.plain {
+  margin: 0;
+  padding: 0; }
+  ul.plain li {
+    transition-duration: .5s;
+    white-space: nowrap;
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0 8px; }
+    ul.plain li:hover {
+      background: #2a7a78;
+      transition-duration: 1s; }
+
+.float-far {
+  float: left; }
+
+.float-near {
+  float: right; }
+
+/*
+ * Droid Arabic Naskh (Arabic) http://www.google.com/webfonts/earlyaccess
+ */
+@font-face {
+  font-family: 'masterfont';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../font/DroidNaskh-Regular.eot);
+  src: url(../font/DroidNaskh-Regular.eot?#iefix) format("embedded-opentype"), url(../font/DroidNaskh-Regular.woff2) format("woff2"), url(../font/DroidNaskh-Regular.woff) format("woff"), url(../font/DroidNaskh-Regular.ttf) format("truetype"); }
+@font-face {
+  font-family: 'masterfont';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../font/DroidNaskh-Bold.eot);
+  src: url(../font/DroidNaskh-Bold.eot?#iefix) format("embedded-opentype"), url(../font/DroidNaskh-Bold.woff2) format("woff2"), url(../font/DroidNaskh-Bold.woff) format("woff"), url(../font/DroidNaskh-Bold.ttf) format("truetype"); }
+.titr, .ui-tabs-anchor, h1, h2, h3, h4, h5, h6, .title {
+  font-family: masterfont !important; }
+
+body, input, textarea, button, select {
+  font-family: masterfont !important;
+  font-size: 12px; }
+
+body {
+  background: url("../../03.jpg");
+  background-size: 100%;
+  background-attachment: fixed;
+  background-repeat: repeat-y; }
+
+body .top-bar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.88);
+  height: 30px !important;
+  line-height: 30px;
+  color: #ffffff;
+  margin: 0 auto;
+  margin-bottom: 15px; }
+  body .top-bar .link-bar {
+    width: 920px;
+    margin: 0 auto; }
+
+footer p {
+  font-size: 11px;
+  text-align: center;
+  width: 100%; }
+
+#main-container-region {
+  margin: 0 auto;
+  width: 920px; }
+
+.component {
+  margin-bottom: 15px;
+  border: solid thin #3333FF;
+  overflow: auto; }
+  .component .header {
+    opacity: .9;
+    background: #3333FF;
+    color: white;
+    padding: 10px;
+    font-weight: bold; }
+  .component .body {
+    background: #fff;
+    overflow: auto;
+    padding: 30px; }
+    .component .body > .name {
+      text-align: center;
+      font-weight: bold;
+      font-size: larger; }
+  .component.post-container .buttons {
+    text-align: left; }
+  .component.post-container .poster {
+    margin-left: 30px;
+    display: block;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+    height: 200px;
+    float: right; }
+  .component .info table {
+    margin: 30px;
+    border-top: thin solid #3333FF;
+    padding: 5px; }
+    .component .info table tr td.name {
+      font-weight: bold;
+      min-width: 80px; }
+    .component .info table td.group {
+      border-bottom: thin solid #3333FF;
+      border-top: thin solid #3333FF;
+      text-align: center;
+      font-weight: bold; }
+    .component .info table tr.buttons td {
+      text-align: center;
+      padding-top: 30px; }
+
+button, .button {
+  display: inline-block;
+  border: none;
+  padding: 0 15px;
+  background-color: #3333FF;
+  color: white !important;
+  height: 30px;
+  line-height: 28px; }
+
+p {
+  text-indent: 20px;
+  text-align: justify; }
+
+form.main-style .error-box {
+  background: darkred;
+  color: white;
+  font-size: smaller;
+  display: inline-block;
+  padding: 5px 10px; }
+  form.main-style .error-box.form-error-box {
+    font-size: medium; }
+form.main-style div {
+  margin: 5px 5px; }
+  form.main-style div label {
+    display: inline-block;
+    min-width: 200px;
+    text-align: left;
+    margin-left: 5px; }
+
+.posts-container .filters {
+  background: #74c7b9;
+  padding: 30px; }
+  .posts-container .filters .filter-main-entity {
+    text-align: center; }
+    .posts-container .filters .filter-main-entity input[type=radio] {
+      display: none; }
+    .posts-container .filters .filter-main-entity label {
+      display: inline-block;
+      margin-right: 4px;
+      background: #fff;
+      padding: 10px;
+      cursor: pointer; }
+    .posts-container .filters .filter-main-entity input[type=radio]:checked + label {
+      background: #ccee00;
+      cursor: default; }
+  .posts-container .filters .filter-options {
+    margin-top: 5px;
+    margin-right: 10px;
+    float: right; }
+    .posts-container .filters .filter-options label {
+      display: block; }
+    .posts-container .filters .filter-options input, .posts-container .filters .filter-options select {
+      display: inline-block;
+      width: 200px;
+      height: 40px;
+      padding: 8px;
+      line-height: 40px; }
+    .posts-container .filters .filter-options input[type=text] {
+      width: 259px; }
+    .posts-container .filters .filter-options button {
+      height: 40px; }
+
+/*# sourceMappingURL=main.css.map */

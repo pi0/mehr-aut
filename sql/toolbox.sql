@@ -14,3 +14,7 @@ SELECT DISTINCT TABLE_NAME
     FROM INFORMATION_SCHEMA.COLUMNS
     WHERE COLUMN_NAME ='maritalStatus'
         AND TABLE_SCHEMA='mehr3';
+
+-- Dumping database structure for mehr
+CREATE DATABASE IF NOT EXISTS `mehr` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_persian_ci */;
+USE `mehr`;

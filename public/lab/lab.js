@@ -1,7 +1,2 @@
-Mehr.cnst = function (c, v) {
-    _.find(Mehr.constants, function (val) {
-        if (val['c'] == c && val['v'] == v) {
-            return val[t];
-        }
-    })
-};
+http://192.69.208.194/mehr/bb/view/changePassword.js
+http://192.69.208.194/mehr/bb/view/changepassword.js

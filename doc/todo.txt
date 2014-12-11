@@ -15,11 +15,12 @@ Reza:
  _ reserved enrollment
  _ Program Filter
  _ Display enrollment date in grid
+ - panel should be displayed for user.
 
 
-
-Masoud:
+Masood:
 ======
+- GENERAL: use font-awesome in extjs: http://extjs.eu/using-font-icons-in-ext-fontawesome/
 - Importing users data
 _ Warn user if there's an error uploading background image
 _ Display user image on the user edit panel and on the top bar.
