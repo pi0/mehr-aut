@@ -520,6 +520,7 @@ button, .button {
   padding: 0 15px;
   background-color: #3333FF;
   color: white !important;
+  cursor: pointer;
   height: 30px;
   line-height: 28px; }
 

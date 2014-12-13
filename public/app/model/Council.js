@@ -1,7 +1,7 @@
 Ext.define('Mehr.model.Council', {
     extend: 'Ext.data.Model',
     //fields: ['userId', 'councilId', 'role', 'name', 'entityId', 'entityFullName'],
-    fields: ['active','electionEndDate','electionStartDate','electionStatus','electionStatusText',
+    fields: ['active', 'electionEndDate', 'electionStartDate', 'electionStatus', 'electionStatusText',
         'endDate',
         'enrollmentEndDate',
         'enrollmentStartDate',
@@ -20,7 +20,7 @@ Ext.define('Mehr.model.Council', {
 
     proxy: {
         type: 'direct',
-                reader: {
+        reader: {
             type: 'json',
             root: 'data',
             totalProperty: 'total'
