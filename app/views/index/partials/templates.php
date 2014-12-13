@@ -54,9 +54,17 @@
 <script type="text/html" id="credit-tpl">
     <div class="component">
         <div class="header">
-افزایش اعتبار
+اعتبار
         </div>
         <div class="body">
+            <div>
+                اعتبار فعلی شما:
+<b>                {{mn credit}} </b>
+                است.
+            </div>
+            <div>
+                با استفاده از فرم زیر می‌توانید به مقدار دلخواه به اعتبار خود بیافزایید. حداقل مبلغ قابل افزایش 1000 ریال است.
+            </div>
             <form class="main-style">
                 <div>
                     <label for=""> </label>
@@ -66,7 +74,7 @@
                 <div><label for="confirmPassword">مقدار اعتبار:</label><input id="amount" name="amount" type="number"/></div>
                 <div>
                     <label for=""> </label>
-                    <button type="submit">اعمال</button>
+                    <button type="submit">پرداخت</button>
                 </div>
         </div>
 
@@ -268,8 +276,7 @@
                     <tr>
                         <td class="name">هزینه:</td>
                         <td>{{#is registerFee '>' 0}}
-                            {{registerFee}}
-                            ریال
+                            {{mn registerFee}}
                             {{else}}
                             <b style="color: green">رایگان</b>
                             {{/is}}
