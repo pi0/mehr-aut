@@ -14,9 +14,9 @@ class CouncilApi extends BaseApi
             $query = $this->queryBuilder('CouncilList');
             if (isset($params['userId'])) {
                 $query->join('CouncilMember', ' CouncilList.id=entityId ')->where('CouncilList.userId=?0', [$params['userId']]);
-            } elseif (isset($params['userId'])) {
+            } elseif (isset($params['entityId'])) {
                 $query->where('entityId=?0', [$params['entityId']]);
-            };
+            }
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);
         }

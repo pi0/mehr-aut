@@ -310,7 +310,6 @@ Ext.define('Mehr.view.user.Edit',
                                 },
                                 {
                                     fieldLabel: 'فعال',
-                                    name: 'active',
                                     xtype: 'radiogroup',
                                     labelAlign: 'right',
                                     columns: 'auto',
@@ -318,16 +317,12 @@ Ext.define('Mehr.view.user.Edit',
                                         {
                                             boxLabel: "فعال",
                                             inputValue: 1,
-                                            checked: true,
-                                            xtype: 'radio',
                                             name: 'active'
                                         },
 
                                         {
                                             boxLabel: "غیرفعال",
-                                            inputValue: false,
-                                            checked: 0,
-                                            xtype: 'radio',
+                                            inputValue: 0,
                                             name: 'active'
                                         }
                                     ]

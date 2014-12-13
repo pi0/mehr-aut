@@ -231,6 +231,7 @@ button, .button {
   padding: 0 15px;
   background-color: $a;
   color: $z !important;
+  cursor: pointer;
   @include line-height(30px);
 }
 

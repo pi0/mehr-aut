@@ -20,11 +20,28 @@
             dataIndex: "name"
         }
     ];
+
     Ext.define("Mehr.view.news.Grid", {
         extend: "Ahura.grid.Base",
         xtype: "newsGrid",
         columns: columns,
         store:'News',
+        menu: [
+            {
+                text: 'ویرایش خبر',
+                handler: function () {
+                    openNewsEditWindow(this.up().rowId);
+                }
+            },
+            {
+                text: 'حذف خبر',
+                handler:function(){
+                    var id = this.up().model.get('id');
+                    this.up().model.destroy();
+                    //RPC.NewsApi.destroy(id);
+                }
+            }
+        ],
         listeners: {
             itemdblclick: function(view,record,item,index,e){
                var id = record.data.id;
@@ -55,4 +72,8 @@
         }
     });
 
-})()
+    function openNewsEditWindow(id){
+        var editPanel = Ext.create('Mehr.view.news.Edit');
+        editPanel.down('form').getForm().load({params: {id: id}})
+    }
+})();

@@ -177,6 +177,23 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 
+    function membershipStatus($entity,$userId){
+        $record = EntityMember::findFirst(['conditions'=>'userId=?0 AND entityId=?1','bind'=>[$userId,$entity->id]]);
+        if($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
+            return $record->role;
+        } else {
+            return $this->inAudience($userId,$entity->audience)?"canJoin":"notAllowed";
+        }
+    }
+
+    function canJoin($entity,$userId){
+        return $this->membershipStatus($entity,$userId) == 'canJoin';
+    }
+
+    function isMember($entity,$userId){
+        return in_array($this->membershipStatus($entity,$userId),['member','active']);
+    }
+
     public function entityAction()
     {
         $app = new Phalcon\Mvc\Micro();
@@ -205,7 +222,26 @@ class ApiController extends ControllerBase
         $app->get('/api/entity/{id}', function ($id = null) {
             $entity = EntityList::findFirst(['id' => $id]);
             $entity->postType = 'entity';
+            $entity->membershipStatus = $this->membershipStatus($entity,$this->currentUser->id);
+            // autoRender specifies that if the membership status can be rendered automatically or not
+            $entity->autoRender = !in_array($entity->membershipStatus,['canJoin','applied','nowAllowed','canceled']);
             $entity->image = ($entity->image != null) ? File::getHashName($entity->image) : false;
+            jsonResponse($entity);
+        });
+        $app->patch('/api/entity/{id}', function ($id = null){
+            $entity = EntityList::findFirst(['id' => $id]);
+            $request = $this->request->getJsonRawBody();
+            if(!$this->canJoin($entity,$this->currentUser->id) || !isset($request->submit))
+                return jsonResponse(false);// we don't want the rest of the function to run, so we return
+
+            $entity->postType = 'entity';
+            $entity->image = ($entity->image != null) ? File::getHashName($entity->image) : false;
+            $em = new EntityMember();
+            $em->userId = $this->currentUser->id;
+            $em->entityId = $id;
+            $em->role = 'applied';
+            $em->save();
+            $entity->membershipStatus = 'applied';
             jsonResponse($entity);
         });
         $app->notFound(function () use ($app) {

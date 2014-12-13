@@ -44,6 +44,10 @@ class NewsApi extends BaseApi
     }
 
     function destroy($params){
-
+        $news = News::findFirst($params->id);
+        if($news->delete())
+            return extJson(true, $news->toArray());
+        else
+            return extJson(false, $news->toArray(), extErrors($news->getMessages()));
     }
 }
