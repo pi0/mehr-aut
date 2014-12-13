@@ -179,22 +179,55 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 
-    function membershipStatus($entity,$userId){
-        $record = EntityMember::findFirst(['conditions'=>'userId=?0 AND entityId=?1','bind'=>[$userId,$entity->id]]);
-        if($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
-            return $record->role;
-        } else {
-            return $this->inAudience($userId,$entity->audience)?"canJoin":"notAllowed";
-        }
-    }
-
-    function canJoin($entity,$userId){
-        return $this->membershipStatus($entity,$userId) == 'canJoin';
-    }
-
-    function isMember($entity,$userId){
-        return in_array($this->membershipStatus($entity,$userId),['member','active']);
-    }
+//    private function acceptsMembers($entity){
+//        return $entity->subscription;
+//    }
+//
+//    private function isMember(EntityMember $em){
+//        return in_array($em->role,['member','active']);
+//    }
+//
+//    // if the user is member of the entity, can become a candidate of the election
+//    // if the user is one of the audience of the entity, can become a candidate of the election
+//    private function canCandidate(Entity $entity,CouncilList $cl,EntityMember $em){
+//        if($this->acceptsMembers($entity)){
+//            if($this->isMember($em)){
+//                if($cl->electionStatus == 'c')
+//                    return true;
+//            }
+//        } else {
+//            if($this->inAudience($em->userId,$entity->audience))
+//                if($cl->electionStatus == 'c')
+//                    return true;
+//        }
+//        return false;
+//    }
+//
+//    private function membershipStatus($entity,$userId){
+//        if(!$this->acceptsMembers($entity))
+//            return $this->inAudience($userId,$entity->audience)?"public":"notAllowed";
+//
+//
+//        $this->canCandidate($entity,)
+//        $record = EntityMember::findFirst(['conditions'=>'userId=?0 AND entityId=?1','bind'=>[$userId,$entity->id]]);
+//        if($record) { // if the user has applied already, we should not let him/her apply again.
+//            if($this->isMember($record)){
+//
+//                $isResponsible = CouncilMember::findFirst(['conditions'=>'userId=?0 AND councilId=?1','bind'=>[$userId,$entity->activeCouncilId]]);
+//
+//                if($isResponsible){
+//                    return $isResponsible->role;
+//                }
+//            }
+//            return $record->role; // applied, cancelled, member, active
+//        } else {
+//            return $this->inAudience($userId,$entity->audience)?"canJoin":"notAllowed";
+//        }
+//    }
+//
+//    private function canJoin($entity,$userId){
+//        return $this->membershipStatus($entity,$userId) == 'canJoin';
+//    }
 
     public function entityAction()
     {
@@ -224,6 +257,7 @@ class ApiController extends ControllerBase
         $app->get('/api/entity/{id}', function ($id = null) {
             $entity = EntityList::findFirst(['id' => $id]);
             $entity->postType = 'entity';
+
             $entity->membershipStatus = $this->membershipStatus($entity,$this->currentUser->id);
             // autoRender specifies that if the membership status can be rendered automatically or not
             $entity->autoRender = !in_array($entity->membershipStatus,['canJoin','applied','nowAllowed','canceled']);
@@ -253,8 +287,7 @@ class ApiController extends ControllerBase
         $app->handle();
     }
 
-    public function newsAction()
-    {
+    public function newsAction(){
         $app = new Phalcon\Mvc\Micro();
         $app->setDI($this->di);
         $app->get('/api/news', function ($id = null) use ($app) {
