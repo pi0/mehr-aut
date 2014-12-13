@@ -28,13 +28,14 @@ class Security extends Phalcon\Mvc\User\Plugin
 
                 $permission = [
                     'guest' => [
-                        'index' => ['index', 'login', 'js'],
+                        'index' => '*',
                         'user' => ['login','logout'],
                         'mehr' => ['js'],
                         'api' => '*',
                     ],
                     'member' => [
-                        'user' => '*'
+                        'user' => '*',
+                        'credit' => '*'
                     ],
                     'staff' => [
                         'mehr' => '*',
@@ -52,6 +53,7 @@ class Security extends Phalcon\Mvc\User\Plugin
                     }
                 }
                 $acl->allow('admin', 'user', '*');
+                $acl->allow('admin', 'mehr', '*');
                 $this->_acl = $acl;
             } catch (\Phalcon\Exception $e) {
                 echo($e->getMessage());
@@ -73,7 +75,6 @@ class Security extends Phalcon\Mvc\User\Plugin
         if ($this->session->auth and !isset($this->currentUser)) {
             $this->getDI()->setShared('currentUser', function () {
                 $user = User::findFirst($this->session->auth);
-                unset($user->password);
                 return $user;
             });
         }

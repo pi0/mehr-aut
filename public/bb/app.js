@@ -137,7 +137,7 @@ Mehr.cnst = function (c, v) {
         if (val['c'] == c && val['v'] == v) {
             return true;
         }
-    })
+    });
     if (r) {
         return r['t']
     }

@@ -53,7 +53,7 @@ $config = array(
         'terminalId' => 1581085,
         'username' => 'ahura773',
         'password' => 23060009,
-        'callbackUrl' => 'http://192.69.208.194/pgu/index/payment'
+        'callbackUrl' => 'http://192.69.208.194/mehr/credit/verify'
     ]
 );
 

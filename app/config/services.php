@@ -10,18 +10,25 @@ $configFile = (php_uname('s') == 'Windows NT') ? 'dev.php' : 'pro.php';
 $config = new Phalcon\Config(include_once __DIR__ . '/' . $configFile);
 $loader = new \Phalcon\Loader();
 
-
-
 //Start the session the first time when some component request the session service
-$di->setShared('session', function() {
+$di->setShared('session', function () {
     $session = new Phalcon\Session\Adapter\Files();
     $session->start();
     return $session;
 });
 
+// easy access to current user's model
 $di->setShared('currentUser', function () use ($di) {
     if (isset($di['session']['auth']))
         return User::findFirst($di['session']->auth);
+    else
+        return false;
+});
+
+// easy access to current user's id
+$di->setShared('uid', function () use ($di) {
+    if (isset($di['session']['auth']))
+        return $di['session']['auth'];
     else
         return false;
 });
@@ -98,7 +105,11 @@ $di->set('pdo', function () use ($config) {
         $dbh = new PDO('mysql:dbname=' . $config->database->name . ';host=' . $config->database->host,
             $config->database->username,
             $config->database->password,
-            [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => TRUE,]
+            [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_PERSISTENT => TRUE,
+            ]
         );
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();

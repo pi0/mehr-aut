@@ -51,6 +51,28 @@
         </form>
     </div>
 </script>
+<script type="text/html" id="credit-tpl">
+    <div class="component">
+        <div class="header">
+افزایش اعتبار
+        </div>
+        <div class="body">
+            <form class="main-style">
+                <div>
+                    <label for=""> </label>
+
+                    <div style="display: none;" class="form-error-box error-box"></div>
+                </div>
+                <div><label for="confirmPassword">مقدار اعتبار:</label><input id="amount" name="amount" type="number"/></div>
+                <div>
+                    <label for=""> </label>
+                    <button type="submit">اعمال</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</script>
 <script type="text/html" id="post-tpl">
     <div class="component post-container">
         <div class="header">
@@ -150,11 +172,11 @@
             <form>
                 <div class="filter-main-entity">
                     <span>نمایش: </span>
-                    <input type="radio" value=""  name="postType" id="all"/>
+                    <input type="radio" value="" name="postType" id="all"/>
                     <label for="all">همه</label>
-                    <input type="radio" value="news"  name="postType" id="news"/>
+                    <input type="radio" value="news" name="postType" id="news"/>
                     <label for="news">اخبار</label>
-                    <input type="radio" value="program"  name="postType" id="program"/>
+                    <input type="radio" value="program" name="postType" id="program"/>
                     <label for="program">برنامه‌ها</label>
                     <input type="radio" value="entity" name="postType" id="entity"/>
                     <label for="entity">نهادها و تشکل‌ها</label>
@@ -303,64 +325,131 @@
 
 
             {{#is userEnrollmentStatus 'ok'}}
-                <div class="program-actions alert alert-info">
-                    <a class="button enroll">
-                        {{#is registerFee '>' 0}}
-                            پرداخت هزینه و ثبت‌نام
-                        {{else}}
-                 ثبت‌نام
-                        {{/is}}
-                    </a>
-                </div>
+            <div class="program-actions alert alert-info">
+                <a class="button enroll">
+                    {{#is registerFee '>' 0}}
+                    پرداخت هزینه و ثبت‌نام
+                    {{else}}
+                    ثبت‌نام
+                    {{/is}}
+                </a>
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'reserve'}}
-                <div class="program-actions alert alert-info">
-                    <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
-                </div>
+            <div class="program-actions alert alert-info">
+                <a href="#program/{{id}}" class="button">ثبت‌نام به عنوان ذخیره</a>
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'enrolled'}}
-                    <div class="program-actions alert alert-success">
-                        شما در تاریخ
-                        {{toJ enroller.cDate}}
-                        در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
-                        {{cnst 'enrollmentStatus' enroller.status}}
-                        است.
-                        {{#is registerFee 0}}
-                        <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>
-                        {{/is}}
-                    </div>
+            <div class="program-actions alert alert-success">
+                شما در تاریخ
+                {{toJ enroller.cDate}}
+                در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
+                {{cnst 'enrollmentStatus' enroller.status}}
+                است.
+                {{#is registerFee 0}}
+                <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>
+                {{/is}}
+                {{#is amount '>' 0}}
+                شما مبلغ
+                {{amount}} ریال
+                پرداخت کرده‌اید.
+                {{/is}}
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'notEligible'}}
-                <div class="program-actions alert alert-warning">
-                            شما واجد شرایط نام‌نویسی در این برنامه نیستید.
-                </div>
+            <div class="program-actions alert alert-warning">
+                شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'guest'}}
-                <div class="program-actions alert alert-warning">
-                    <a href="#login">برای ثبت‌نام در این برنامه لطفا وارد شوید.
-                    </a>
-                </div>
+            <div class="program-actions alert alert-warning">
+                <a href="#login">برای ثبت‌نام در این برنامه لطفا وارد شوید.
+                </a>
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'executed'}}
-                <div class="program-actions alert alert-info">
+            <div class="program-actions alert alert-info">
                 این برنامه برگزار شده است.
-                </div>
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'enrollmentInFuture'}}
-                <div class="program-actions alert alert-info">
+            <div class="program-actions alert alert-info">
                 نام‌نویسی این برنامه‌ هنوز آغاز نشده است.
-                </div>
+            </div>
             {{/is}}
             {{#is userEnrollmentStatus 'unknown'}}
-                <div class="program-actions alert alert-info">
-فرآیند ثبت‌نام برای این برنامه مشخص نشده است.
-                </div>
+            <div class="program-actions alert alert-info">
+                فرآیند ثبت‌نام برای این برنامه مشخص نشده است.
+            </div>
             {{/is}}
             {{userEnrollmentStatus}}
         </div>
 
     </div>
 </script>
+
+
+
+<script type="text/html" id="top-bar-tpl">
+    <div class="top-bar">
+        <div class="link-bar">
+            <ul class="plain float-near">
+                <li title="صفحه اصلی" class="home active">
+                    <a class="icons " href="#">سامانه مهر: معاونت فرهنگی دانشگاه صنعتی امیرکبیر</a>
+                </li>
+            </ul>
+
+            <ul class="plain float-far">
+                {{#if id}}
+                <li>
+                    <i class="fa fa-user"></i>
+                    <b>
+                        {{firstName}} {{lastName}}:
+                    </b>
+                </li>
+                {{#if admin}}
+                <li>
+                    <a href="mehr" target="_blank" title="">
+                        <i class="fa fa-gears"></i>
+                        سامانه مدیریت
+                    </a>
+                </li>
+                {{/if}}
+                <li>
+                    <a href="#account/password" title="">
+                        <i class="fa fa-key"></i>
+                        تغییر گذرواژه
+                    </a>
+                </li>
+                <li>
+                    <a href="#credit" title="">
+                        <i class="fa fa-money"></i>
+                        اعتبار
+                    </a>
+                </li>
+                <li>
+                    <a href="user/logout" title="">
+                        <i class="fa fa-sign-out"></i>
+                        خروج
+                    </a>
+                </li>
+
+                {{else}}
+                <li>
+                    <a title="" href="#login">
+                        ورود
+                        <i class="fa fa-key"></i>
+                    </a>
+                </li>
+                {{/if}}
+            </ul>
+
+        </div>
+
+    </div>
+</script>
+
 
 
 

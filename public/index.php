@@ -1,5 +1,4 @@
 <?php
-
 date_default_timezone_set('Asia/Tehran');
 error_reporting(E_ALL ^ E_DEPRECATED);
 ini_set("log_errors", 1);
@@ -15,9 +14,6 @@ spl_autoload_register(function($className) {
 });
 
 try {
-
-
-
     /**
      * We're a registering a set of directories taken from the configuration file
      */
@@ -31,13 +27,6 @@ try {
         )
     )->register();
 
-//    $loader->registerNamespaces(array(
-////        'Phalcon' => 'D:\www\server\php_include_path\incubator-master\Library\Phalcon'
-//    ));
-
-
-//    require __DIR__ . "/../app/config/services.php";
-
     $application = new \Phalcon\Mvc\Application();
     $application->setDI($di);
     echo $application->handle()->getContent();
@@ -47,5 +36,3 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-
-//print_r( (new ProgramApi())->read());

@@ -12,22 +12,27 @@ class ApiController extends ControllerBase
 
     protected function programEnrollmentStatus($program, $uid)
     {
+        $program = $program->toArray();
         $status = null;
-        if ($program->executionStatus == 'p') {
+        if ($program['executionStatus'] == 'p') {
             $status = 'executed';
-        } elseif ($program->enrollmentStatus == 'f') {
+        } elseif ($program['enrollmentStatus'] == 'f') {
             $status = 'enrollmentInFuture';
-        } elseif ($program->enrollmentStatus == 'c' || ($program->enrollmentStatus == 'p' and $program->executoinStatus == 'f')) {
+        } elseif ($program['enrollmentStatus'] == 'c' || ($program['enrollmentStatus'] == 'p' and $program['executoinStatus'] == 'f')) {
             if (!isset($this->di['session']['auth'])) {
                 $status = 'guest'; // need to log in
             } else {
-                $enroller = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program->id]]);
+                $enroller = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program['id']]]);
                 if ($enroller) {
                     $status = 'enrolled';
-                    $program->enroller = $enroller->toArray();
-                } elseif ($this->inAudience($uid, $program->audience)) {
-                    if ($program->enrollmentStatus == 'c') {
-                        if ($program->enrollerCount && $program->maxCapacity <= $program->enrollerCount) {
+                    $program['enroller'] = $enroller->toArray();
+                    $program['enroller'] = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program['id']]]);
+                    if ($enroller->payment) {
+                        $program['amount'] = Payment::findFirst($enroller->payment)->amount;
+                    }
+                } elseif ($this->inAudience($uid, $program['audience'])) {
+                    if ($program['enrollmentStatus'] == 'c') {
+                        if ($program['enrollerCount'] && $program['maxCapacity'] <= $program['enrollerCount']) {
                             $status = 'full';
                         } else {
                             $status = 'ok';
@@ -37,10 +42,11 @@ class ApiController extends ControllerBase
                     $status = 'notEligible';
                 }
             }
-        } elseif ($program->enrollmentStatus == null) {
+        } elseif ($program['enrollmentStatus'] == null) {
             $status = 'unknown';
         }
-        return $status;
+        $program['userEnrollmentStatus'] = $status;
+        return $program;
     }
 
     protected function initialize()
@@ -131,11 +137,7 @@ class ApiController extends ControllerBase
         $app->get('/api/program/{id}', function ($id = null) {
             $program = ProgramList::findFirstById($id);
             $uid = $this->di['session']['auth'];
-            $programArray = $program->toArray();
-            $programArray['userEnrollmentStatus'] = $this->programEnrollmentStatus($program, $uid);
-            if ($programArray['userEnrollmentStatus'] == 'enrolled') {
-                $programArray['enroller'] = Enroller::findFirst(['conditions' => 'userId=?0 and programId=?1', 'bind' => [$uid, $program->id]]);
-            }
+            $programArray = $this->programEnrollmentStatus($program, $uid);
             jsonResponse($programArray);
         });
         $app->patch('/api/program/{id}', function ($id = null) {
@@ -152,11 +154,7 @@ class ApiController extends ControllerBase
                 jsonResponse($programArray);
             } elseif (isset($request->enroll) && in_array($userEnrollmentStatus, ['ok', 'full'])) {
                 if ($program->registerFee > 0) {
-                    $payment = new Payment();
-                    $payment->save();
-                    $bank = $this->di['bank'];
-                    $redirect = $bank->redirect($program->registerFee, $payment->id);
-                    jsonResponse($redirect);
+
                 } else {
                     $enroller = new Enroller();
                     $enroller->userId = $uid;
@@ -274,4 +272,5 @@ class ApiController extends ControllerBase
         });
         $app->handle();
     }
+
 }

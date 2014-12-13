@@ -10,19 +10,17 @@ class MehrController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
-    {
-    }
-
     public function apiAction()
     {
         $this->view->disable();
+        header('application/json');
         ExtDirect::$namespace = 'RPC';
         ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug = true;
         ExtDirect::$descriptor = 'RPC.REMOTING_API';
         ExtDirect::$form_handlers = array('ProgramApi::create', 'UserApi::create', 'EntityApi::create', 'CouncilApi::create','NewsApi::create','SystemApi::update');
         ExtDirect::provide(['UserController', 'ProgramApi','NewsApi', 'UserApi', 'EntityApi', 'EnrollerApi', 'CouncilMemberApi', 'MemberApi', 'CouncilApi','SystemApi']);
+
     }
 
     public function jsAction()
@@ -67,8 +65,6 @@ class MehrController extends ControllerBase
         $this->view->userType = toJsArray($db->query('select `value`,text from constant where category="userType"')->fetchAll());;
         $this->view->department = toJsArray($db->query('select id,name from department')->fetchAll());;
         $this->view->college = toJsArray($db->query('select id,name from college')->fetchAll());;
-//        var_dump($this->view->college);
-//        die();
 
         header('content-type:application/javascript; charset=utf-8');
 
