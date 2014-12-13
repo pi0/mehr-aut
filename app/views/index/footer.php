@@ -40,20 +40,15 @@
     <script src="bb/app.js"></script>
     <script src="bb/view/topbar.js"></script>
     <script src="bb/router.js"></script>
-    <script src="bb/model/post.js"></script>
     <script src="bb/view/post.js"></script>
     <script src="bb/view/posts.js"></script>
-    <script src="bb/model/program.js"></script>
     <script src="bb/view/program.js"></script>
     <script src="bb/view/login.js"></script>
-    <script src="bb/view/changepassword.js"></script>
-    <script src="bb/model/membership.js"></script>
     <script src="bb/view/membership.js"></script>
     <script src="bb/view/password.js"></script>
     <script src="bb/view/news.js"></script>
-    <script src="bb/model/news.js"></script>
     <script src="bb/view/entity.js"></script>
-    <script src="bb/model/entity.js"></script>
+    <script src="bb/view/credit.js"></script>
 <?php else: ?>
     <script src='app/app.merged.min.js'></script>
 <?php endif; ?>

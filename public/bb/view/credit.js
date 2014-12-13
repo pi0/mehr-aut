@@ -1,30 +1,20 @@
 'use strict';
-app.Password = Backbone.Model.extend({
-    url: 'user/password',
+app.Credit = Backbone.Model.extend({
+    url: 'credit',
     validation: {
-        newPassword: {
-            required: true
-        },
-        password: {
-            required: true
-        },
-        confirmPassword: {
+        amount: {
             required: true,
-            equalTo: 'newPassword'
+            min: 1000
         }
     },
     labels: {
-        password: 'گذرواژه',
-        newPassword: 'گذرواژه جدید',
-        confirmPassword: 'تکرار گذرواژه'
-
+        amount: 'مبلغ'
     }
 });
-app.PasswordView = Backbone.Marionette.ItemView.extend({
-    template: '#password-tpl',
-    model: new app.Password,
+app.CreditView = Backbone.Marionette.ItemView.extend({
+    template: '#credit-tpl',
+    model: new app.Credit,
     initialize: function () {
-
         Backbone.Validation.bind(this);
     },
     events: {
@@ -36,9 +26,16 @@ app.PasswordView = Backbone.Marionette.ItemView.extend({
         var data = this.$el.find('form').serializeObject();
 
         this.model.save(data, {
-            success: function (model, response, options) {
-//                app.layout.topbar.show(new app.TopbarView({model: model}));
-                me.$el.find('.form-error-box').html('گذرواژه با موفقیت تغییر کرد.').fadeIn();
+            success: function (model, response) {
+                if (response.error) {
+                    alert(response.message);
+                }
+                else if (response.form) {
+                    me.$el.html(response.form);
+                }
+                else {
+                    me.render();
+                }
             },
             error: function (model, response, options) {
                 try {
@@ -51,6 +48,4 @@ app.PasswordView = Backbone.Marionette.ItemView.extend({
             }
         });
     }
-
 });
-

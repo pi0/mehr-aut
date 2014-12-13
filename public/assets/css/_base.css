@@ -353,6 +353,9 @@ td,
 th {
   padding: 0; }
 
+.program-actions {
+  clear: both; }
+
 .alert {
   padding: 15px;
   margin-bottom: 20px;

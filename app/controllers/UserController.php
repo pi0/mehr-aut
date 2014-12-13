@@ -8,9 +8,6 @@ class UserController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
-    {
-    }
 
     function readAction($params = null)
     {
@@ -46,10 +43,7 @@ class UserController extends ControllerBase
     {
         $this->view->disable();
         if ($this->session['auth']) {
-            $user = $this->currentUser;
-            $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
-            if ($user->type == 'a') $view['admin'] = true;
-            jsonResponse($view);
+            $this->getSafeUserData();
         } else {
             jsonResponse('Please log in!');
         }
@@ -67,10 +61,7 @@ class UserController extends ControllerBase
                 }
             }
             if ($this->session['auth']) {
-                $user = $this->currentUser;
-                $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
-                if ($user->type == 'a') $view['admin'] = true;
-                jsonResponse($view);
+                $this->getSafeUserData();
             } else {
                 http_response_code(401);
                 jsonResponse(['message' => 'شناسه و/یا گذرواژه وارد شده معتبر نمی‌باشد. ']);
@@ -86,7 +77,7 @@ class UserController extends ControllerBase
 
     function passwordAction()
     {
-        $user = $this->di['session']['user'];
+        $user = $this->currentUser;
         $request = $this->request->getJsonRawBody();
         $this->view->disable();
         $new = $request->newPassword;
@@ -106,9 +97,12 @@ class UserController extends ControllerBase
         }
     }
 
-    private function safeUserDate()
+    private function getSafeUserData()
     {
-
+        $user = $this->currentUser;
+        $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
+        if ($user->type == 'a') $view['admin'] = true;
+        jsonResponse($view);
     }
 
 }

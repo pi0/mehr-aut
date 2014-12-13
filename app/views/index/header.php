@@ -22,4 +22,3 @@
 
 </head>
 <body dir="rtl">
-<?php include_once "partials/navbar.php"; ?>

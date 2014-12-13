@@ -10,6 +10,13 @@ Handlebars.registerHelper('def', function (x, def) {
     return x;
 });
 
+Handlebars.registerHelper('mn', function (n) {
+    if (typeof Intl.DateTimeFormat == 'function') {
+        n = new Intl.NumberFormat('fa-IR').format(n);
+    }
+    return n + ' ریال';
+});
+
 // A helper to convert constants to human-readable text.
 Handlebars.registerHelper('cnst', function (cat, val) {
     return Mehr.cnst(cat, val);
@@ -137,11 +144,11 @@ Mehr.cnst = function (c, v) {
         if (val['c'] == c && val['v'] == v) {
             return true;
         }
-    })
+    });
     if (r) {
         return r['t']
     }
     else {
-        console.error("Constant not found: "+c+' '+v);
+        console.error("Constant not found: " + c + ' ' + v);
     }
 };

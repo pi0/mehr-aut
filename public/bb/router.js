@@ -10,7 +10,8 @@ app.MainRouter = Backbone.Router.extend({
         'account/password': 'password',
         'login': 'login',
         'account/membership': 'membership',
-        'news/:id': 'news'
+        'news/:id': 'news',
+        'credit':'credit'
     },
     home: function () {
         var p = new app.Posts();
@@ -62,6 +63,13 @@ app.MainRouter = Backbone.Router.extend({
         new app.News({id: id}).fetch({
             success: function (model) {
                 app.layout.content.show(new app.NewsView({model: model}));
+            }
+        });
+    },
+    credit:function(){
+        new app.Credit().fetch({
+            success: function (model) {
+                app.layout.content.show(new app.CreditView({model: model}));
             }
         });
     }

@@ -1,0 +1,19 @@
+<div style="margin: 0 auto">
+    <?php if ($status == 'noRefId'): ?>
+        هیچ تراکنشی ارسال نشده‌است.
+    <?php elseif ($status == 'notFound')    : ?>
+        تراکنش ارسالی پیشتر ثبت‌ نشده است. هیچ مبلغی انتقال نیافت.
+    <?php elseif ($status == 'failed'): ?>
+        <div>    <?= $message ?></div>
+        هیچ مبلغی انتقال نیافت.
+    <?php elseif ($status == 'ok'): ?>
+        تراکنش با موفقیت انجام شد.
+        <div>
+            کد رهگیری:
+            <?=$saleReferenceId?>
+        </div>
+    <?php endif; ?>
+    <div>
+        <a href="<?=$_SERVER['HTTP_HOST']?>/mehr#credit"></a>
+    </div>
+</div>
