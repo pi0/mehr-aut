@@ -6,16 +6,16 @@ class CouncilApi extends BaseApi
     function read($params)
     {
         $params = (array)$params;
-        if (isset($params['id'])) {
+        if (isset($params['id']) && !isset($params['type'])) {
             $data = $this->db->fetchOne("SELECT * FROM council WHERE id=:id", Phalcon\Db::FETCH_ASSOC, ['id' => $params['id']]);
             return (['data' => fromDB($data), 'success' => true]);
         } else {
             $whitList = [];
             $query = $this->queryBuilder('CouncilList');
-            if (isset($params['user'])) {
-                $query->join('CouncilMember', ' CouncilList.id=entity ')->where('CouncilList.user=?0', [$params['user']]);
-            } elseif (isset($params['entity'])) {
-                $query->where('entity=?0', [$params['entity']]);
+            if (isset($params['type']) && $params['type'] == 'user') {
+                $query->join('CouncilMember', ' CouncilList.id=entity ')->where('CouncilList.user=?0', [$params['id']]);
+            } elseif (isset($params['type']) && $params['type'] == 'entity') {
+                $query->where('entity=?0', [$params['id']]);
             }
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);

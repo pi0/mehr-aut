@@ -1,5 +1,3 @@
-Ext.require('Mehr.view.audience.Panel');
-//Ext.require('Ahura.form.combo.Provinces');
 
 Ext.define('Mehr.view.entity.Info', {
     extend: 'Ahura.window.Base',
@@ -7,8 +5,7 @@ Ext.define('Mehr.view.entity.Info', {
     title: 'مرکز مدیریت نهاد',
     width: 600,
     layout: 'fit',
-    items: [
-    ],
+    items: [],
     buttons: [
         {
             text: 'ویرایش',
@@ -32,14 +29,14 @@ Ext.define('Mehr.view.entity.Info', {
         {
             text: 'برنامه‌ها',
             icon: icon('microphone'),
-            handler: function(){
-                var entity = this.up('window').entity;
+            handler: function () {
+                var entity = this.up('window').entity.data;
                 console.log(entity);
                 var programs = Ext.create('Mehr.view.program.List', {
                     info: {
                         title: 'برنامه‌های: ' + entity.typeText + ' ' + entity.name,
-                        row: entity,
-                        caller: 'entity'
+                        type: 'entity',
+                        id: entity.id
                     }
                 });
             }
@@ -48,11 +45,16 @@ Ext.define('Mehr.view.entity.Info', {
             xtype: 'splitbutton',
             'text': 'دوره‌ها',
             handler: function () {
+                var entity = this.up('window').entity;
+                console.log(entity);
+                
                 Ext.create('Mehr.view.council.List', {
                     info: {
-                        row: this.up('window').info,
-                        for: 'entity'
-                    }})
+                        title: 'دوره‌های شوراهای مرکزی:' + entity.typeText + ' ' + entity.name,
+                        type: 'entity',
+                        id: entity.id
+                    }
+                })
             },
             menu: [
                 {
@@ -61,7 +63,8 @@ Ext.define('Mehr.view.entity.Info', {
                         Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
                     }
                 }
-            ]}
+            ]
+        }
 //        {text:'طرح‌ها'},
     ]
 });

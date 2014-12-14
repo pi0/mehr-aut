@@ -20,9 +20,9 @@
             dataIndex: "sid",
             renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                 if ('f' == record.get('sex'))
-                    return  '<span style="color:red;">' + value + '</span>';
+                    return '<span style="color:red;">' + value + '</span>';
                 else if ('m' == record.get('sex'))
-                    return  '<span style="color:blue;">' + value + '</span>';
+                    return '<span style="color:blue;">' + value + '</span>';
                 return value;
 
             }
@@ -179,8 +179,8 @@
                             var programs = Ext.create('Mehr.view.council.List', {
                                 info: {
                                     title: 'عضویت‌ها در شورای مرکزی: ' + Ahura.window.Base.userWindowTitle(row),
-                                    row: row,
-                                    for: 'user'
+                                    id: row.data.id,
+                                    type: 'user'
                                 }
                             });
                         }
