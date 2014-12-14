@@ -24,30 +24,29 @@ class ProgramApi extends BaseApi
         return $data;
     }
 
-    function canEnroll($userId,$programId){
+    function canEnroll($userId, $programId)
+    {
         $program = ProgramList::findFirst("id=$programId");
-        if($program->executionStatus!='f'){
+        if ($program->executionStatus != 'f') {
             return 'isPast' . $program->executionStatus;
         }
         $audience = $program->audience;
         $query = $this->queryBuilder('UserList')->columns(['UserList.id']);
-        applyAudience($query,$audience);
-        $query->andWhere('UserList.id=?0',[$userId]);
-        if($query->getQuery()->execute()->count() == 0)
+        applyAudience($query, $audience);
+        $query->andWhere('UserList.id=?0', [$userId]);
+        if ($query->getQuery()->execute()->count() == 0)
             return 'notValid';
-        if($program->enrollmentStatus == 'c' && $program->enrollerCount >= $program->maxCapacity)
+        if ($program->enrollmentStatus == 'c' && $program->enrollerCount >= $program->maxCapacity)
             return 'enroll';
         else
             return 'reserved';
-
-
     }
 
     function read($params)
     {
         $params = (array)$params;
         $id = @$params['id'];
-        if ($id) {
+        if ($id && !isset($params['type'])) {
             $p = new Program();
             $response = $p->findFirst("id=$id")->toArray();
             formPostProcess($response);
@@ -59,16 +58,13 @@ class ProgramApi extends BaseApi
                     $response['audience[' . $k . ']'] = $v;
                 }
             }
-
             return (['data' => $response, 'success' => true]);
         } else {
             $query = $this->queryBuilder('ProgramList')->orderBy('executionStartDate desc');
-            if (isset($params['user'])) {
-                $query->join('Enroller', 'ProgramList.id=program')->where('user=?0', [$params['user']]);
-//                $params[] = ['type' => 'numeric', 'value' => $params['user'], 'comparison' => 'eq', 'field' => 'user'];
-            } else if(isset($params['entity']))
-                $query->where('entity=?0',[$params['entity']]);
-
+            if (isset($params['type']) && $params['type'] == 'user') {
+                $query->join('Enroller', 'ProgramList.id=program')->where('user=?0', [$params['id']]);
+            } else if (isset($params['type']) && $params['type'] == 'entity')
+                $query->where('entity=?0', [$params['id']]);
             $response = $this->extFilter($query, $params);
             return ($response);
         }

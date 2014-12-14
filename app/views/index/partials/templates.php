@@ -393,7 +393,8 @@
                 شما در تاریخ
                 {{toJ enroller.cDate}}
                 در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
-                {{cnst 'enrollmentStatus' enroller.status}}
+<b>                {{cnst 'enrollmentStatus' enroller.status}}
+</b>
                 است.
                 {{#is registerFee 0}}
                 <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>
@@ -448,7 +449,9 @@
         <div class="link-bar">
             <ul class="plain float-near">
                 <li title="صفحه اصلی" class="home active">
-                    <a class="icons " href="#">سامانه مهر: معاونت فرهنگی دانشگاه صنعتی امیرکبیر</a>
+                    <a class="icons " href="#">سامانه مهر:
+                        {{licensee}}
+                    </a>
                 </li>
             </ul>
 

@@ -146,12 +146,11 @@
                         text: 'برنامه‌ها',
                         handler: function () {
                             var row = this.up().up().model;
-                            var grid = this.up().up().grid;
                             var programs = Ext.create('Mehr.view.program.List', {
                                 info: {
                                     title: 'برنامه‌های: ' + Ahura.window.Base.userWindowTitle(row),
-                                    row: row,
-                                    caller: 'user'
+                                    id: row.data.id,
+                                    type: 'user'
                                 }
                             });
                         }
@@ -161,11 +160,11 @@
                         text: 'عضویت‌ها',
                         handler: function () {
                             var row = this.up().up().model;
-                            var grid = this.up().up().grid;
                             var programs = Ext.create('Mehr.view.entity.List', {
                                 info: {
                                     title: 'عضویت‌های: ' + Ahura.window.Base.userWindowTitle(row),
-                                    row: row
+                                    id: row.data.id,
+                                    type: 'user '
                                 }
                             });
                         }
@@ -175,7 +174,6 @@
                         text: 'شوراها',
                         handler: function () {
                             var row = this.up().up().model;
-                            var grid = this.up().up().grid;
                             var programs = Ext.create('Mehr.view.council.List', {
                                 info: {
                                     title: 'عضویت‌ها در شورای مرکزی: ' + Ahura.window.Base.userWindowTitle(row),

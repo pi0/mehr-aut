@@ -4,20 +4,21 @@ class ProgramController extends ControllerBase
 {
     public function programAction()
     {
+        $filter = $_REQUEST;
         $app = new Phalcon\Mvc\Micro();
         $app->setDI($this->di);
-        $app->get('/program/program', function ($id = null) use ($app) {
+        $app->get('/program/program', function ($id = null) use ($app, $filter) {
             $query = $this->modelsManager->createBuilder()
                 ->orderBy('cDate desc')
                 ->from('ProgramList');
             if (isset($filter['text']) && $filter['text'] != null)
-                $query->andWhere('.details like :s: OR name like :t:',
+                $query->andWhere('details like :s: OR name like :t:',
                     ['s' => '%' . $filter['text'] . '%', 't' => '%' . $filter['text'] . '%']);
             if (isset($filter['subject']) && $filter['subject'] != null) {
-                $query->andWhere('.subject = :s:', ['s' => $filter['subject']]);
+                $query->andWhere('subject = :s:', ['s' => $filter['subject']]);
             }
             if (isset($filter['type']) && $filter['type'] != null) {
-                $query->andWhere('.type = :s:', ['s' => $filter['type']]);
+                $query->andWhere('type = :type:', ['type' => $filter['type']]);
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
@@ -47,7 +48,7 @@ class ProgramController extends ControllerBase
                 $enroller = new Enroller();
                 $enroller->user = $uid;
                 $enroller->program = $id;
-                $enroller->status = 'ok';
+                $enroller->status = 'final';
                 if ($enroller->save()) {
                     $credit = new Credit();
                     $credit->assign([

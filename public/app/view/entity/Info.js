@@ -30,7 +30,7 @@ Ext.define('Mehr.view.entity.Info', {
             text: 'برنامه‌ها',
             icon: icon('microphone'),
             handler: function () {
-                var entity = this.up('window').entity.data;
+                var entity = this.up('window').entity;
                 console.log(entity);
                 var programs = Ext.create('Mehr.view.program.List', {
                     info: {
@@ -46,8 +46,6 @@ Ext.define('Mehr.view.entity.Info', {
             'text': 'دوره‌ها',
             handler: function () {
                 var entity = this.up('window').entity;
-                console.log(entity);
-                
                 Ext.create('Mehr.view.council.List', {
                     info: {
                         title: 'دوره‌های شوراهای مرکزی:' + entity.typeText + ' ' + entity.name,
