@@ -4,11 +4,6 @@ class ControllerBase extends Phalcon\Mvc\Controller
 {
     protected function initialize()
     {
-//        var_dump($this->di['session']['user']);
-//        if (isset($this->di['session']['user']))
-//            $this->user = $this->di['session']['user'];
-//        $this->view->setVar('BASE', $this->url->getBaseUri());
-//        Phalcon\Tag::prependTitle('Vajje.com | ');
     }
 
     protected function forward($uri)
@@ -21,4 +16,13 @@ class ControllerBase extends Phalcon\Mvc\Controller
             )
         );
     }
+
+    protected  function inAudience($id, $audience)
+    {
+        $query = $this->modelsManager->createBuilder()->from('User')->columns('User.id');
+        $query->andWhere('User.id=:id:', ['id' => $id]);
+        applyAudience($query, $audience);
+        return $result = $query->getQuery()->execute()->count();
+    }
+
 }

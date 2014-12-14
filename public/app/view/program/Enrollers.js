@@ -54,7 +54,7 @@ var tbar = [
             var status = this.up().down('[name=status]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.up('window').info.get('id'), id: id, status: status});
+                var enroll = Ext.create('Mehr.model.Enroller', {program: grid.up('window').info.get('id'), id: id, status: status});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({
@@ -132,7 +132,7 @@ Ext.define("Mehr.view.program.Enrollers", {
         this.title = 'نام‌نوشتگان در:' + ' ' + this.info.get('name');
         this.callParent(arguments);
         var grid = this.down('grid');
-        grid.getStore().getProxy().setExtraParam('programId', this.info.get('id'));
+        grid.getStore().getProxy().setExtraParam('program', this.info.get('id'));
         grid.getStore().load();
     }
 })

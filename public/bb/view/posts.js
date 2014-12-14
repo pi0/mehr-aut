@@ -19,7 +19,6 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
     },
     'filterEntity': function (e) {
         var type = $(e.target).attr('value');
-
         Backbone.history.navigate(type, {trigger: true});
     },
     'filterSubmit': function (e) {

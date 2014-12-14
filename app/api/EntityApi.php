@@ -46,8 +46,8 @@ class EntityApi extends BaseApi
         } else {
             $whitList = [];
             $query = $this->queryBuilder('EntityList');
-            if (isset($params['userId'])) {
-                $query->join('EntityMember', ' EntityList.id=entityId ')->where('userId=?0', [$params['userId']]);
+            if (isset($params['user'])) {
+                $query->join('EntityMember', ' EntityList.id=entity ')->where('user=?0', [$params['user']]);
             };
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);

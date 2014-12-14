@@ -20,9 +20,9 @@ class NewsApi extends BaseApi
         } else {
             $whitList = [];
             $query = $this->queryBuilder('News');
-            if (isset($params['userId'])) {
+            if (isset($params['user'])) {
                 $query->join('NewsMember', ' News.id=newsId ')
-                    ->where('userId=?0', [$params['userId']]);
+                    ->where('user=?0', [$params['user']]);
             };
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);

@@ -1,6 +1,6 @@
 Ext.define('Mehr.model.Enroller', {
     extend: 'Ext.data.Model',
-    fields: ['programId', 'id', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'status','statusText'],
+    fields: ['program', 'id', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'status','statusText'],
     proxy: {
         type: 'direct',
                 reader: {

@@ -7,14 +7,14 @@ Ext.define('Mehr.model.Council', {
         'enrollmentStatus',
         'enrollmentStatusText',
         'entityFullName',
-        'entityId',
+        'entity',
         'id',
         'name',
         'note',
         'secretaryFullName',
         'startDate',
         'timeStage(startDate,endDate)',
-        'userId'],
+        'user'],
     proxy: {
         type: 'direct',
         api: {

@@ -63,11 +63,11 @@ class ProgramApi extends BaseApi
             return (['data' => $response, 'success' => true]);
         } else {
             $query = $this->queryBuilder('ProgramList')->orderBy('executionStartDate desc');
-            if (isset($params['userId'])) {
-                $query->join('Enroller', 'ProgramList.id=programId')->where('userId=?0', [$params['userId']]);
-//                $params[] = ['type' => 'numeric', 'value' => $params['userId'], 'comparison' => 'eq', 'field' => 'userId'];
-            } else if(isset($params['entityId']))
-                $query->where('entityId=?0',[$params['entityId']]);
+            if (isset($params['user'])) {
+                $query->join('Enroller', 'ProgramList.id=program')->where('user=?0', [$params['user']]);
+//                $params[] = ['type' => 'numeric', 'value' => $params['user'], 'comparison' => 'eq', 'field' => 'user'];
+            } else if(isset($params['entity']))
+                $query->where('entity=?0',[$params['entity']]);
 
             $response = $this->extFilter($query, $params);
             return ($response);
@@ -85,7 +85,5 @@ class ProgramApi extends BaseApi
         } else {
             return extJson(false, $p->toArray(), (array)($p->getMessages()));
         }
-
-//        var_dump($P->getModelsMetaData()->getAttributes($P));
     }
 }

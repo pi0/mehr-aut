@@ -7,7 +7,7 @@ class Enroller extends BaseModel
 }
 
 //$x=new Enroller();
-//$x->userId=3;
-//$x->programId=333;
+//$x->user=3;
+//$x->program=333;
 //$x->save();
 //print_r($x->getMessages());

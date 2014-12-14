@@ -1,5 +1,4 @@
 'use strict';
-'use strict';
 app.Post = Backbone.Model.extend({
     idAttribute: 'tid',
     urlRoot: 'api/post'

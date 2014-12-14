@@ -12,7 +12,7 @@
                         var data = grid.getStore().getAt(rowIndex).getData();
                         var panel = Ext.create('Mehr.view.entity.Info', {
                             info: record,
-                            entityId: data.id,
+                            entity: data.id,
                             entity: data,
                             items: {
                                 itemId: "info",
@@ -81,7 +81,7 @@
             this.title = this.info.title || 'نهاد‌ها';
             this.callParent(arguments);
             var grid = this.down('grid');
-            grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+            grid.getStore().getProxy().setExtraParam('user', (this.info.row) ? this.info.row.getId() : this.tid);
             grid.getStore().load();
         }
     });

@@ -1,6 +1,6 @@
 Ext.define('Mehr.model.Member', {
     extend: 'Ext.data.Model',
-    fields: ['id','entityId', 'userId', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'role','roleText'],
+    fields: ['id','entity', 'user', 'firstName', 'lastName', 'nid', 'sid', 'sex', 'role','roleText'],
     proxy: {
         type: 'direct',
                 reader: {

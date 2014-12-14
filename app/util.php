@@ -174,8 +174,8 @@ function applyAudience(&$query, $audience)
                     if ($v == 'm' or $v == 'f') $query->andWhere('sex=:sex:', ['sex' => $v]);
                     break;
                 case 'entityMember':
-                    $query->join('EntityMember', 'EntityMember.userId=User.id');
-                    $query->inWhere('entityId', $v);
+                    $query->join('EntityMember', 'EntityMember.user=User.id');
+                    $query->inWhere('entity', $v);
                     break;
                 case 'educationStatus':
                     if ($v == 'current')

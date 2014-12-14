@@ -29,17 +29,22 @@ class Security extends Phalcon\Mvc\User\Plugin
                 $permission = [
                     'guest' => [
                         'index' => '*',
-                        'user' => ['login','logout'],
+                        'user' => ['login', 'logout'],
                         'mehr' => ['js'],
                         'api' => '*',
                     ],
                     'member' => [
                         'user' => '*',
-                        'credit' => '*'
+                        'credit' => '*',
+                        'program' => '*',
+                        'entity' => '*'
                     ],
                     'staff' => [
                         'mehr' => '*',
                         'user' => '*'
+                    ],
+                    'admin' => [
+                        '*' => '*'
                     ]
                 ];
 
@@ -52,8 +57,6 @@ class Security extends Phalcon\Mvc\User\Plugin
                         $acl->allow($role, $resource, $accesses);
                     }
                 }
-                $acl->allow('admin', 'user', '*');
-                $acl->allow('admin', 'mehr', '*');
                 $this->_acl = $acl;
             } catch (\Phalcon\Exception $e) {
                 echo($e->getMessage());

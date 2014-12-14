@@ -5,15 +5,15 @@ class MemberApi extends BaseApi
 {
     function read($params)
     {
-        if (!isset($params->entityId)) {
+        if (!isset($params->entity)) {
             return ['success' => 'false', 'errors' => ['No entity Specified!']];
         }
         if (isset($params->id)) {
 //            $data = $u->findFirst("id=" . $params->id)->toArray();
             return (['data' => $data, 'success' => true]);
         } else {
-            $data = $this->db->fetchAll("select * from entitymemberlist where entityId=:entityId", Phalcon\Db::FETCH_ASSOC, ['entityId' => $params->entityId]);
-            $total = $this->db->fetchOne("select count(*) from entitymemberlist where entityId=:entityId", Phalcon\Db::FETCH_NUM, ['entityId' => $params->entityId]);
+            $data = $this->db->fetchAll("select * from entitymemberlist where entity=:entity", Phalcon\Db::FETCH_ASSOC, ['entity' => $params->entity]);
+            $total = $this->db->fetchOne("select count(*) from entitymemberlist where entity=:entity", Phalcon\Db::FETCH_NUM, ['entity' => $params->entity]);
             return (['data' => $data, 'total' => $total[0]]);
         }
     }
@@ -22,8 +22,8 @@ class MemberApi extends BaseApi
     {
         error_reporting(E_STRICT);
 
-        $result = $this->db->execute('insert entitymember (userId,entityId,role) values (:user,:entity, :role) on duplicate key update role=:role ',
-            ['entity' => $params->entityId, 'user' => $params->userId,'role'=>$params->role]);
+        $result = $this->db->execute('insert entitymember (user,entity,role) values (:user,:entity, :role) on duplicate key update role=:role ',
+            ['entity' => $params->entity, 'user' => $params->user,'role'=>$params->role]);
         $affected=$this->db->affectedRows();
         if ($affected > 0) {
             return extJson(true, [], []);
@@ -34,7 +34,7 @@ class MemberApi extends BaseApi
 
     function destroy($params)
     {
-        $result = $this->db->execute('delete from entitymember where userId=:user and entityId=:entity', ['entity' => $params->entityId, 'user' => $params->userId]);
+        $result = $this->db->execute('delete from entitymember where user=:user and entity=:entity', ['entity' => $params->entity, 'user' => $params->user]);
         if ($result > 0) {
             return extJson(true, [], []);
         } else {

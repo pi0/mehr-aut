@@ -17,7 +17,7 @@ var termColumns = [
             xtype: 'user-combo',
             fieldLabel: null,
             allowBlank: false,
-            name: 'userId',
+            name: 'user',
             displayTpl: Ext.create('Ext.XTemplate',
                 '<tpl for=".">',
                 '{firstName} {lastName}',

@@ -93,7 +93,7 @@ Ext.define("Mehr.view.program.Edit",
                             },
                             {
                                 fieldLabel: 'متولی',
-                                name: 'entityId',
+                                name: 'entity',
                                 allowBlank: false,
                                 xtype: 'entity-combo'
                             },

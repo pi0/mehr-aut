@@ -47,22 +47,22 @@ $di->set('dispatcher', function () use ($di) {
      */
     $eventsManager->attach('dispatch', $security);
 
-    $eventsManager->attach(
-        "dispatch:beforeException",
-        function ($event, $dispatcher, $exception) {
-            switch ($exception->getCode()) {
-                case \Phalcon\Mvc\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
-                case \Phalcon\Mvc\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
-                    $dispatcher->forward(
-                        array(
-                            'controller' => 'index',
-                            'action' => 'notFound',
-                        )
-                    );
-                    return false;
-            }
-        }
-    );
+//    $eventsManager->attach(
+//        "dispatch:beforeException",
+//        function ($event, $dispatcher, $exception) {
+//            switch ($exception->getCode()) {
+//                case \Phalcon\Mvc\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+//                case \Phalcon\Mvc\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+//                    $dispatcher->forward(
+//                        array(
+//                            'controller' => 'index',
+//                            'action' => 'notFound',
+//                        )
+//                    );
+//                    return false;
+//            }
+//        }
+//    );
 
     $dispatcher = new Phalcon\Mvc\Dispatcher();
     $dispatcher->setEventsManager($eventsManager);

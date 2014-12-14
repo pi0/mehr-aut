@@ -12,10 +12,10 @@ class CouncilApi extends BaseApi
         } else {
             $whitList = [];
             $query = $this->queryBuilder('CouncilList');
-            if (isset($params['userId'])) {
-                $query->join('CouncilMember', ' CouncilList.id=entityId ')->where('CouncilList.userId=?0', [$params['userId']]);
-            } elseif (isset($params['entityId'])) {
-                $query->where('entityId=?0', [$params['entityId']]);
+            if (isset($params['user'])) {
+                $query->join('CouncilMember', ' CouncilList.id=entity ')->where('CouncilList.user=?0', [$params['user']]);
+            } elseif (isset($params['entity'])) {
+                $query->where('entity=?0', [$params['entity']]);
             }
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);
@@ -36,7 +36,7 @@ class CouncilApi extends BaseApi
 
     function destroy($params)
     {
-        $result = $this->db->execute('DELETE FROM Council WHERE userId=:user AND programId=:program', ['program' => $params->programId, 'user' => $params->id]);
+        $result = $this->db->execute('DELETE FROM Council WHERE user=:user AND program=:program', ['program' => $params->program, 'user' => $params->id]);
         if ($result > 0) {
             return extJson(true, [], []);
         } else {

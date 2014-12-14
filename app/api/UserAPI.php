@@ -10,7 +10,7 @@ class UserApi extends BaseApi
             $u = new User();
             $data = $u->findFirst("id=" . $params->id)->toArray();
             unset($data['password']);
-            $r = $this->pdo->prepare('SELECT resourceId FROM resource WHERE userId=?');
+            $r = $this->pdo->prepare('SELECT resourceId FROM resource WHERE user=?');
             $r->execute([$params->id]);
             $data['entityAdmin[]'] = $r->fetchAll(PDO::FETCH_COLUMN, 0);
             return (['data' => $data, 'success' => true]);
@@ -38,8 +38,8 @@ class UserApi extends BaseApi
                                     if ($v == 'm' or $v == 'f') $query->andWhere('sex=?0', [$v]);
                                     break;
                                 case 'entityMember':
-                                    $query->join('EntityMember', 'EntityMember.userId=User.id');
-                                    $query->inWhere('entityId', $v);
+                                    $query->join('EntityMember', 'EntityMember.user=User.id');
+                                    $query->inWhere('entity', $v);
                                     break;
                                 case 'educationStatus':
                                     if ($v == 'current')
@@ -82,9 +82,9 @@ class UserApi extends BaseApi
 
         formPreProcess($data);
         if ($user->save($data)) {
-            $this->db->delete('resource', 'userId=?', [$user->id]);
+            $this->db->delete('resource', 'user=?', [$user->id]);
             foreach ($data['entityAdmin'] as $entity) {
-                $this->db->execute('INSERT INTO resource SET userId=?,resourceId=?,resourceType="entity",level="w"', [$user->id, $entity]);
+                $this->db->execute('INSERT INTO resource SET user=?,resourceId=?,resourceType="entity",level="w"', [$user->id, $entity]);
             }
             if ($data['entityAdmin']) {
             }

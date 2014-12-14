@@ -32,8 +32,8 @@
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
                         var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
 //                    var grid = win.down('grid');
-//                    grid.setProgramId(programId);
-//                    grid.getStore().getProxy().setExtraParam('programId', programId);
+//                    grid.setProgramId(program);
+//                    grid.getStore().getProxy().setExtraParam('program', program);
 //                    grid.getStore().load();
                     }
                 }
@@ -145,10 +145,10 @@
 
             grid.getStore().getProxy().extraParams = {};
             if(this.info.caller == 'user')
-                grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+                grid.getStore().getProxy().setExtraParam('user', (this.info.row) ? this.info.row.getId() : this.tid);
 
             else if(this.info.caller == 'entity')
-                grid.getStore().getProxy().setExtraParam('entityId',(this.info.row) ? this.info.row.id : this.tid);
+                grid.getStore().getProxy().setExtraParam('entity',(this.info.row) ? this.info.row.id : this.tid);
 
             grid.getStore().load();
         }

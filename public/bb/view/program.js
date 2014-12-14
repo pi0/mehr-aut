@@ -1,12 +1,12 @@
 'use strict';
 
 app.Program = Backbone.Model.extend({
-    urlRoot: 'api/program'
+    urlRoot: 'program/program'
 });
 
 app.Programs = Backbone.Collection.extend({
     model: app.Post,
-    url: 'api/program'
+    url: 'program/program'
 });
 
 
@@ -19,7 +19,8 @@ app.ProgramView = Backbone.Marionette.ItemView.extend({
     template: '#program-tpl',
     events: {
         'click .program-actions .button.unenroll': 'unenroll',
-        'click .program-actions .button.enroll': 'enroll'
+        'click .program-actions .button.enroll': 'enroll',
+        'click .program-actions .button.charge': 'charge'
     },
     enroll: function () {
         var me = this;
@@ -28,9 +29,6 @@ app.ProgramView = Backbone.Marionette.ItemView.extend({
             success: function (model, response) {
                 if (response.error) {
                     alert(response.message);
-                }
-                else if (response.form) {
-                    me.$el.html(response.form);
                 }
                 else {
                     me.render();
@@ -45,5 +43,9 @@ app.ProgramView = Backbone.Marionette.ItemView.extend({
                 me.render();
             }
         });
+    },
+    charge: function () {
+        var me = this;
+        app.router. navigate("credit", {trigger: true});
     }
 });

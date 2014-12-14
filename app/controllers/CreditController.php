@@ -21,10 +21,7 @@ class CreditController extends ControllerBase
             }
             jsonResponse($redirect);
         } else {
-            $credit = Credit::sum([
-                'column' => 'amount',
-                'conditions' => "user=" . $this->uid
-            ]);
+            $credit =Credit::currentCredit($this->uid);
             jsonResponse(['credit'=>$credit]);
         }
     }

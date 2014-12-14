@@ -15,7 +15,7 @@ Ext.define('Mehr.view.entity.Info', {
             icon: icon('pencil'),
             handler: function () {
                 var panel = Ext.create('Mehr.view.entity.Edit');
-                panel.down('form').getForm().load({params: {id: this.up('window').entityId}});
+                panel.down('form').getForm().load({params: {id: this.up('window').entity}});
             }
         },
         {

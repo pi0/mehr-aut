@@ -62,10 +62,10 @@ Ext.define('Mehr.view.council.List', {
 //        this.down('pagingtoolbar').bindStore(grid.getStore());
 //        var grid = this.down('grid');
 ////        if (this.info.for == 'user') {
-////            grid.getStore().getProxy().setExtraParam('userId', this.info.row.getId());
+////            grid.getStore().getProxy().setExtraParam('user', this.info.row.getId());
 ////        }
 //// else {
-////            grid.getStore().getProxy().setExtraParam('entityId', (this.info) ? this.info.getId() : this.tid);
+////            grid.getStore().getProxy().setExtraParam('entity', (this.info) ? this.info.getId() : this.tid);
 ////        }
 ////        grid.getStore().load();
     }

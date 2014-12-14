@@ -55,7 +55,7 @@ var tbar = [
             var role = this.up().down('[name=role]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Member', {entityId: grid.up('window').info.get('id'), userId: id, role: role});
+                var enroll = Ext.create('Mehr.model.Member', {entity: grid.up('window').info.get('id'), user: id, role: role});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({
@@ -103,7 +103,7 @@ Ext.define("Mehr.view.entity.MemberGrid", {
     extend: "Ahura.grid.Base",
     alias: "widget.memberGrid",
     config: {
-        'entityId': null
+        'entity': null
     },
     selModel: {model: 'MULTI'},
     multiSelect: true,
@@ -115,7 +115,7 @@ Ext.define("Mehr.view.entity.MemberGrid", {
         me.store = 'Member'
         me.callParent(arguments);
         me.down('pagingtoolbar').bindStore(me.store);
-//        me.store.getProxy().setExtraParam('entityId', 3);
+//        me.store.getProxy().setExtraParam('entity', 3);
 ////        me.tbar = tbar;
 ////        me.columns = Ext.clone(me.columns);
 ////        var firstCol = me.columns.shift();
@@ -152,7 +152,7 @@ Ext.define("Mehr.view.entity.MemberList", {
         this.title = (this.info) ? 'عضوها:' + this.info.get('name') : "عضوها";
         this.callParent(arguments);
         var grid = this.down('grid');
-        grid.getStore().getProxy().setExtraParam('entityId', this.info.get('id'));
+        grid.getStore().getProxy().setExtraParam('entity', this.info.get('id'));
         grid.getStore().load();
     }
 
