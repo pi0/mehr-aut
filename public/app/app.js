@@ -19,7 +19,7 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-        Ext.create('Mehr.view.entity.List');
+        Ext.create('Mehr.view.program.List');
     }
 
 });

@@ -1,4 +1,14 @@
 (function () {
+    var timeStageRenderer = function (value, metaData, record, rowIndex, colIndex, store) {
+        var text = cnst.timeStage[value];
+        if ('c' == value)
+            return '<span style="color:red;">' + text + '</span>';
+        if ('p' == value)
+            return '<span style="color:blue;">' + text + '</span>';
+        if ('f' == value)
+            return '<span style="color:green;">' + text + '</span>';
+        return 'نامشخص';
+    };
     var columns = [
         {
             xtype: 'actioncolumn',
@@ -11,19 +21,6 @@
                         var id = grid.getStore().getAt(rowIndex).getId();
                         var panel = Ext.create('Mehr.view.program.Edit');
                         panel.down('form').getForm().load({params: {id: id}});
-//                    Ext.create('Mehr.view.program.Edit').down('form').getForm().load({params: {'id': id}});
-//                    var rec = Mehr.store.Programs.getAt(rowIndex);
-//                    Mehr.v.program_id = rec.get('program_id');
-//                    Mehr.formPanel.ProgramEdit.load({
-//                        url: '/admin/json-Get-Programe',
-//                        params: {
-//                            program_id: Mehr.v.program_id
-//                        },
-//                        failure: function (form, action) {
-//                            Ext.Msg.alert("Load failed", action.result.errorMessage);
-//                        }
-//                    });
-//                    Mehr.window.ProgramEdit.show();
                     }
                 },
                 {
@@ -31,10 +28,6 @@
                     tooltip: 'مدیریت نام نوشتگان',
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
                         var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
-//                    var grid = win.down('grid');
-//                    grid.setProgramId(program);
-//                    grid.getStore().getProxy().setExtraParam('program', program);
-//                    grid.getStore().load();
                     }
                 }
             ]
@@ -82,29 +75,13 @@
                 type: 'list',
                 store: Ahura.store.TimeStage
             },
-            renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                if ('c' == record.get('enrollmentStatus'))
-                    return '<span style="color:red;">' + value + '</span>';
-                if ('p' == record.get('enrollmentStatus'))
-                    return '<span style="color:blue;">' + value + '</span>';
-                if ('f' == record.get('enrollmentStatus'))
-                    return '<span style="color:green;">' + value + '</span>';
-                return 'نامشخص';
-            }
+            renderer: timeStageRenderer
         }
         ,
         {
             header: "وضعیت اجرا",
             dataIndex: "executionStatusText",
-            renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                if ('c' == record.get('executionStatus'))
-                    return '<span style="color:red;">' + value + '</span>';
-                if ('p' == record.get('executionStatus'))
-                    return '<span style="color:blue;">' + value + '</span>';
-                if ('f' == record.get('executionStatus'))
-                    return '<span style="color:green;">' + value + '</span>';
-                return 'نامشخص';
-            }
+            renderer: timeStageRenderer
         },
         {
             header: "شرکت‌کننده‌گان",
@@ -141,8 +118,6 @@
         ],
         initComponent: function () {
             this.title = this.info.title || this.title;
-            console.log(this.info);
-            
             this.callParent(arguments);
             var grid = this.down('grid');
             grid.getStore().getProxy().setExtraParam('id', this.info.id);
@@ -150,4 +125,4 @@
             grid.getStore().load();
         }
     });
-})()
+})();

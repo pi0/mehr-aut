@@ -42,7 +42,7 @@ app.CreditView = Backbone.Marionette.ItemView.extend({
                     var error = response.responseJSON.message;
                 }
                 catch (e) {
-                    var error = 'گذرواژه تغییر نکرد. لطفا با مدیر سامانه تماس بگیرد.'
+                    var error = 'متاسفانه خطایی رخ داده است. لطفا بعدا دوباره امتحان کنید با با مسئول سامانه تماس بگیرید.'
                 }
                 me.$el.find('.form-error-box').html(error).fadeIn();
             }

@@ -33,6 +33,17 @@ $di->setShared('uid', function () use ($di) {
         return false;
 });
 
+// easy access to constants
+$di->setShared('constants', function () use ($di) {
+    $rawConstants = $di['db']->fetchAll('SELECT text AS t, category AS c, value AS v FROM constant', Phalcon\Db::FETCH_ASSOC);
+    $constantsArray = [];
+    foreach ($rawConstants as $row) {
+        $constantsArray[$row['c']][$row['v']] = $row['t'];
+    }
+    return $constantsArray;
+});
+
+
 /**
  * We register the events manager
  */

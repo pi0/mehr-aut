@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../../vendor/ExtDirect/ExtDirect.php';
-error_reporting(E_STRICT);
 
 class MehrController extends ControllerBase
 {
@@ -29,6 +28,9 @@ class MehrController extends ControllerBase
 
     public function jsAction()
     {
+        header('content-type:application/javascript; charset=utf-8');
+        $this->view->constants = json_encode($this->constants, JSON_UNESCAPED_UNICODE);
+
         $db = $this->getDI()->get('db');
 
         $degrees = toJsArray($db->fetchAll('select id as value,name as text from degree where `level` is not null order by id',Phalcon\Db::FETCH_ASSOC));
@@ -69,8 +71,5 @@ class MehrController extends ControllerBase
         $this->view->userType = toJsArray($db->query('select `value`,text from constant where category="userType"')->fetchAll());;
         $this->view->department = toJsArray($db->query('select id,name from department')->fetchAll());;
         $this->view->college = toJsArray($db->query('select id,name from college')->fetchAll());;
-
-        header('content-type:application/javascript; charset=utf-8');
-
     }
 }

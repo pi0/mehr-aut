@@ -91,9 +91,9 @@ class Mellat
             $refId = $request['refId'];
 
             $request['form'] = <<<EOF
-<i class='fa fa-spinner fa-spin'
->        اتصال به درگاه بانک...
+<i class='fa fa-spinner fa-spin'/>
 </i>
+ اتصال به درگاه بانک...
         <form id="gateway" method="post" action='$this->gateway'>
     <input type="hidden" name="RefId" value="$refId"/>
 </form>

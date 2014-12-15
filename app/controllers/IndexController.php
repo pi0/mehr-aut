@@ -21,7 +21,7 @@ class IndexController extends ControllerBase
 
     public function jsAction()
     {
-        $this->view->constants = json_encode($this->di['db']->fetchAll('SELECT text AS t, category AS c, value AS v FROM constant', Phalcon\Db::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
+        $this->view->constants = json_encode($this->constants, JSON_UNESCAPED_UNICODE);
         $this->view->user = $this->session['auth'] ? 'true' : 'false';
         $this->view->licensee = $this->config->licensee->name;
     }
