@@ -89,7 +89,16 @@
 <script type="text/html" id="post-tpl">
     <div class="component post-container">
         <div class="header">
-            {{cnst 'postType' postType}}
+            <div class="post-title">
+                {{cnst 'postType' postType}}
+                {{#if subject}}:
+                    {{cnst 'subject' subject}}
+                {{/if}}
+            </div>
+            <div class="post-date">
+                <i class="fa fa-clock-o"></i> &nbsp;
+                {{toJ cDate}}
+            </div>
         </div>
         <div class="body">
             <div class="name">
@@ -117,20 +126,32 @@
         <div class="header">
             <i class="fa fa-file-text-o"></i>
             خبر
-
+            {{#if subject}}:
+                {{cnst 'subject' subject}}
+            {{/if}}
         </div>
         <div class="body">
             <div class="name">{{name}}</div>
-            {{#if image}}
-            <img class="poster" src="file-server/{{image}}" alt=""/>
-            {{/if}}
             <p class="details">
                 {{{details}}}
             </p>
         </div>
         <div class="footer">
-            <i class="fa fa-user"></i>
-            ارسال شده توسط مدیر سایت در تاریخ {{toJ cDate}}
+            {{#if image}}
+            <img class="poster" src="file-server/{{image}}" alt=""/>
+            {{/if}}
+            <div class="footer-content">
+                <div class="footer-first-line">
+                    <i class="fa fa-user"></i>
+
+                تاریخ ارسال:
+                {{toJ cDate}}
+                </div>
+                <div class="footer-last-line">
+                نویسنده:
+                مدیر
+                </div>
+            </div>
         </div>
     </div>
 </script>
@@ -181,7 +202,9 @@
             {{/is}}
             {{#is membershipStatus 'applied'}}
             <div class="program-actions alert alert-warning" style="clear:both;text-align:center">
-                قبلا برای عضویت در این نهاد/تشکل اقدام کرده اید.
+                شما در تاریخ
+                {{toJ cDate}}
+                درخواست عضویت داده اید.
             </div>
             {{/is}}
             {{#is membershipStatus 'in' 'notAllowed,canceled'}}

@@ -124,7 +124,7 @@ body, input, textarea, button, select {
 }
 
 body {
-  background: url("../../03.jpg");
+  background: url("../../file-server/background.jpg");
   background-size: 100%;
   background-attachment: fixed;
   background-repeat: repeat-y;
@@ -188,18 +188,30 @@ footer p {
     }
   }
 
+
   &.post-container {
+    .header{
+      overflow:auto;
+    }
+    .header .post-title{
+      float:right;
+    }
+    .header .post-date{
+      float:left;
+    }
+
     .buttons {
       text-align: left;
     }
     .poster {
-      margin-left: 30px;
       display: block;
       cursor: -webkit-zoom-in;
       cursor: -moz-zoom-in;
       cursor: zoom-in;
-      height: 200px;
+      max-width:300px;
       float: right;
+      margin:5px;
+      overflow:auto;
     }
     .details {
     }
@@ -208,8 +220,20 @@ footer p {
       background:#5896FF;
       font-size:10px;
       padding:5px;
+      overflow:auto;
     }
-
+    .footer .poster{
+      max-height: 50px;
+      max-width:inherit;
+    }
+    .footer-first-line{
+      margin-top:12px;
+      margin-right:10px;
+    }
+    .footer-last-line{
+      margin-bottom:12px;
+      margin-right:10px;
+    }
   }
   .info table {
     margin: 30px;
