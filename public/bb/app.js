@@ -143,11 +143,7 @@ $(function () {
 });
 
 Mehr.cnst = function (c, v) {
-    var r = _.find(Mehr.constants, function (val) {
-        if (val['c'] == c && val['v'] == v) {
-            return true;
-        }
-    });
+    var r = cnst[c][v];
     if (r) {
         return r['t']
     }
