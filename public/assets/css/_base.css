@@ -441,14 +441,14 @@ ul.plain {
 
 body, input, textarea, button, select {
   font-family: masterfont !important;
-  font-size: 12px;
-  padding-top: 45px; }
+  font-size: 12px; }
 
 body {
   background: url("../../03.jpg");
   background-size: 100%;
   background-attachment: fixed;
-  background-repeat: repeat-y; }
+  background-repeat: repeat-y;
+  padding-top: 45px; }
 
 body .top-bar {
   position: fixed;
@@ -503,6 +503,10 @@ footer p {
     cursor: zoom-in;
     height: 200px;
     float: right; }
+  .component.post-container .footer {
+    background: #5896FF;
+    font-size: 10px;
+    padding: 5px; }
   .component .info table {
     margin: 30px;
     border-top: thin solid #3333FF;

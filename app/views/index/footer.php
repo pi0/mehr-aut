@@ -1,4 +1,4 @@
-<?php $development = false; ?>
+<?php $development = true; ?>
 <footer>
     <p>
         تمام حقوق محفوظ ا

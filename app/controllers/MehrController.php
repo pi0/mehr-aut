@@ -17,7 +17,7 @@ class MehrController extends ControllerBase
     public function apiAction()
     {
         $this->view->disable();
-        header('application/json');
+        $this->response->setHeader("Content-Type", "application/javascript");
         ExtDirect::$namespace = 'RPC';
         ExtDirect::$url = 'mehr/api';
         ExtDirect::$debug = true;

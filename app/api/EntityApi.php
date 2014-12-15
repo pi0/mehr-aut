@@ -39,7 +39,7 @@ class EntityApi extends BaseApi
         $id = @$params['id'];
         if ($id) {
             $p = new Entity();
-            $data = $p->findFirst("id=$id")->toArray();
+            $data = $p->findFirst($id)->toArray();
             formPostProcess($data);
             $data['audience'] = unserialize($data['audience']);
             return (['data' => $data, 'success' => true]);

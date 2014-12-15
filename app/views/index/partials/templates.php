@@ -90,7 +90,13 @@
             {{cnst 'postType' postType}}
         </div>
         <div class="body">
-            <div class="name">{{name}}</div>
+            <div class="name">
+                {{#unless fullName}}
+                    {{name}}
+                {{else}}
+                    {{fullName}}
+                {{/unless}}
+            </div>
             {{#if image}}
             <img class="poster" src="file-server/{{image}}" alt=""/>
             {{/if}}

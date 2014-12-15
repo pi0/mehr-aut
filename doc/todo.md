@@ -9,6 +9,7 @@ Reza:
 
 Masoud:
 ======
+- (done) Delete news
 - Display enrollment date in grid
 - Exporting to excel
 - Grid printing
@@ -17,7 +18,6 @@ Masoud:
 - Display user image on the user edit panel and on the top bar.
 - Importing users data
 - Warn user if there's an error in uploading background image
-- (done) Delete news
 - List of candidates
 - add default state of submission in the councils
 - add three fields to the audience of all models
