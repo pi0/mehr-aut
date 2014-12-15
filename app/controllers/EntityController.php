@@ -4,7 +4,7 @@ class EntityController extends ControllerBase
 {
 
     // this var is used in the member level method
-    private var $role = null;
+    var $role = null;
 
     public function entityAction()
     {
