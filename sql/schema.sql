@@ -344,7 +344,7 @@ CREATE TABLE `entity` (
   `charter` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
   `image` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +401,7 @@ CREATE TABLE `entitymember` (
   `role` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT 'member',
   PRIMARY KEY (`id`),
   UNIQUE KEY `userId_entityId` (`user`,`entity`)
-) ENGINE=MyISAM AUTO_INCREMENT=852552290 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=852552291 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -639,12 +639,12 @@ DROP TABLE IF EXISTS `resource`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` bigint(20) NOT NULL DEFAULT '0',
+  `user` bigint(20) NOT NULL DEFAULT '0',
   `resourceId` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   `resourceType` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   `level` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -672,8 +672,8 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8_persian_ci NOT NULL,
-  `password` varchar(60) COLLATE utf8_persian_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL,
+  `password` varchar(60) COLLATE utf8_persian_ci DEFAULT NULL,
   `type` char(255) COLLATE utf8_persian_ci DEFAULT NULL,
   `role` char(1) COLLATE utf8_persian_ci DEFAULT NULL,
   `firstName` varchar(45) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'نام',
@@ -1130,4 +1130,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-15  9:53:08
+-- Dump completed on 2014-12-15 18:31:49

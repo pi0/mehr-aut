@@ -145,7 +145,8 @@ $(function () {
 Mehr.cnst = function (c, v) {
     var r = cnst[c][v];
     if (r) {
-        return r['t']
+        return r;
+
     }
     else {
         console.error("Constant not found: " + c + ' ' + v);

@@ -53,14 +53,6 @@ Ext.require([
 ]);
 
 Ext.onReady(function () {
-//    var grid = win.down('grid');
-//    var entity = 1;
-//    grid.setProgramId(program);
-//    grid.getStore().getProxy().setExtraParam('entity', entity);
-//    grid.getStore().load();
-
-//    Ext.create('Mehr.view.program.List');
-//    Ext.create('Mehr.view.user.List');
     init();
 });
 
