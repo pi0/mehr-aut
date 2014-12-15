@@ -31,13 +31,13 @@ class Security extends Phalcon\Mvc\User\Plugin
                         'index' => '*',
                         'user' => ['login', 'logout'],
                         'mehr' => ['js'],
-                        'api' => '*',
+                        'program' => '*',
+                        'entity' => '*',
+                        'api' => '*'
                     ],
                     'member' => [
                         'user' => '*',
                         'credit' => '*',
-                        'program' => '*',
-                        'entity' => '*'
                     ],
                     'staff' => [
                         'mehr' => '*',

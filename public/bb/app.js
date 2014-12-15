@@ -1,4 +1,6 @@
 var Mehr = Mehr || {};
+app = new Backbone.Marionette.Application();
+ux = {};
 
 Handlebars.registerHelper('def', function (x, def) {
     if (x == null) {

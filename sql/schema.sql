@@ -165,7 +165,7 @@ CREATE TABLE `credit` (
   `cDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `payment` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +235,7 @@ CREATE TABLE `enroller` (
   `uDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `credit` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -396,12 +396,12 @@ DROP TABLE IF EXISTS `entitymember`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entitymember` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) NOT NULL,
-  `entityId` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `entity` int(11) NOT NULL,
   `role` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT 'member',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `userId_entityId` (`userId`,`entityId`)
-) ENGINE=MyISAM AUTO_INCREMENT=852552287 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+  UNIQUE KEY `userId_entityId` (`user`,`entity`)
+) ENGINE=MyISAM AUTO_INCREMENT=852552290 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,8 +414,8 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `entitymemberlist` AS SELECT 
  1 AS `id`,
- 1 AS `userId`,
- 1 AS `entityId`,
+ 1 AS `user`,
+ 1 AS `entity`,
  1 AS `role`,
  1 AS `roleText`,
  1 AS `firstName`,
@@ -568,14 +568,10 @@ SET character_set_client = utf8;
  1 AS `projectedCost`,
  1 AS `income`,
  1 AS `projectedIncome`,
- 1 AS `typeText`,
- 1 AS `subjectText`,
  1 AS `enrollerCount`,
  1 AS `entityFullName`,
  1 AS `enrollmentStatus`,
- 1 AS `executionStatus`,
- 1 AS `enrollmentStatusText`,
- 1 AS `executionStatusText`*/;
+ 1 AS `executionStatus`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1030,7 +1026,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyCouncilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`userId`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName`,`entity`.`image` AS `image` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entityId`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
+/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyCouncilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`user`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName`,`entity`.`image` AS `image` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entity`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1048,7 +1044,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `entitymemberlist` AS select `entitymember`.`id` AS `id`,`entitymember`.`userId` AS `userId`,`entitymember`.`entityId` AS `entityId`,`entitymember`.`role` AS `role`,`constant`.`text` AS `roleText`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`fullName` AS `fullName`,`userlist`.`sid` AS `sid` from ((`entitymember` left join `constant` on(((`constant`.`value` = `entitymember`.`role`) and (`constant`.`category` = 'membership')))) left join `userlist` on((`entitymember`.`userId` = `userlist`.`id`))) */;
+/*!50001 VIEW `entitymemberlist` AS select `entitymember`.`id` AS `id`,`entitymember`.`user` AS `user`,`entitymember`.`entity` AS `entity`,`entitymember`.`role` AS `role`,`constant`.`text` AS `roleText`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`fullName` AS `fullName`,`userlist`.`sid` AS `sid` from ((`entitymember` left join `constant` on(((`constant`.`value` = `entitymember`.`role`) and (`constant`.`category` = 'membership')))) left join `userlist` on((`entitymember`.`user` = `userlist`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1084,7 +1080,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `programlist` AS select `program`.`id` AS `id`,`program`.`entity` AS `entity`,`program`.`name` AS `name`,`program`.`manager` AS `manager`,`program`.`type` AS `type`,`program`.`cDate` AS `cDate`,`program`.`uDate` AS `uDate`,`program`.`enrollmentStartDate` AS `enrollmentStartDate`,`program`.`enrollmentEndDate` AS `enrollmentEndDate`,`program`.`enrollmentMethod` AS `enrollmentMethod`,`program`.`executionEndDate` AS `executionEndDate`,`program`.`executionStartDate` AS `executionStartDate`,`program`.`minCapacity` AS `minCapacity`,`program`.`maxCapacity` AS `maxCapacity`,`program`.`cost` AS `cost`,`program`.`registerFee` AS `registerFee`,`program`.`paymentMethod` AS `paymentMethod`,`program`.`subject` AS `subject`,`program`.`level` AS `level`,`program`.`audienceLevel` AS `audienceLevel`,`program`.`audience` AS `audience`,`program`.`planId` AS `planId`,`program`.`sessions` AS `sessions`,`program`.`prerequisites` AS `prerequisites`,`program`.`details` AS `details`,`program`.`image` AS `image`,`program`.`location` AS `location`,`program`.`projectedCost` AS `projectedCost`,`program`.`income` AS `income`,`program`.`projectedIncome` AS `projectedIncome`,(`constantText`(`program`.`type`,'programType') collate utf8_persian_ci) AS `typeText`,`constantText`(`program`.`subject`,'subjet') AS `subjectText`,count(`enroller`.`program`) AS `enrollerCount`,`e`.`fullName` AS `entityFullName`,`timeStage`(`program`.`enrollmentStartDate`,`program`.`enrollmentEndDate`) AS `enrollmentStatus`,`timeStage`(`program`.`executionStartDate`,`program`.`executionEndDate`) AS `executionStatus`,`constantText`(`timeStage`(`program`.`enrollmentStartDate`,`program`.`enrollmentEndDate`),'timeStage') AS `enrollmentStatusText`,`constantText`(`timeStage`(`program`.`executionStartDate`,`program`.`executionEndDate`),'timeStage') AS `executionStatusText` from ((`program` left join `enroller` on((`program`.`id` = `enroller`.`program`))) left join `entitylist` `e` on((`e`.`id` = `program`.`entity`))) group by `program`.`id` */;
+/*!50001 VIEW `programlist` AS select `program`.`id` AS `id`,`program`.`entity` AS `entity`,`program`.`name` AS `name`,`program`.`manager` AS `manager`,`program`.`type` AS `type`,`program`.`cDate` AS `cDate`,`program`.`uDate` AS `uDate`,`program`.`enrollmentStartDate` AS `enrollmentStartDate`,`program`.`enrollmentEndDate` AS `enrollmentEndDate`,`program`.`enrollmentMethod` AS `enrollmentMethod`,`program`.`executionEndDate` AS `executionEndDate`,`program`.`executionStartDate` AS `executionStartDate`,`program`.`minCapacity` AS `minCapacity`,`program`.`maxCapacity` AS `maxCapacity`,`program`.`cost` AS `cost`,`program`.`registerFee` AS `registerFee`,`program`.`paymentMethod` AS `paymentMethod`,`program`.`subject` AS `subject`,`program`.`level` AS `level`,`program`.`audienceLevel` AS `audienceLevel`,`program`.`audience` AS `audience`,`program`.`planId` AS `planId`,`program`.`sessions` AS `sessions`,`program`.`prerequisites` AS `prerequisites`,`program`.`details` AS `details`,`program`.`image` AS `image`,`program`.`location` AS `location`,`program`.`projectedCost` AS `projectedCost`,`program`.`income` AS `income`,`program`.`projectedIncome` AS `projectedIncome`,count(`n`.`user`) AS `enrollerCount`,`e`.`fullName` AS `entityFullName`,`timeStage`(`program`.`enrollmentStartDate`,`program`.`enrollmentEndDate`) AS `enrollmentStatus`,`timeStage`(`program`.`executionStartDate`,`program`.`executionEndDate`) AS `executionStatus` from ((`program` left join `enroller` `n` on((`program`.`id` = `n`.`program`))) left join `entitylist` `e` on((`e`.`id` = `program`.`entity`))) group by `program`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1134,4 +1130,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-14 15:36:25
+-- Dump completed on 2014-12-15  9:53:08

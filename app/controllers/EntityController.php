@@ -2,26 +2,6 @@
 
 class EntityController extends ControllerBase
 {
-    function membershipStatus($entity, $userId)
-    {
-        $record = EntityMember::findFirst(['conditions' => 'user=?0 AND entity=?1', 'bind' => [$userId, $entity->id]]);
-        if ($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
-            return $record->role;
-        } else {
-            return $this->inAudience($userId, $entity->audience) ? "canJoin" : "notAllowed";
-        }
-    }
-
-    function canJoin($entity, $userId)
-    {
-        return $this->membershipStatus($entity, $userId) == 'canJoin';
-    }
-
-    function isMember($entity, $userId)
-    {
-        return in_array($this->membershipStatus($entity, $userId), ['member', 'active']);
-    }
-
     public function entityAction()
     {
         $app = new Phalcon\Mvc\Micro();
@@ -77,6 +57,27 @@ class EntityController extends ControllerBase
         });
         $app->handle();
     }
+
+    function membershipStatus($entity, $userId)
+    {
+        $record = EntityMember::findFirst(['conditions' => 'user=?0 AND entity=?1', 'bind' => [$userId, $entity->id]]);
+        if ($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
+            return $record->role;
+        } else {
+            return $this->inAudience($userId, $entity->audience) ? "canJoin" : "notAllowed";
+        }
+    }
+
+    function canJoin($entity, $userId)
+    {
+        return $this->membershipStatus($entity, $userId) == 'canJoin';
+    }
+
+    function isMember($entity, $userId)
+    {
+        return in_array($this->membershipStatus($entity, $userId), ['member', 'active']);
+    }
+
 
     public function membershipAction()
     {

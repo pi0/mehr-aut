@@ -5,14 +5,6 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
         template: '#empty-post-tpl'
     }),
     childViewContainer: '.post-models',
-    model: new Backbone.Model({
-        store: Ahura.store
-    }),
-    initialize: function (param) {
-//        var me = this;
-//        me.collection = new app.Posts;
-//        me.collection.fetch();
-    },
     events: {
         'change .filter-main-entity [name=postType]': 'filterEntity',
         'submit  form': 'filterSubmit'
@@ -27,4 +19,4 @@ app.PostsView = Backbone.Marionette.CompositeView.extend({
         this.collection.reset();
         this.collection.fetch({reset: true, data: form});
     }
-})
+});

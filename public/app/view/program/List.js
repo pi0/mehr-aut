@@ -77,7 +77,7 @@
         ,
         {
             header: "وضعیت نام‌نویسی",
-            dataIndex: "enrollmentStatusText",
+            dataIndex: "enrollmentStatus",
             filter: {
                 type: 'list',
                 store: Ahura.store.TimeStage
