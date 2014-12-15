@@ -8,22 +8,8 @@
                 {
                     icon: icon('gear'),                // Use a URL in the icon config
                     tooltip: 'مدیریت نهاد',
-                    handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                        var data = grid.getStore().getAt(rowIndex).getData();
-                        var panel = Ext.create('Mehr.view.entity.Info', {
-                            info: record,
-                            entity: data.id,
-                            entity: data,
-                            items: {
-                                itemId: "info",
-                                data: data,
-                                tpl: '<div id="entityManagement"><div class="settingIcon"></div><h3>{typeText}</h3><h1>{name}</h1></div>',
-                                bodyStyle: {
-                                    padding: 15
-                                }
-                            }
-                        });
-//                    panel.down('form').getForm().load({params: {id: id}});
+                    handler: function (view, rowIndex, colIndex, item, event, record, row) {
+                        view.up('grid').dblHandle(record);
                     }
                 }
             ]
@@ -69,6 +55,23 @@
             this.store = 'Entity';
             this.callParent(arguments);
             this.down('pagingtoolbar').bindStore(this.store);
+        },
+        dblHandle: function(record){
+            var data = record.data;
+            var panel = Ext.create('Mehr.view.entity.Info', {
+                info: data,
+                entity: data,
+                items: {
+                    itemId: "info",
+                    data: data,
+                    tpl: '<div id="entityManagement"><div class="settingIcon"></div><h3>{typeText}</h3><h1>{name}</h1></div>',
+                    bodyStyle: {
+                        padding: 15
+                    }
+                }
+            });
+//                    panel.down('form').getForm().load({params: {id: id}});
+
         }
     });
     Ext.define("Mehr.view.entity.List", {

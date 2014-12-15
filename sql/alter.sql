@@ -1,0 +1,14 @@
+CREATE TABLE `file` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT '0' COLLATE 'utf8_persian_ci',
+	`owner` INT(11) NULL DEFAULT '0',
+	`size` INT(11) NULL DEFAULT '0',
+	`type` VARCHAR(20) NULL DEFAULT '0' COLLATE 'utf8_persian_ci',
+	`hash` VARCHAR(32) NULL DEFAULT '0' COLLATE 'utf8_persian_ci',
+	`cDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_persian_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=8
+;

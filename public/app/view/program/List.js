@@ -7,10 +7,9 @@
                 {
                     icon: icon('pencil'),                // Use a URL in the icon config
                     tooltip: 'ویرایش برنامه',
-                    handler: function (grid, rowIndex, colIndex) {
-                        var id = grid.getStore().getAt(rowIndex).getId();
-                        var panel = Ext.create('Mehr.view.program.Edit');
-                        panel.down('form').getForm().load({params: {id: id}});
+                    handler: function (view, rowIndex, colIndex, item, event, record, row) {
+                        view.up('grid').dblHandle(record);
+
 //                    Ext.create('Mehr.view.program.Edit').down('form').getForm().load({params: {'id': id}});
 //                    var rec = Mehr.store.Programs.getAt(rowIndex);
 //                    Mehr.v.program_id = rec.get('program_id');
@@ -29,7 +28,7 @@
                 {
                     icon: icon('groupAdd'),                // Use a URL in the icon config
                     tooltip: 'مدیریت نام نوشتگان',
-                    handler: function (grid, rowIndex, colIndex, item, event, record, row) {
+                    handler: function(grid, rowIndex, colIndex, item, event, record, row) {
                         var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
 //                    var grid = win.down('grid');
 //                    grid.setProgramId(program);
@@ -129,6 +128,12 @@
             this.store = 'Program';
             this.callParent(arguments);
             this.down('pagingtoolbar').bindStore(this.store);
+        },
+
+        dblHandle: function(record){
+            var id = record.get('id');
+            var panel = Ext.create('Mehr.view.program.Edit');
+            panel.down('form').getForm().load({params: {id: id}});
         }
     });
     Ext.define("Mehr.view.program.List", {

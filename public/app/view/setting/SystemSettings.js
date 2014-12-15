@@ -24,6 +24,23 @@
                 tabPosition: 'top',
                 items: [
                     {
+                        title: 'تنظیمات ظاهری',
+                        layout: 'form',
+                        items: [
+                            {
+                                xtype: 'panel',
+                                bodyStyle: 'text-align: center',
+                                html: 'فرمت عکس باید jpg باشد.'
+                            },
+                            {
+                                name:'background',
+                                xtype: 'filefield',
+                                fieldLabel: 'تصویر پس زمینه'
+                            }
+                        ]
+                    },
+                    {
+                        disabled: true,
                         title: 'پرداخت الکترونیک',
                         layout: 'form',
                         bodyStyle: 'padding: 5px',
@@ -61,25 +78,11 @@
                         ]
                     },
                     {
+                        disabled: true,
                         title: 'سامانه پیامک'
                     },
                     {
-                        title: 'تنظیمات ظاهری',
-                        layout: 'form',
-                        items: [
-                            {
-                                xtype: 'panel',
-                                bodyStyle: 'text-align: center',
-                                html: 'فرمت عکس باید jpg باشد.'
-                            },
-                            {
-                                name:'background',
-                                xtype: 'filefield',
-                                fieldLabel: 'تصویر پس زمینه'
-                            }
-                        ]
-                    },
-                    {
+                        disabled: true,
                         title: 'سیستم درون برد'
 
                     }

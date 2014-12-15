@@ -36,12 +36,14 @@ var menu = Ext.create('Ext.menu.Menu', {
             },
             {
                 colspan: 2,
+                disabled: true,
                 icon: icon('databaseRefresh'),
                 text: 'همزمان‌سازی',
                 scale: 'small'
             },
             {
                 colspan: 2,
+                disabled: true,
                 icon: icon('db-import'),
                 text: 'درون‌برد از فایل',
                 scale: 'small'
@@ -96,6 +98,7 @@ Ext.create("Ext.toolbar.Toolbar", {
 
                 {
                     text: 'طرح‌ها',
+                    disabled: true,
                     icon: icon('ruler-triangle'),
                     handler: function () {
                         Ext.create('Mehr.view.plan.Window');
@@ -111,6 +114,7 @@ Ext.create("Ext.toolbar.Toolbar", {
                 },
                 {
                     text: 'نشریه‌ها',
+                    disabled: true,
                     icon: icon('newspaper'),
                     handler: function () {
                         Mehr.window.Issues.show();
@@ -137,9 +141,11 @@ Ext.create("Ext.toolbar.Toolbar", {
                         },
 
                         {
+                            disabled: true,
                             text: 'پیشنهاد طرح'
                         },
                         {
+                            disabled: true,
                             text: 'نشریه نو'
                         }
                     ]
@@ -213,6 +219,7 @@ Ext.create("Ext.toolbar.Toolbar", {
         },
         {
             text: "SMS",
+            disabled: true,
             icon: icon('phone'),
             menu: [
                 {
@@ -249,6 +256,7 @@ Ext.create("Ext.toolbar.Toolbar", {
         },
         {
             text: "رایانامه",
+            disabled: true,
             icon: icon('email'),
             menu: [
                 {
@@ -296,10 +304,11 @@ Ext.create("Ext.toolbar.Toolbar", {
                 //        Ext.create('Mehr.view.setting.Password');
                 //    }
                 //}
-                {
-                    text: 'مشخصات من',
-                    icon: icon('information')
-                },
+                //{
+                //    text: 'مشخصات من',
+                //    disabled: true,
+                //    icon: icon('information')
+                //},
                 {
                     text: 'سامانه',
                     icon: icon('gear'),

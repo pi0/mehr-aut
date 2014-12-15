@@ -8,9 +8,8 @@
                 {
                     icon: icon('userEdit'),
                     tooltip: 'ویرایش کاربر',
-                    handler: function (grid, rowIndex, colIndex, item, e, record) {
-                        var id = record.getId();
-                        openUserEditWindow(id);
+                    handler: function (view, rowIndex, colIndex, item, e, record) {
+                        view.up('grid').dblHandle(record);
                     }
                 }
             ]
@@ -135,7 +134,10 @@
                 icon: icon('userEdit'),
                 text: 'ویرایش کاربر',
                 handler: function () {
-                    openUserEditWindow(this.up().rowId);
+                    this.up('grid'). // right click menu
+                        up('grid') // main gird of the students
+                        .dblHandle(
+                        this.up('view').record);
                 }
 
             },
@@ -198,6 +200,11 @@
             me.callParent(arguments);
             me.down('pagingtoolbar').bindStore(me.store);
 //        me.down('searchfield').store=me.store;
+        },
+        dblHandle: function(record){
+            var id = record.get('id');
+            console.log(id);
+            openUserEditWindow(id);
         }
     });
 

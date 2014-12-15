@@ -15,6 +15,10 @@ Ext.define('Ahura.grid.Base', {
     ],
     constructor: function () {
         this.callParent(arguments);
+        this.on({
+            scope: this,
+            itemdblclick: this.dblClick
+        });
         if (this.menu) {
             if (!(this.menu instanceof Ext.menu.Menu)) {
                 this.menu = this.buildMenu(this.menu);
@@ -31,7 +35,7 @@ Ext.define('Ahura.grid.Base', {
             displayInfo: true,
             displayMsg: 'نمایش موارد {0} - {1} از {2}',
             emptyMsg: "موردی یافت نشد."
-        }
+        };
         this.callParent(arguments);
     },
     buildMenu: function (menuCfg) {
@@ -51,6 +55,11 @@ Ext.define('Ahura.grid.Base', {
         this.menu.model = model;
         this.menu.rowId = model.getId();
         this.menu.showAt(evt.getXY());
+    },
+    dblClick: function( me , record, item, index, e, eOpts ){
+        e.stopEvent();
+        if(typeof this.dblHandle!= 'undefined' && Ext.isFunction(this.dblHandle))
+            this.dblHandle( record );
     }
 });
 

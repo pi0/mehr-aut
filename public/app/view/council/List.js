@@ -7,8 +7,8 @@
                 {
                     tooltip: 'ویرایش/مشاهده',
                     icon: icon('gear'),
-                    handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                        Ext.create('Mehr.view.council.Edit', {info: record});
+                    handler: function (view, rowIndex, colIndex, item, event, record, row) {
+                        view.up('grid').dblHandle(record);
                     }
                 }
                 ,
@@ -46,12 +46,16 @@
     ];
     Ext.define("Mehr.view.council.Grid", {
         extend: "Ahura.grid.Base",
-        xtype: "councilGrid",
         columns: columns,
+        xtype: "councilGrid",
         initComponent: function () {
             this.store = 'Council';
             this.callParent(arguments);
             this.down('pagingtoolbar').bindStore(this.store);
+        },
+        dblHandle: function(record ){
+            Ext.create('Mehr.view.council.Edit', {info: record});
+
         }
     });
     Ext.define("Mehr.view.council.List", {
