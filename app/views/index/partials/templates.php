@@ -1,6 +1,7 @@
 <script type="text/html" id="login-tpl">
     <div class="component">
         <div class="header">
+            <i class="fa fa-key"></i>
             ورود به سامانه
         </div>
         <div class="body">
@@ -30,6 +31,7 @@
 <script type="text/html" id="password-tpl">
     <div class="component">
         <div class="header">
+            <i class="fa fa-key"></i>
             تغییر گذرواژه
         </div>
         <div class="body">
@@ -54,12 +56,13 @@
 <script type="text/html" id="credit-tpl">
     <div class="component">
         <div class="header">
-اعتبار
+            <i class="fa fa-money"></i>
+            اعتبار
         </div>
         <div class="body">
             <div>
                 اعتبار فعلی شما:
-<b>                {{mn credit}} </b>
+                <b> {{mn credit}} </b>
                 است.
             </div>
             <div>
@@ -161,29 +164,29 @@
                 </table>
             </div>
             {{#unless autoRender}}
-                {{#is membershipStatus 'canJoin'}}
-                <div class="program-actions alert alert-info" style="clear:both;text-align:center">
-                        <a class="button submit">
-                            عضویت در این نهاد/تشکل
-                        </a>
-                </div>
-                {{/is}}
-                {{#is membershipStatus 'applied'}}
-                <div class="program-actions alert alert-warning" style="clear:both;text-align:center">
-                        قبلا برای عضویت در این نهاد/تشکل اقدام کرده اید.
-                </div>
-                {{/is}}
-                {{#is membershipStatus 'in' 'notAllowed,canceled'}}
-                <div class="program-actions alert alert-danger" style="clear:both;text-align:center">
-                    متاسفانه امکان عضویت شما در این گروه وجود ندارد.
-                </div>
-                {{/is}}
+            {{#is membershipStatus 'canJoin'}}
+            <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+                <a class="button submit">
+                    عضویت در این نهاد/تشکل
+                </a>
+            </div>
+            {{/is}}
+            {{#is membershipStatus 'applied'}}
+            <div class="program-actions alert alert-warning" style="clear:both;text-align:center">
+                قبلا برای عضویت در این نهاد/تشکل اقدام کرده اید.
+            </div>
+            {{/is}}
+            {{#is membershipStatus 'in' 'notAllowed,canceled'}}
+            <div class="program-actions alert alert-danger" style="clear:both;text-align:center">
+                متاسفانه امکان عضویت شما در این گروه وجود ندارد.
+            </div>
+            {{/is}}
             {{/unless}}
             {{#if autoRender}}
-                <div class="program-actions alert alert-info" style="clear:both;text-align:center">
-                        شما {{cnst 'membership' membershipStatus}} این گروه هستید.
+            <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+                شما {{cnst 'membership' membershipStatus}} این گروه هستید.
 
-                </div>
+            </div>
             {{/if}}
 
             <p class="details">
@@ -279,11 +282,11 @@
                     </tr>
                     <tr>
                         <td class="name">نوع:</td>
-                        <td>{{typeText}}</td>
+                        <td>{{def typeText}}</td>
                     </tr>
                     <tr>
                         <td class="name">موضوع:</td>
-                        <td>{{subjectText}}</td>
+                        <td>{{def subjectText}}</td>
                     </tr>
                     <tr>
                         <td class="name">حدنصاب:</td>
@@ -359,11 +362,24 @@
             {{#is userEnrollmentStatus 'ok'}}
             <div class="program-actions alert alert-info">
                 <a class="button enroll">
-                    {{#is registerFee '>' 0}}
-                    پرداخت هزینه و ثبت‌نام
-                    {{else}}
                     ثبت‌نام
-                    {{/is}}
+                </a>
+            </div>
+            {{/is}}
+            {{#is userEnrollmentStatus 'pay'}}
+            <div class="program-actions alert alert-info">
+                <a class="button enroll">
+            پرداخت هزینه و ثبت‌نام
+                </a>
+            </div>
+            {{/is}}
+            {{#is userEnrollmentStatus 'lowCredit'}}
+            <div class="program-actions alert alert-info">
+                اعتبار شما برای ثبت‌نام کافی نمی‌باشد. لطفا مبلغ
+                {{mn neededCredit}}
+                به اعتبار خود بیافزایید.
+                <a class="button charge">
+                    افزایش اعتبار
                 </a>
             </div>
             {{/is}}
@@ -377,14 +393,15 @@
                 شما در تاریخ
                 {{toJ enroller.cDate}}
                 در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
-                {{cnst 'enrollmentStatus' enroller.status}}
+<b>                {{cnst 'enrollmentStatus' enroller.status}}
+</b>
                 است.
                 {{#is registerFee 0}}
                 <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>
                 {{/is}}
                 {{#is amount '>' 0}}
                 شما مبلغ
-                {{amount}} ریال
+                {{mn amount}}
                 پرداخت کرده‌اید.
                 {{/is}}
             </div>
@@ -392,6 +409,11 @@
             {{#is userEnrollmentStatus 'notEligible'}}
             <div class="program-actions alert alert-warning">
                 شما واجد شرایط نام‌نویسی در این برنامه نیستید.
+            </div>
+            {{/is}}
+            {{#is userEnrollmentStatus 'full'}}
+            <div class="program-actions alert alert-warning">
+                متاسفانه ظرفیت خالی برای شرکت در این برنامه وجود ندارد.
             </div>
             {{/is}}
             {{#is userEnrollmentStatus 'guest'}}
@@ -422,13 +444,14 @@
 </script>
 
 
-
 <script type="text/html" id="top-bar-tpl">
     <div class="top-bar">
         <div class="link-bar">
             <ul class="plain float-near">
                 <li title="صفحه اصلی" class="home active">
-                    <a class="icons " href="#">سامانه مهر: معاونت فرهنگی دانشگاه صنعتی امیرکبیر</a>
+                    <a class="icons " href="#">سامانه مهر:
+                        {{licensee}}
+                    </a>
                 </li>
             </ul>
 

@@ -25,17 +25,19 @@
         extend: "Ahura.grid.Base",
         xtype: "newsGrid",
         columns: columns,
-        store:'News',
+        store: 'News',
         menu: [
             {
-                text: 'ویرایش خبر',
+                text: 'ویرایش',
+                icon: icon('pencil'),
                 handler: function () {
                     openNewsEditWindow(this.up().rowId);
                 }
             },
             {
-                text: 'حذف خبر',
-                handler:function(){
+                text: 'حذف',
+                icon: icon('delete'),
+                handler: function () {
                     var id = this.up().model.get('id');
                     this.up().model.destroy();
                     //RPC.NewsApi.destroy(id);
@@ -43,8 +45,8 @@
             }
         ],
         listeners: {
-            itemdblclick: function(view,record,item,index,e){
-               var id = record.data.id;
+            itemdblclick: function (view, record, item, index, e) {
+                var id = record.data.id;
                 var editPanel = Ext.create('Mehr.view.news.Edit');
                 editPanel.down('form').getForm().load({params: {id: id}})
             }
@@ -67,12 +69,12 @@
         initComponent: function () {
             this.callParent(arguments);
             //var grid = this.down('grid');
-            //grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
+            //grid.getStore().getProxy().setExtraParam('user', (this.info.row) ? this.info.row.getId() : this.tid);
             //grid.getStore().load();
         }
     });
 
-    function openNewsEditWindow(id){
+    function openNewsEditWindow(id) {
         var editPanel = Ext.create('Mehr.view.news.Edit');
         editPanel.down('form').getForm().load({params: {id: id}})
     }

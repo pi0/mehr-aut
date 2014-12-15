@@ -44,9 +44,9 @@ $config = array(
             'path' => '/app/var/locale/',
             'charset' => 'UTF-8',
         ],
-    'ddos' =>
+    'licensee' =>
         [
-            'threshold' => '20',
+            'name' => 'معاونت فرهنگی و اجتماعی دانشگاه شهید بهشتی (دمو)',
         ],
     'bank' => [
         'brand' => 'mellat',

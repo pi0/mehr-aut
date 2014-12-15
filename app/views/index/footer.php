@@ -1,10 +1,11 @@
-<?php $development = true; ?>
+<?php $development = false; ?>
 <footer>
     <p>
         تمام حقوق محفوظ ا
         ست.
-    </p>
 
+    </p>
+<p><a href="http://www.ahurait.com">شرکت مهندسی اهورا</a></p>
 </footer>
 </body>
 
@@ -22,7 +23,6 @@
     <script src="vendor/helpers.js"></script>
     <script src="vendor/moment.js"></script>
     <script src="vendor/moment-jalaali.js"></script>
-
     <script src="vendor/backbone.marionette/underscore.js"></script>
     <script src="vendor/backbone.marionette/backbone.js"></script>
     <script src="vendor/backbone.marionette/backbone.wreqr.js"></script>
@@ -31,13 +31,8 @@
     <script src="vendor/backbone-validation.js"></script>
     <script src="vendor/jquery-ui/js/jquery-ui.js"></script>
     <!--App scripts-->
-    <script type="text/javascript">
-        app = new Backbone.Marionette.Application();
-        ux = {};
-    </script>
-    <script src="mehr/js"></script>
-    <script src="bb/ux.js"></script>
     <script src="bb/app.js"></script>
+    <script src="bb/ux.js"></script>
     <script src="bb/view/topbar.js"></script>
     <script src="bb/router.js"></script>
     <script src="bb/view/post.js"></script>
@@ -50,7 +45,7 @@
     <script src="bb/view/entity.js"></script>
     <script src="bb/view/credit.js"></script>
 <?php else: ?>
-    <script src='app/app.merged.min.js'></script>
+    <script src='app.merged.min.js'></script>
 <?php endif; ?>
 
 

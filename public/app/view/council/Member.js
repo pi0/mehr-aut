@@ -54,7 +54,7 @@ var tbar = [
             var status = this.up().down('[name=status]').getValue();
             if (id) {
                 var grid = button.up('grid');
-                var enroll = Ext.create('Mehr.model.Enroller', {programId: grid.up('window').info.get('id'), id: id, status: status});
+                var enroll = Ext.create('Mehr.model.Enroller', {program: grid.up('window').info.get('id'), id: id, status: status});
                 enroll.save({
                     failure: function (record, operation) {
                         Ext.MessageBox.show({
@@ -103,20 +103,20 @@ var tbar = [
         }
     }
 ];
-Ext.define("Mehr.view.council.Member", {
-    extend: "Ext.grid.Panel",
-    //alias: "widget.councilMembersGrid",
-    //selModel: {model: 'MULTI'},
-    //multiSelect: true,
-    //require: 'Ahura.form.combo.SID',
-    ////columns: columns,
-    ////tbar: tbar,
-    ////initComponent: function () {
-    ////    var me = this;
-    ////    me.store = 'Council'
-    ////    me.callParent(arguments);
-    ////    me.down('pagingtoolbar').bindStore(me.store);
-    ////}
+Ext.define("Mehr.view.council.MemberGrid", {
+    extend: "Ahura.grid.Base",
+    alias: "widget.councilMembersGrid",
+    selModel: {model: 'MULTI'},
+    multiSelect: true,
+    require: 'Ahura.form.combo.SID',
+    columns: columns,
+    tbar: tbar,
+    initComponent: function () {
+        var me = this;
+        me.store = 'Council'
+        me.callParent(arguments);
+        me.down('pagingtoolbar').bindStore(me.store);
+    }
 });
 Ext.define("Mehr.view.council.Member", {
     extend: "Ahura.window.Grid",
@@ -125,12 +125,12 @@ Ext.define("Mehr.view.council.Member", {
     items: [
         {xtype: 'councilMembersGrid'}
     ],
-    //initComponent: function () {
-    //
-    //    this.title = 'نام‌نوشتگان در:' + ' ' + 'asdf';
-    //    this.callParent(arguments);
-    //    var grid = this.down('grid');
-    //    grid.getStore().getProxy().setExtraParam('programId',63);
-    //    grid.getStore().load();
-    //}
+    initComponent: function () {
+
+        this.title = 'نام‌نوشتگان در:' + ' ' + 'asdf';
+        this.callParent(arguments);
+        var grid = this.down('grid');
+        grid.getStore().getProxy().setExtraParam('program',63);
+        grid.getStore().load();
+    }
 })

@@ -1,6 +1,6 @@
 'use strict';
 app.Entity = Backbone.Model.extend({
-    urlRoot:'api/entity'
+    urlRoot:'entity/entity'
 });
 app.EntityView = Backbone.Marionette.ItemView.extend({
     template: '#entity-tpl',

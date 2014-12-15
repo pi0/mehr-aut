@@ -1,4 +1,5 @@
 'use strict';
+
 Ext.Loader.setConfig({
     enabled: true
 });
@@ -18,18 +19,7 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-//        Ext.create('Mehr.view.user.Edit');
-        Ext.create('Mehr.view.council.Member');
-//        var win = Ext.create('Mehr.view.user.Role');
-//        var win = Ext.create("Mehr.view.program.Edit", {
-//            info: {
-//                get: function () {
-//                    return 9;
-//                }
-//            }
-//        });
-
-
+        Ext.create('Mehr.view.entity.List');
     }
 
 });
@@ -64,9 +54,9 @@ Ext.require([
 
 Ext.onReady(function () {
 //    var grid = win.down('grid');
-//    var entityId = 1;
-//    grid.setProgramId(programId);
-//    grid.getStore().getProxy().setExtraParam('entityId', entityId);
+//    var entity = 1;
+//    grid.setProgramId(program);
+//    grid.getStore().getProxy().setExtraParam('entity', entity);
 //    grid.getStore().load();
 
 //    Ext.create('Mehr.view.program.List');

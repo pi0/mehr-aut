@@ -1,4 +1,4 @@
-(function(){
+(function () {
     var columns = [
         {
             xtype: 'actioncolumn',
@@ -13,11 +13,11 @@
                 }
                 ,
                 {
-                    icon: icon('groupAdd'),                // Use a URL in the icon config
+                    icon: icon('groupAdd'),
                     tooltip: 'شورای مرکزی',
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
                         var record = {};
-                        record.get = function(d){
+                        record.get = function (d) {
                             return this.id;
                         }
                         record.id = 63;
@@ -40,7 +40,7 @@
         },
         {
             header: 'دبیر',
-            flex:.75,
+            flex: .75,
             dataIndex: 'secretaryFullName'
         }
     ];
@@ -60,14 +60,14 @@
         items: [
             {xtype: 'councilGrid'}
         ],
-        initComponent: function () {console.log(this.info);
-            this.title = this.info.title || this.info.row.data.typeText || 'شوراها';
+        title: 'دوره‌های شوراهای مرکزی',
+        initComponent: function () {
+            this.title = this.info.title || this.title;
             this.callParent(arguments);
             var grid = this.down('grid');
-            var type = (this.info.for == 'user') ? 'userId' : 'entityId';
-            grid.getStore().getProxy().setExtraParam(type, (this.info.row) ? this.info.row.getId() : this.tid);
+            grid.getStore().getProxy().setExtraParam('id', this.info.id);
+            grid.getStore().getProxy().setExtraParam('type', this.info.type);
             grid.getStore().load();
         }
-
     });
 })()

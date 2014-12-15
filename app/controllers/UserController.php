@@ -100,9 +100,10 @@ class UserController extends ControllerBase
     private function getSafeUserData()
     {
         $user = $this->currentUser;
-        $view = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
-        if ($user->type == 'a') $view['admin'] = true;
-        jsonResponse($view);
+        $userSafeData = Util\Arr\subset($user->toArray(), ['firstName', 'lastName', 'id']);
+        $userSafeData['licensee']= $this->config->licensee->name;
+        if ($user->type == 'a') $userSafeData['admin'] = true;
+        jsonResponse($userSafeData);
     }
 
 }

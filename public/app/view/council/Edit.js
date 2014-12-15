@@ -33,7 +33,7 @@ Ext.define('Mehr.view.council.Edit', {
                             items: [
                                 {
                                     xtype: 'hidden',
-                                    name: 'entityId'
+                                    name: 'entity'
                                 },
                                 {
                                     name: 'active',
@@ -129,7 +129,7 @@ Ext.define('Mehr.view.council.Edit', {
         this.callParent(arguments);
         console.log(this.isNew);
         if (this.isNew) {
-            var field = this.down('form').getForm().findField('entityId');
+            var field = this.down('form').getForm().findField('entity');
             field.setValue((this.info) ? this.info.getId() : this.tid);
         } else {
             this.down('form').load({params: {id: this.info.get('id')}});

@@ -1,4 +1,4 @@
-(function(){
+(function () {
     var columns = [
         {
             xtype: 'actioncolumn',
@@ -32,8 +32,8 @@
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
                         var win = Ext.create('Mehr.view.program.Enrollers', {info: record});
 //                    var grid = win.down('grid');
-//                    grid.setProgramId(programId);
-//                    grid.getStore().getProxy().setExtraParam('programId', programId);
+//                    grid.setProgramId(program);
+//                    grid.getStore().getProxy().setExtraParam('program', program);
 //                    grid.getStore().load();
                     }
                 }
@@ -77,18 +77,18 @@
         ,
         {
             header: "وضعیت نام‌نویسی",
-            dataIndex: "enrollmentStatusText",
+            dataIndex: "enrollmentStatus",
             filter: {
                 type: 'list',
                 store: Ahura.store.TimeStage
             },
             renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                 if ('c' == record.get('enrollmentStatus'))
-                    return  '<span style="color:red;">' + value + '</span>';
+                    return '<span style="color:red;">' + value + '</span>';
                 if ('p' == record.get('enrollmentStatus'))
-                    return  '<span style="color:blue;">' + value + '</span>';
+                    return '<span style="color:blue;">' + value + '</span>';
                 if ('f' == record.get('enrollmentStatus'))
-                    return  '<span style="color:green;">' + value + '</span>';
+                    return '<span style="color:green;">' + value + '</span>';
                 return 'نامشخص';
             }
         }
@@ -98,11 +98,11 @@
             dataIndex: "executionStatusText",
             renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                 if ('c' == record.get('executionStatus'))
-                    return  '<span style="color:red;">' + value + '</span>';
+                    return '<span style="color:red;">' + value + '</span>';
                 if ('p' == record.get('executionStatus'))
-                    return  '<span style="color:blue;">' + value + '</span>';
+                    return '<span style="color:blue;">' + value + '</span>';
                 if ('f' == record.get('executionStatus'))
-                    return  '<span style="color:green;">' + value + '</span>';
+                    return '<span style="color:green;">' + value + '</span>';
                 return 'نامشخص';
             }
         },
@@ -135,21 +135,18 @@
         extend: "Ahura.window.Grid",
         alias: "widget.programs",
         info: [],
+        title: 'برنامه‌ها',
         items: [
             {xtype: 'programsGrid'}
         ],
         initComponent: function () {
-            this.title = this.info.title || 'برنامه‌ها';
+            this.title = this.info.title || this.title;
+            console.log(this.info);
+            
             this.callParent(arguments);
             var grid = this.down('grid');
-
-            grid.getStore().getProxy().extraParams = {};
-            if(this.info.caller == 'user')
-                grid.getStore().getProxy().setExtraParam('userId', (this.info.row) ? this.info.row.getId() : this.tid);
-
-            else if(this.info.caller == 'entity')
-                grid.getStore().getProxy().setExtraParam('entityId',(this.info.row) ? this.info.row.id : this.tid);
-
+            grid.getStore().getProxy().setExtraParam('id', this.info.id);
+            grid.getStore().getProxy().setExtraParam('type', this.info.type);
             grid.getStore().load();
         }
     });

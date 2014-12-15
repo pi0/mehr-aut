@@ -1,4 +1,6 @@
 var Mehr = Mehr || {};
+app = new Backbone.Marionette.Application();
+ux = {};
 
 Handlebars.registerHelper('def', function (x, def) {
     if (x == null) {
@@ -130,11 +132,12 @@ $(function () {
         var current = new app.CurrentUser();
         current.fetch({
             success: function (model, response, options) {
+                //model.set('licensee', Mehr.licensee);
                 app.layout.topbar.show(new app.TopbarView({model: model}));
             }
         })
     } else {
-        app.layout.topbar.show(new app.TopbarView());
+        app.layout.topbar.show(new app.TopbarView({model: new Backbone.Model({licensee: Mehr.licensee})}));
     }
     app.start();
 });

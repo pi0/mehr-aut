@@ -6,16 +6,16 @@ class CouncilApi extends BaseApi
     function read($params)
     {
         $params = (array)$params;
-        if (isset($params['id'])) {
+        if (isset($params['id']) && !isset($params['type'])) {
             $data = $this->db->fetchOne("SELECT * FROM council WHERE id=:id", Phalcon\Db::FETCH_ASSOC, ['id' => $params['id']]);
             return (['data' => fromDB($data), 'success' => true]);
         } else {
             $whitList = [];
             $query = $this->queryBuilder('CouncilList');
-            if (isset($params['userId'])) {
-                $query->join('CouncilMember', ' CouncilList.id=entityId ')->where('CouncilList.userId=?0', [$params['userId']]);
-            } elseif (isset($params['entityId'])) {
-                $query->where('entityId=?0', [$params['entityId']]);
+            if (isset($params['type']) && $params['type'] == 'user') {
+                $query->join('CouncilMember', ' CouncilList.id=entity ')->where('CouncilList.user=?0', [$params['id']]);
+            } elseif (isset($params['type']) && $params['type'] == 'entity') {
+                $query->where('entity=?0', [$params['id']]);
             }
             $response = $this->extFilter($query, $params, $whitList);
             return ($response);
@@ -36,7 +36,7 @@ class CouncilApi extends BaseApi
 
     function destroy($params)
     {
-        $result = $this->db->execute('DELETE FROM Council WHERE userId=:user AND programId=:program', ['program' => $params->programId, 'user' => $params->id]);
+        $result = $this->db->execute('DELETE FROM Council WHERE user=:user AND program=:program', ['program' => $params->program, 'user' => $params->id]);
         if ($result > 0) {
             return extJson(true, [], []);
         } else {

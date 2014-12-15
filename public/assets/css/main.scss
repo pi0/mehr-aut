@@ -15,7 +15,7 @@ $padding: 30px;
 
 // Bootstrap alerts
 
-.program-actions{
+.program-actions {
   clear: both;
 }
 
@@ -48,7 +48,7 @@ $padding: 30px;
 
 .busy-box {
   position: fixed;
-  bottom:20px;
+  bottom: 20px;
   right: 20px;
   opacity: .85;
   margin-bottom: 0;
@@ -121,6 +121,7 @@ ul.plain {
 body, input, textarea, button, select {
   font-family: masterfont !important;
   font-size: 12px;
+  padding-top: 45px;
 }
 
 body {
@@ -131,6 +132,10 @@ body {
 }
 
 body .top-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 90;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
   background: rgba(0, 0, 0, 0.88);
   height: 30px !important;
