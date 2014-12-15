@@ -68,7 +68,6 @@ class UserApi extends BaseApi
 //            return paginator($query, $params, 'user');
         }
     }
-
     function create()
     {
         $data = $_REQUEST;

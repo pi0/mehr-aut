@@ -441,7 +441,8 @@ ul.plain {
 
 body, input, textarea, button, select {
   font-family: masterfont !important;
-  font-size: 12px; }
+  font-size: 12px;
+  padding-top: 45px; }
 
 body {
   background: url("../../03.jpg");
@@ -450,6 +451,10 @@ body {
   background-repeat: repeat-y; }
 
 body .top-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 90;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   background: rgba(0, 0, 0, 0.88);
   height: 30px !important;
