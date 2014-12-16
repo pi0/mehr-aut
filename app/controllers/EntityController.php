@@ -2,6 +2,10 @@
 
 class EntityController extends ControllerBase
 {
+
+    // this var is used in the member level method
+    var $role = null;
+
     public function entityAction()
     {
         $app = new Phalcon\Mvc\Micro();
@@ -58,26 +62,79 @@ class EntityController extends ControllerBase
         $app->handle();
     }
 
-    function membershipStatus($entity, $userId)
-    {
-        $record = EntityMember::findFirst(['conditions' => 'user=?0 AND entity=?1', 'bind' => [$userId, $entity->id]]);
-        if ($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
-            return $record->role;
+//    function membershipStatus($entity, $userId)
+//    {
+//        $record = EntityMember::findFirst(['conditions' => 'user=?0 AND entity=?1', 'bind' => [$userId, $entity->id]]);
+//        if ($record && count($record)) { // if the user has applied already, we should not let him/her apply again.
+//            return $record->role;
+//        } else {
+//            return $this->inAudience($userId, $entity->audience) ? "canJoin" : "notAllowed";
+//        }
+//    }
+//
+//    function canJoin($entity, $userId)
+//    {
+//        return $this->membershipStatus($entity, $userId) == 'canJoin';
+//    }
+//
+//    function isMember($entity, $userId)
+//    {
+//        return in_array($this->membershipStatus($entity, $userId), ['member', 'active']);
+//    }
+//
+
+    private function acceptsMembers($entity){
+        return $entity->subscription == 1;
+    }
+
+    // levels: "member","active","applied","notApplied"
+    private function memberLevel($user,$entity){
+        if(!$this->role) {
+            $em = EntityMember::findFirst([
+                'conditions' => 'user=?0 AND entity=?1',
+                'bind' => [$user->id, $entity->id]
+            ]);
+            if (!$em) {
+                $this->role = 'notApplied';
+            } else {
+                $this->role = $em->role;
+            }
+        }
+        return $this->role;
+    }
+
+    private function isMember($user,$entity){
+        return in_array($this->memberLevel($user,$entity),['member','active','applied']);
+    }
+
+    private function hasPosition($user,$entity){
+        $cm = CouncilMember::findFirst('user=?0 AND council=?1',[$user->id,$entity->council]);
+        if(!$cm)
+            return false;
+        return $cm->role;
+    }
+
+    // function that takes care of all the issue related to the user membership status
+    private function handleMembership($user,$entity){
+        if(!$this->inAudience($user->id,$entity->audience)){
+            return 'you\'re not audience';
         } else {
-            return $this->inAudience($userId, $entity->audience) ? "canJoin" : "notAllowed";
+            if(!$this->acceptsMembers($entity)){ // does not accept members
+                return 'you\'re one of the audience';
+            } else { // accepts members
+                $level = $this->memberLevel($user,$entity); // levels: "member","active","applied","notApplied"
+                if($this->isMember($user,$entity)){ // status of the user is either "member", "active" or "applied"
+                    if($position = $this->hasPosition($user,$entity)){ // user has a position in the entity
+                        return 'you\'re ' . $position . ' of the entity';
+                    } else { // user does not have a position in the entity
+                        return 'you\'re member of entity | ' . $level;
+                    }
+                } else { // user is not member of the entity, but can apply
+                    return 'you can apply for the entity';
+                }
+            }
         }
     }
-
-    function canJoin($entity, $userId)
-    {
-        return $this->membershipStatus($entity, $userId) == 'canJoin';
-    }
-
-    function isMember($entity, $userId)
-    {
-        return in_array($this->membershipStatus($entity, $userId), ['member', 'active']);
-    }
-
 
     public function membershipAction()
     {
