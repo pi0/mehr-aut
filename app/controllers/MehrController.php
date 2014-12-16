@@ -54,7 +54,7 @@ class MehrController extends ControllerBase
         $membership = toJsArray($db->query('select `value`,text from constant where category="membership"')->fetchAll());
         $this->view->membership = $membership;
 
-        $councilMembership = toJsArray($db->query('select `value`,text from constant where category="councilMembership"')->fetchAll());
+        $councilMembership = toJsArray($db->query('select `value`,text from constant where category="councilMembership" order by text')->fetchAll());
         $this->view->councilMembership = $councilMembership;
 
         $course = toJsArray($db->query('select `value`,text from constant where category="course"')->fetchAll());

@@ -4,7 +4,7 @@ Ext.define("Ahura.form.combo.User", {
     width:300,
     fieldLabel: "کاربر",
     name: 'sid',
-    emptyString:'نام، #دانشجویی، #ملی',
+    emptyString:'نام یا نام خانوادگی، #دانشجویی، #ملی',
     store: 'User',
     displayField: 'sid',
     valueField: 'id',

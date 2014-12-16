@@ -16,13 +16,12 @@
                     icon: icon('groupAdd'),
                     tooltip: 'شورای مرکزی',
                     handler: function (grid, rowIndex, colIndex, item, event, record, row) {
-                        var record = {};
-                        record.get = function (d) {
-                            return this.id;
-                        }
-                        record.id = 63;
                         var win = Ext.create('Mehr.view.council.Member', {
-                            info: record
+                            info: {
+                                id: record.data.id,
+                                type: 'council',
+                                title: 'اعضای شورای مرکزی دوره ' + record.data.name + ' در ' + record.data.entityFullName
+                            }
                         });
                     }
                 }
@@ -53,7 +52,7 @@
             this.callParent(arguments);
             this.down('pagingtoolbar').bindStore(this.store);
         },
-        dblHandle: function(record ){
+        dblHandle: function (record) {
             Ext.create('Mehr.view.council.Edit', {info: record});
 
         }
@@ -74,4 +73,4 @@
             grid.getStore().load();
         }
     });
-})()
+})();

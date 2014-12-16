@@ -30,12 +30,41 @@ Ext.define('Ahura.grid.Base', {
         }
     },
     initComponent: function () {
-        this.bbar = {
-            xtype: 'pagingtoolbar',
-            displayInfo: true,
-            displayMsg: 'نمایش موارد {0} - {1} از {2}',
-            emptyMsg: "موردی یافت نشد."
-        };
+        this.bbar = [
+            {
+                xtype: 'pagingtoolbar',
+                displayInfo: true,
+                displayMsg: 'نمایش موارد {0} - {1} از {2}',
+                emptyMsg: "موردی یافت نشد."
+            },
+            '->'
+            ,
+            {
+                text: 'اکسل',
+                'icon': icon('excel')
+            }, {
+                xtype: 'splitbutton',
+                'tooltip': 'چاپ همه صفحات',
+                text: 'چاپ',
+                'icon': icon('printer'),
+                menu: [
+                    {
+                        text: 'چاپ این صفحه',
+                        'icon': icon('printer'),
+                        handler: function () {
+                            Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
+                        }
+                    },
+                    {
+                        text: 'چاپ همه صفحات',
+                        'icon': icon('printer'),
+                        handler: function () {
+                            Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
+                        }
+                    }
+                ]
+            }
+        ];
         this.callParent(arguments);
     },
     buildMenu: function (menuCfg) {
@@ -56,10 +85,9 @@ Ext.define('Ahura.grid.Base', {
         this.menu.rowId = model.getId();
         this.menu.showAt(evt.getXY());
     },
-    dblClick: function( me , record, item, index, e, eOpts ){
+    dblClick: function (me, record, item, index, e, eOpts) {
         e.stopEvent();
-        if(typeof this.dblHandle!= 'undefined' && Ext.isFunction(this.dblHandle))
-            this.dblHandle( record );
+        if (typeof this.dblHandle != 'undefined' && Ext.isFunction(this.dblHandle))
+            this.dblHandle(record);
     }
 });
-

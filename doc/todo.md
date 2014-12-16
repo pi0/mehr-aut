@@ -10,6 +10,7 @@ Reza:
 Masoud:
 ======
 - (done) Delete news
+- Improve user edit Window (New or Edit)
 - Display enrollment date in grid
 - Exporting to excel
 - Grid printing

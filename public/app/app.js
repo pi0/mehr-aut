@@ -19,7 +19,7 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-        Ext.create('Mehr.view.program.List');
+        Ext.create('Mehr.view.council.List');
     }
 
 });
@@ -49,7 +49,8 @@ Ext.require([
     'Ahura.form.combo.Nationality',
     'Ahura.form.combo.Department',
     'Ahura.form.combo.College',
-    'Mehr.view.program.List'
+    'Mehr.view.program.List',
+    'Ahura.form.combo.CouncilMembership'
 ]);
 
 Ext.onReady(function () {

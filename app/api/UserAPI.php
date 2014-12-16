@@ -61,11 +61,8 @@ class UserApi extends BaseApi
                     }
                 }
             }
-//            var_dump($query->getPhql());
-//            var_dump($query->limit(4)->columns('UserList.id')->getQuery()->execute()->toArray());
             $response = $this->extFilter($query, $params, [], $extraFilter);
             return $response;
-//            return paginator($query, $params, 'user');
         }
     }
     function create()

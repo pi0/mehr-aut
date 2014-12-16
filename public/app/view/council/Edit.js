@@ -127,7 +127,6 @@ Ext.define('Mehr.view.council.Edit', {
     initComponent: function () {
         this.title = (this.info) ? 'ویرایش/ایجاد دوره:' + this.info.get('name') : "ویرایش/ایجاد دوره";
         this.callParent(arguments);
-        console.log(this.isNew);
         if (this.isNew) {
             var field = this.down('form').getForm().findField('entity');
             field.setValue((this.info) ? this.info.getId() : this.tid);

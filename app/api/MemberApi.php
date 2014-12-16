@@ -12,8 +12,8 @@ class MemberApi extends BaseApi
 //            $data = $u->findFirst("id=" . $params->id)->toArray();
             return (['data' => $data, 'success' => true]);
         } else {
-            $data = $this->db->fetchAll("select * from entitymemberlist where entity=:entity", Phalcon\Db::FETCH_ASSOC, ['entity' => $params->entity]);
-            $total = $this->db->fetchOne("select count(*) from entitymemberlist where entity=:entity", Phalcon\Db::FETCH_NUM, ['entity' => $params->entity]);
+            $data = $this->db->fetchAll("SELECT * FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_ASSOC, ['entity' => $params->entity]);
+            $total = $this->db->fetchOne("SELECT count(*) FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_NUM, ['entity' => $params->entity]);
             return (['data' => $data, 'total' => $total[0]]);
         }
     }
@@ -21,8 +21,8 @@ class MemberApi extends BaseApi
     function create($params)
     {
         $result = $this->db->execute('insert entitymember (user,entity,role) values (:user,:entity, :role) on duplicate key update role=:role ',
-            ['entity' => $params->entity, 'user' => $params->user,'role'=>$params->role]);
-        $affected=$this->db->affectedRows();
+            ['entity' => $params->entity, 'user' => $params->user, 'role' => $params->role]);
+        $affected = $this->db->affectedRows();
         if ($affected > 0) {
             return extJson(true, [], []);
         } else {
@@ -32,7 +32,7 @@ class MemberApi extends BaseApi
 
     function destroy($params)
     {
-        $result = $this->db->execute('delete from entitymember where user=:user and entity=:entity', ['entity' => $params->entity, 'user' => $params->user]);
+        $result = $this->db->execute('DELETE FROM entitymember WHERE user=:user AND entity=:entity', ['entity' => $params->entity, 'user' => $params->user]);
         if ($result > 0) {
             return extJson(true, [], []);
         } else {

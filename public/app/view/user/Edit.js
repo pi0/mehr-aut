@@ -164,7 +164,7 @@ Ext.define('Mehr.view.user.Edit',
                                     name: 'passedUnits'
                                 },
                                 {
-                                    fieldLabel: 'میانگین',
+                                    fieldLabel: 'معدل نمرات',
                                     xtype: 'numberfield',
                                     decimalPrecision: 2,
                                     allowDecimals: true,

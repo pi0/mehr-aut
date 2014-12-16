@@ -76,7 +76,7 @@ Ext.create("Ext.toolbar.Toolbar", {
             menu: menu
         },
         {
-            text: "نهادها و برنامه‌ها",
+            text: "نهادها و تشکل‌ها",
             icon: icon('microphone'),
             menu: [
                 {
@@ -87,24 +87,6 @@ Ext.create("Ext.toolbar.Toolbar", {
                         Ext.create('Mehr.view.entity.List');
                     }
                 },
-
-                {
-                    text: 'برنامه‌ها',
-                    icon: icon('microphone'),
-                    handler: function () {
-                        Ext.create('Mehr.view.program.List');
-                    }
-                },
-
-                {
-                    text: 'طرح‌ها',
-                    disabled: true,
-                    icon: icon('ruler-triangle'),
-                    handler: function () {
-                        Ext.create('Mehr.view.plan.Window');
-                    }
-                },
-
                 {
                     text: 'دوره‌های نهادها',
                     icon: icon('users'),
@@ -120,7 +102,6 @@ Ext.create("Ext.toolbar.Toolbar", {
                         Mehr.window.Issues.show();
                     }
                 },
-
                 {
                     text: "ایجاد",
                     icon: icon('add'),
@@ -131,24 +112,47 @@ Ext.create("Ext.toolbar.Toolbar", {
                                 Ext.create('Mehr.view.entity.Edit');
                             }
                         },
-
-                        {
-                            text: 'برنامه نو',
-                            handler: function () {
-//                                Mehr.window.ProgramEdit.show();
-                                Ext.create('Mehr.view.program.Edit')
-                            }
-                        },
-
-                        {
-                            disabled: true,
-                            text: 'پیشنهاد طرح'
-                        },
                         {
                             disabled: true,
                             text: 'نشریه نو'
                         }
                     ]
+                }
+            ]
+        },
+        {
+            text: "طرح و برنامه",
+            icon: icon('microphone'),
+            menu: [
+                {
+                    text: 'برنامه‌ها',
+                    icon: icon('microphone'),
+                    handler: function () {
+                        Ext.create('Mehr.view.program.List');
+                    }
+                },
+                {
+                    text: 'طرح‌ها',
+                    disabled: true,
+                    icon: icon('ruler-triangle'),
+                    handler: function () {
+                        Ext.create('Mehr.view.plan.Window');
+                    }
+                },
+                {
+                    text: "ایجاد",
+                    icon: icon('add'),
+                    menu: [{
+                        text: 'برنامه نو',
+                        handler: function () {
+                            Ext.create('Mehr.view.program.Edit')
+                        }
+                    },
+
+                        {
+                            disabled: true,
+                            text: 'پیشنهاد طرح'
+                        }]
                 }
             ]
         },
@@ -334,12 +338,11 @@ Ext.create("Ext.toolbar.Toolbar", {
             text: "راهنما",
             icon: icon('help'),
             menu: [
-                /*
-                 {
-                 icon: icon('help'),
-                 text: "راهنمای برنامه"
-                 } ,
-                 */
+                {
+                    disabled: true,
+                    icon: icon('help'),
+                    text: "راهنمای برنامه"
+                },
                 {
                     text: "وبگاه شرکت",
                     icon: icon('world'),
