@@ -67,8 +67,8 @@
             </div>
             <div>
                 با استفاده از فرم زیر می‌توانید به مقدار دلخواه به اعتبار خود بیافزایید. حداقل مبلغ قابل افزایش
-            {{mn 1000}}
-            است..
+                {{mn 1000}}
+                است..
             </div>
             <form class="main-style">
                 <div>
@@ -92,7 +92,7 @@
             <div class="post-title">
                 {{cnst 'postType' postType}}
                 {{#if subject}}:
-                    {{cnst 'subject' subject}}
+                {{cnst 'subject' subject}}
                 {{/if}}
             </div>
             <div class="post-date">
@@ -103,9 +103,9 @@
         <div class="body">
             <div class="name">
                 {{#unless fullName}}
-                    {{name}}
+                {{name}}
                 {{else}}
-                    {{fullName}}
+                {{fullName}}
                 {{/unless}}
             </div>
             {{#if image}}
@@ -127,7 +127,7 @@
             <i class="fa fa-file-text-o"></i>
             خبر
             {{#if subject}}:
-                {{cnst 'subject' subject}}
+            {{cnst 'subject' subject}}
             {{/if}}
         </div>
         <div class="body">
@@ -144,12 +144,12 @@
                 <div class="footer-first-line">
                     <i class="fa fa-user"></i>
 
-                تاریخ ارسال:
-                {{toJ cDate}}
+                    تاریخ ارسال:
+                    {{toJ cDate}}
                 </div>
                 <div class="footer-last-line">
-                نویسنده:
-                مدیر
+                    نویسنده:
+                    مدیر
                 </div>
             </div>
         </div>
@@ -158,8 +158,7 @@
 <script type="text/html" id="entity-tpl">
     <div class="component post-container">
         <div class="header">
-            نهاد یا تشکل
-
+نهاد
         </div>
         <div class="body">
             <div class="name">{{fullName}}</div>
@@ -193,21 +192,34 @@
                 </table>
             </div>
             {{#unless autoRender}}
-            {{#is membershipStatus 'canJoin'}}
+            {{#is membership.status 'canJoin'}}
             <div class="program-actions alert alert-info" style="clear:both;text-align:center">
                 <a class="button submit">
-                    عضویت در این نهاد/تشکل
+عضویت در این نهاد
                 </a>
             </div>
             {{/is}}
-            {{#is membershipStatus 'applied'}}
-            <div class="program-actions alert alert-warning" style="clear:both;text-align:center">
+            {{#is membership.status 'member'}}
+            <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+            {{#is membership.role 'applied'}}
                 شما در تاریخ
-                {{toJ cDate}}
-                درخواست عضویت داده اید.
+                {{toJ membership.cDate}}
+                درخواست عضویت ارائه داده‌اید.
             </div>
+            {{else}}
+وضعیت عضویت شما:
+            {{cnst 'membership' membership.role}}
             {{/is}}
-            {{#is membershipStatus 'in' 'notAllowed,canceled'}}
+                </div>
+            {{/is}}
+            {{#is membership.status 'coucillor'}}
+            <div class="program-actions alert alert-info" style="clear:both;text-align:center">
+            شما
+            {{cnst 'councilMembership' membership.role}}
+            دوره جاری این نهاد می‌باشید.
+</div>
+            {{/is}}
+            {{#is membership.status 'in' 'notAllowed,canceled'}}
             <div class="program-actions alert alert-danger" style="clear:both;text-align:center">
                 متاسفانه امکان عضویت شما در این گروه وجود ندارد.
             </div>
@@ -215,7 +227,7 @@
             {{/unless}}
             {{#if autoRender}}
             <div class="program-actions alert alert-info" style="clear:both;text-align:center">
-                شما {{cnst 'membership' membershipStatus}} این گروه هستید.
+                شما {{cnst 'membership' membership.status}} این گروه هستید.
 
             </div>
             {{/if}}
@@ -313,11 +325,11 @@
                     </tr>
                     <tr>
                         <td class="name">نوع:</td>
-                        <td>{{def typeText}}</td>
+                        <td>{{cnst 'programType' type}}</td>
                     </tr>
                     <tr>
                         <td class="name">موضوع:</td>
-                        <td>{{def subjectText}}</td>
+                        <td>{{cnst 'subject' subject}}</td>
                     </tr>
                     <tr>
                         <td class="name">حدنصاب:</td>
@@ -351,11 +363,11 @@
                     </tr>
                     <tr>
                         <td class="name">وضعیت:</td>
-                        <td>{{def enrollmentStatusText}}</td>
+                        <td>{{cnst 'timeStage' enrollmentStatus}}</td>
                     </tr>
                     <tr>
                         <td class="name">نام‌نوسی شما:</td>
-                        <td>{{def enrollmentStatusText 'انجام نشده'}}</td>
+                        <td>{{def enrollmentStatus 'انجام نشده'}}</td>
                     </tr>
                     <tr>
                         <td class="group" colspan="2">
@@ -372,7 +384,7 @@
                     </tr>
                     <tr>
                         <td class="name">وضعیت :</td>
-                        <td>{{def executionStatusText}}</td>
+                        <td>{{cnst 'timeStage' executionStatus}}</td>
                     </tr>
 
                     <tr>
@@ -400,7 +412,7 @@
             {{#is userEnrollmentStatus 'pay'}}
             <div class="program-actions alert alert-info">
                 <a class="button enroll">
-            پرداخت هزینه و ثبت‌نام
+                    پرداخت هزینه و ثبت‌نام
                 </a>
             </div>
             {{/is}}
@@ -424,8 +436,8 @@
                 شما در تاریخ
                 {{toJ enroller.cDate}}
                 در این برنامه ثبت‌نام کرده‌اید و ثبت‌نام شما در حالت
-<b>                {{cnst 'enrollmentStatus' enroller.status}}
-</b>
+                <b> {{cnst 'enrollmentStatus' enroller.status}}
+                </b>
                 است.
                 {{#is registerFee 0}}
                 <a href="#program/{{id}}" class="button unenroll">انصراف از شرکت در برنامه</a>

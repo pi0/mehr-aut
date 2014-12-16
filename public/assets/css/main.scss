@@ -188,13 +188,13 @@ footer p {
     }
   }
 
-
   &.post-container {
     .header{
       overflow:auto;
     }
     .header .post-title{
       float:right;
+      min-width: 100px;
     }
     .header .post-date{
       float:left;

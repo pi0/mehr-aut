@@ -146,9 +146,9 @@ Mehr.cnst = function (c, v) {
     var r = cnst[c][v];
     if (r) {
         return r;
-
     }
     else {
-        console.error("Constant not found: " + c + ' ' + v);
+        console.info("Constant not found: " + c + ' ' + v);
+        return r || 'نامشخص';
     }
 };

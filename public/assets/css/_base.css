@@ -496,7 +496,8 @@ footer p {
   .component.post-container .header {
     overflow: auto; }
   .component.post-container .header .post-title {
-    float: right; }
+    float: right;
+    min-width: 100px; }
   .component.post-container .header .post-date {
     float: left; }
   .component.post-container .buttons {

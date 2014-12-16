@@ -19,8 +19,8 @@ app.MainRouter = Backbone.Router.extend({
         var url = {
             'post': 'api',
             'news': 'api',
-            'program': 'program',
-            'entity': 'entity'
+            'program': 'rest',
+            'entity': 'rest'
         };
         p.url = url[type] + '/' + type;
         p.fetch({

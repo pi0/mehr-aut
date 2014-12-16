@@ -1,12 +1,12 @@
 'use strict';
 
 app.Program = Backbone.Model.extend({
-    urlRoot: 'program/program'
+    urlRoot: 'rest/program'
 });
 
 app.Programs = Backbone.Collection.extend({
     model: app.Post,
-    url: 'program/program'
+    url: 'rest/program'
 });
 
 

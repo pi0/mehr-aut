@@ -1,31 +1,55 @@
 <?php
-$router = new Phalcon\Mvc\Router(true);
+$router = new Phalcon\Mvc\Router();
 
-//$router->removeExtraSlashes(true);
-//$router->setDefaultController('index');
-//$router->setDefaultAction('index');
+$router->removeExtraSlashes(true);
+$router->setDefaultController('index');
+$router->setDefaultAction('index');
+
+$router->addGet('/rest/:controller', array(
+    'controller' => 1,
+    'action' => 'readAll',
+));
+
+$router->addGet('/rest/:controller/:int', array(
+    'controller' => 1,
+    'action' => 'read',
+    'id' => 2
+));
+
+$router->addPost('/rest/:controller', array(
+    'controller' => 1,
+    'action' => 'create',
+));
+
+$router->addPut('/rest/:controller/:int', array(
+    'controller' => 1,
+    'action' => 'create',
+    'id' => 2
+));
+
+
+//$router->addPatch('/rest/:controller/:id/:op', array(
+//    'controller' => 1,
+//    'action' => 'op',
+//    'int' => 2,
+//    'op' => 3
+//));
 //
 
-//$router->add("[/]", array(
-//    'controller' => 'index',
-//    'action' => 'index'
-//));
+$router->addPatch('/rest/:controller/:int', array(
+    'controller' => 1,
+    'action' => 'op',
+    'id' => 2,
+));
 
-//$router->add('/:controller', array(
-//    'controller' => 1,
-//    'action' => 'index'
-//));
-//
-//$router->add('/:controller/:action', array(
-//    'controller' => 1,
-//    'action' => 2,
-//));
+$router->addPatch('/rest/:controller', array(
+    'controller' => 1,
+    'action' => 'read',
+));
 
-//$router->add('/:controller/[:action][/:params]', array(
-//    'controller' => 1,
-//    'action' => 2,
-//    'params' => 3
-//));
-//
+$router->add('/logout', array(
+    'controller' => 'user',
+    'action' => 'logout',
+));
 //$router->notFound(['controller' => 'index', 'action' => 'notfound']);
 return $router;

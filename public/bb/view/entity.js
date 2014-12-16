@@ -1,16 +1,15 @@
 'use strict';
 app.Entity = Backbone.Model.extend({
-    urlRoot:'entity/entity'
+    urlRoot: 'rest/entity'
 });
 app.EntityView = Backbone.Marionette.ItemView.extend({
     template: '#entity-tpl',
-    events:
-    {
+    events: {
         'click .program-actions .button.submit': 'submit'
     },
-    submit: function(){
+    submit: function () {
         var me = this;
-        this.model.save('submit', true, {
+        this.model.save('apply', true, {
             patch: true,
             success: function (model, response) {
                 if (response.error) {
