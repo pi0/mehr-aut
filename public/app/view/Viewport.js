@@ -47,7 +47,8 @@ var menu = Ext.create('Ext.menu.Menu', {
                 icon: icon('db-import'),
                 text: 'درون‌برد از فایل',
                 scale: 'small'
-            },
+            }
+            //,
             //{
             //    colspan: 2,
             //    icon: icon('db-export'),
@@ -63,7 +64,6 @@ var menu = Ext.create('Ext.menu.Menu', {
         ]
     }
 });
-
 Ext.create("Ext.toolbar.Toolbar", {
     rtl: true,
     renderTo: document.body,
@@ -248,7 +248,8 @@ Ext.create("Ext.toolbar.Toolbar", {
                     handler: function () {
                         Mehr.window.Messages.show();
                     }
-                },
+                }
+                //,
 
                 /*
                  {
@@ -388,7 +389,6 @@ Ext.create("Ext.toolbar.Toolbar", {
         }
     ]
 });
-
 Ext.define('Mehr.view.Viewport', {
     itemId: 'vp',
     items: []

@@ -11,10 +11,10 @@ $publicPath = 'D:/www/www/mehr-aut/public';
 preg_match_all('#<script src="(.*)">.*</script>#u', $index, $scripts);
 var_dump($scripts[1]);
 $build = '/*!' . PHP_EOL;
-$build .= ' * Mehr Management System.' . PHP_EOL;
-$build .= ' * Copyright 2014 Ahura, Inc.'.PHP_EOL;
-$build .= ' * http://www.AhuraIT.com'.PHP_EOL;
-$build .= ' */' . PHP_EOL;
+$build .= '* @preserve Mehr Management System.' . PHP_EOL;
+$build .= '* Copyright 2014 Ahura, Inc.'.PHP_EOL;
+$build .= '* http://www.AhuraIT.com'.PHP_EOL;
+$build .= '*/' . PHP_EOL;
 echo $build;
 foreach ($scripts[1] as $file) {
     $build .= <<<eos

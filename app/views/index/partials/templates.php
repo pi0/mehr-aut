@@ -492,6 +492,7 @@
         <div class="link-bar">
             <ul class="plain float-near">
                 <li title="صفحه اصلی" class="home active">
+                    <i class="fa fa-home"></i>
                     <a class="icons " href="#">سامانه مهر:
                         {{licensee}}
                     </a>

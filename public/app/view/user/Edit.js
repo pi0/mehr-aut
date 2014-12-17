@@ -169,7 +169,8 @@ Ext.define('Mehr.view.user.Edit',
                                     decimalPrecision: 2,
                                     allowDecimals: true,
                                     name: 'average'
-                                },
+                                }
+                                //,
                                 //{
                                 //    fieldLabel: 'ترم های مشروطی',
                                 //    xtype: 'integer',

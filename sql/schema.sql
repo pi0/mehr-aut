@@ -44,7 +44,7 @@ CREATE TABLE `constant` (
   `value` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
   `category` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=137 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=140 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `councilmember` (
   `role` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT 'member',
   PRIMARY KEY (`id`),
   UNIQUE KEY `userId_councilId` (`user`,`council`)
-) ENGINE=MyISAM AUTO_INCREMENT=852552328 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=852552346 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +132,8 @@ SET character_set_client = utf8;
  1 AS `council`,
  1 AS `role`,
  1 AS `roleText`,
- 1 AS `fullName`,
+ 1 AS `firstName`,
+ 1 AS `lastName`,
  1 AS `sid`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -235,7 +236,7 @@ CREATE TABLE `enroller` (
   `uDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `credit` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +345,7 @@ CREATE TABLE `entity` (
   `charter` varchar(5000) COLLATE utf8_persian_ci DEFAULT NULL,
   `image` char(50) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +385,8 @@ SET character_set_client = utf8;
  1 AS `councilCount`,
  1 AS `memberCount`,
  1 AS `fullName`,
- 1 AS `image`*/;
+ 1 AS `image`,
+ 1 AS `council`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -399,9 +401,11 @@ CREATE TABLE `entitymember` (
   `user` int(11) NOT NULL,
   `entity` int(11) NOT NULL,
   `role` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT 'member',
+  `cDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `uDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `userId_entityId` (`user`,`entity`)
-) ENGINE=MyISAM AUTO_INCREMENT=852552291 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=852552296 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,6 +427,25 @@ SET character_set_client = utf8;
  1 AS `fullName`,
  1 AS `sid`*/;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `file`
+--
+
+DROP TABLE IF EXISTS `file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_persian_ci DEFAULT '0',
+  `owner` int(11) DEFAULT '0',
+  `size` int(11) DEFAULT '0',
+  `type` varchar(20) COLLATE utf8_persian_ci DEFAULT '0',
+  `hash` varchar(32) COLLATE utf8_persian_ci DEFAULT '0',
+  `cDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `news`
@@ -644,7 +667,7 @@ CREATE TABLE `resource` (
   `resourceType` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   `level` char(50) COLLATE utf8_persian_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -723,7 +746,7 @@ CREATE TABLE `user` (
   KEY `users_ibfk_1` (`department`),
   KEY `users_ibfk_3` (`endTerm`),
   KEY `users_ibfk_2` (`startTerm`)
-) ENGINE=MyISAM AUTO_INCREMENT=8833812338 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=8833812340 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -936,7 +959,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `councilmemberlist` AS select `councilmember`.`id` AS `id`,`councilmember`.`user` AS `user`,`councilmember`.`council` AS `council`,`councilmember`.`role` AS `role`,`constant`.`text` AS `roleText`,`userlist`.`fullName` AS `fullName`,`userlist`.`sid` AS `sid` from ((`councilmember` left join `constant` on(((`constant`.`value` = `councilmember`.`role`) and (`constant`.`category` = 'councilMembership')))) left join `userlist` on((`councilmember`.`user` = `userlist`.`id`))) */;
+/*!50001 VIEW `councilmemberlist` AS select `councilmember`.`id` AS `id`,`councilmember`.`user` AS `user`,`councilmember`.`council` AS `council`,`councilmember`.`role` AS `role`,`constant`.`text` AS `roleText`,`userlist`.`firstName` AS `firstName`,`userlist`.`lastName` AS `lastName`,`userlist`.`sid` AS `sid` from ((`councilmember` left join `constant` on(((`constant`.`value` = `councilmember`.`role`) and (`constant`.`category` = 'councilMembership')))) left join `userlist` on((`councilmember`.`user` = `userlist`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1026,7 +1049,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyCouncilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`user`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName`,`entity`.`image` AS `image` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entity`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
+/*!50001 VIEW `entitylist` AS select `entity`.`id` AS `id`,`entity`.`name` AS `name`,`entity`.`type` AS `type`,`entity`.`manager` AS `manager`,`entity`.`cDate` AS `cDate`,`entity`.`details` AS `details`,`entity`.`audience` AS `audience`,`entity`.`councilMembers` AS `councilMembers`,`entity`.`understudyConcuilMembers` AS `understudyCouncilMembers`,`entity`.`subscription` AS `subscription`,`entity`.`charter` AS `charter`,`constant`.`text` AS `typeText`,`entitycouncil`.`councilCount` AS `councilCount`,count(`entitymember`.`user`) AS `memberCount`,concat(`constant`.`text`,' ',`entity`.`name`) AS `fullName`,`entity`.`image` AS `image`,(select `council`.`id` from `council` where (`council`.`entity` = `entity`.`id`) order by `council`.`id` limit 1) AS `council` from (((`entity` left join `entitymember` on((`entity`.`id` = `entitymember`.`entity`))) left join `constant` on(((`entity`.`type` = `constant`.`value`) and (`constant`.`category` = 'entityType')))) left join `entitycouncil` on((`entitycouncil`.`id` = `entity`.`id`))) group by `entity`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1130,4 +1153,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-15 18:31:49
+-- Dump completed on 2014-12-17 12:14:20

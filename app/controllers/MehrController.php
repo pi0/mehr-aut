@@ -15,6 +15,7 @@ class MehrController extends ControllerBase
 
     public function apiAction()
     {
+        header('content-type:application/javascript; charset=utf-8');
         $this->view->disable();
         $this->response->setHeader("Content-Type", "application/javascript");
         ExtDirect::$namespace = 'RPC';

@@ -10,8 +10,7 @@ Ext.define('Mehr.view.audience.Panel', {
             bodyPadding: 15,
             title: 'دامنه',
             labelWidth: 150,
-            defaults: {
-            },
+            defaults: {},
             items: [
                 {
                     store: Ahura.store.UserType,
@@ -54,7 +53,7 @@ Ext.define('Mehr.view.audience.Panel', {
                     xtype: 'radiogroup',
                     items: [
                         {
-                            name:'audience[educationStatus]',
+                            name: 'audience[educationStatus]',
                             inputValue: "",
                             boxLabel: "مهم نیست",
                             checked: true,
@@ -87,7 +86,7 @@ Ext.define('Mehr.view.audience.Panel', {
                 {
                     xtype: 'college-combo',
                     multiSelect: true,
-                    emptyText:'یا دانشکده را مشخص کنید یا رشته و نه هر دو',
+                    emptyText: 'یا دانشکده را مشخص کنید یا رشته و نه هر دو',
                     name: 'audience[college][]'
                 },
                 {
@@ -127,7 +126,8 @@ Ext.define('Mehr.view.audience.Panel', {
                     fieldLabel: 'مخصوص عضوهای',
                     multiSelect: true,
                     emptyText: 'عضوها و شورای مرکزی و نه مخاطبان'
-                },
+                }
+                //,
 //                'اعمال محدودیت روی رشته/دانشکده',
 //                {
 //                    xtype: 'checkbox',

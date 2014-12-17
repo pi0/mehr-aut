@@ -1,9 +1,6 @@
 <?php
 $config = array(
-    'stage' =>
-        [
-            'production' => false,
-        ],
+    'stage' => 'production',
     'setting' => [
         'path' => __DIR__ . '/setting.json'
     ],

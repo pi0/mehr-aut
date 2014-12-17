@@ -1,10 +1,10 @@
-<?php $development = true; ?>
+<?php $development = $this->config->stage == 'development' ?>
 <footer>
     <p>
         تمام حقوق محفوظ ا
         ست.
 
-    <br/>
+        <br/>
         <a href="http://www.ahurait.com">شرکت مهندسی اهورا</a>
     </p>
 </footer>

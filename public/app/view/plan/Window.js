@@ -28,7 +28,8 @@ var columns=[
 Ext.define("Mehr.view.plan.Grid", {
     extend: "Ahura.grid.Base",
     alias: "widget.plansGrid",
-    columns: columns,
+    columns: columns
+    //,
     //    sm:new Ext.grid.RowSelectionModel({
     //        singleSelect:true,
     //        listeners:{

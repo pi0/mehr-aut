@@ -2,11 +2,6 @@ Ext.define('Mehr.controller.Users', {
     extend: 'Ext.app.Controller',
     stores: ['User'],
     models: ['User'],
-    views: ['user.Grid',
-        'user.Window',
-//        'user.Edit'
-    ],
-
     init: function () {
         this.control({
             '#vp button': {

@@ -1,14 +1,14 @@
 'use strict';
-
 Ext.Loader.setConfig({
+    //enabled: Ahura.dev
     enabled: true
 });
 
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
-    stores: ['User', 'News','Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
-    models: ['User', 'News','Enroller', 'CouncilMember', 'Council', 'Member'],
+    stores: ['User', 'News', 'Program', 'Entity', 'Enroller', 'CouncilMember', 'Council', 'Member'],
+    models: ['User', 'News', 'Enroller', 'CouncilMember', 'Council', 'Member'],
     autoCreateViewport: true,
     paths: {
         'Ahura': BASE + 'ahura',
@@ -75,78 +75,6 @@ Ext.onReady(function () {
 //
 //        }
 //    },
-Ext.ns('Ahura.button');
-Ahura.button.SaveForm = {
-    itemId: 'saveBtn',
-    text: 'ذخیره',
-    icon: icon('save'),
-    handler: function () {
-        var c = [], d = [];
-        var form = this.up('window').down('form').getForm();
-        var win = this.up('window');
-        if (form.isValid()) {
-            // Submit the Ajax request and handle the response
-            form.submit({
-                submitEmptyText: false,
-                params: {
-                },
-                success: function (form, action) {
-//                            Ext.Msg.alert('Success', action.result.message);
-                    Ext.MessageBox.show({
-                        scope: win,
-                        rtl: true,
-                        title: 'موفقیت',
-                        msg: 'دستور شما به درستی اجرا شد.',
-//                            msg: 'اطلاعات به شکل موفقیت آمیز ذخیره شد.',
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.INFO,
-                        fn: function () {
-                            this.close();
-                        }
-                    })
-                },
-                failure: function (form, action) {
-                    var msg = 'ارتباط با سرور برقرار نشد.';
-                    if (action.result) {
-                        if (action.result.message) msg = action.result.message;
-                        msg = 'در داده‌های وارد شده خطا وجود دارد.'
-                    }
-                    Ext.MessageBox.show({
-                        rtl: true,
-                        msg: msg,
-                        title: 'خطا',
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.ERROR
-                    });
-                }
-            });
-        } else {
-            var errors = [];
-            form.getFields().each(function (field) {
-                errors = errors.concat(Ext.Array.map(field.getErrors(), function (error) {
-                    return { field: field.getName(), error: error }
-                }));
-            });
-            Ext.MessageBox.show({
-                rtl: true,
-                title: 'ورودی نامعتبر',
-                msg: 'در داده‌های وارد شده خطا وجود دارد.',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.ERROR
-            });
-
-        }
-    }
-};
-Ahura.button.CancelForm = {
-    text: 'انصراف',
-    itemId: 'cancelBtn',
-    icon: icon('cancel'),
-    handler: function () {
-        this.up('window').close();
-    }
-};
-
 
 var $$ = function (q) {
     return Ext.ComponentQuery.query(q)
@@ -196,4 +124,11 @@ function init() {
     Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider', {
         expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7)) //7 days from now
     }));
+}
+
+Ahura.store.Terms = [];
+for (var i = moment().jYear() - 10; i <= moment().jYear() + 1; i++) {
+    Ahura.store.Terms.push(i + '03');
+    Ahura.store.Terms.push(i + '06');
+    Ahura.store.Terms.push(i + '11');
 }

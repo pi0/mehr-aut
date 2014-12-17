@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-<?php $base = $this->url->getBaseUri();
+<?php
+$base = $this->url->getBaseUri();
+$development = $this->config->stage == 'development';
 ?>
+<?php //$base = '';?>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -28,32 +31,36 @@
 
     </style>
 </head>
-<body>
 
+<body>
 </body>
+
 <script type="text/javascript">
     BASE = "<?= $base ?>";
 </script>
-<script type="text/javascript" src="<?= $base ?>vendor/moment.js"></script>
-<script type="text/javascript" src="<?= $base ?>vendor/moment-jalaali.js"></script>
-<!--<script type="text/javascript" src="--><?//= $base ?><!--vendor/ext/ext-all-rtl.js"></script>-->
-<script type="text/javascript" src="<?= $base ?>vendor/ext/ext-all-rtl-debug-w-comments.js"></script>
-<script type="text/javascript" src="<?= $base ?>vendor/ext/local/ext-lang-fa.js"></script>
-<script type="text/javascript" src="<?= $base ?>mehr/js"></script>
-<script type="text/javascript" src="<?= $base ?>mehr/api?javascript"></script>
-<script type="text/javascript" src="<?= $base ?>ahura/utility.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/app.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/app.js"></script>
-<script type="text/javascript" src="<?= $base ?>vendor/tinymce/tinymce.js"></script>
-<?php
-/* ?>
-<script type="text/javascript" src="<?= $base ?>ahura/form/combo/SID.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/user/Edit.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/user/Window.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/entity/List.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/entity/Edit.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/entity/TermEdit.js"></script>
-<script type="text/javascript" src="<?= $base ?>app/view/entity/TermsList.js"></script>
-<?php */
-?>
+
+<?php if ($development): ?>
+    <script src='<?= $base ?>vendor/ext/ext-all-rtl-debug-w-comments.js'></script>
+<?php else: ?>
+    <script src='<?= $base ?>vendor/ext/ext-all-rtl.js'></script>
+<?php endif; ?>
+
+<script src='<?= $base ?>ahura/utility.js'></script>
+<script src='<?= $base ?>mehr/api?javascript'></script>
+<script src='<?= $base ?>mehr/js'></script>
+    <script src="<?= $base ?>vendor/tinymce/tinymce.min.js"></script>
+
+<?php if ($development): ?>
+
+    <script src="<?= $base ?>vendor/ext/local/ext-lang-fa.js"></script>
+    <script src="<?= $base ?>vendor/moment.js"></script>
+    <script src="<?= $base ?>vendor/moment-jalaali.js"></script>
+
+<?php else: ?>
+    <script src='<?= $base ?>ext.merged.js'></script>
+<?php endif; ?>
+
+<script src='<?= $base ?>app/app.js'></script>
+
+
 </html>
