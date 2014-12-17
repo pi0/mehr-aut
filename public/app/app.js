@@ -19,7 +19,11 @@ Ext.application({
 //        'Audiences'
     ],
     launch: function () {
-        Ext.create('Mehr.view.council.List');
+        Ext.create('Ahura.window.Base', {
+            title:'توجه',
+            width:400,
+            contentEl: 'welcomeMsg'
+        });
     }
 
 });

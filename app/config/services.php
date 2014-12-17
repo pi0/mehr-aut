@@ -107,7 +107,11 @@ $di->set('db', function () use ($config) {
         "password" => $config->database->password,
         "dbname" => $config->database->name,
         'charset' => 'utf8', // UTF8 charset
-        'options' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => TRUE,],
+        'options' => [
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+//            PDO::ATTR_PERSISTENT => TRUE,
+        ],
     ));
 });
 

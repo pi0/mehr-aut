@@ -33,6 +33,29 @@ $development = $this->config->stage == 'development';
 </head>
 
 <body>
+<div style="display: none;">
+    <div style="padding: 15px;" id="welcomeMsg">
+<h1>
+    تیریک، شما در آستانه تحول در فرآیندهای فرهنگی هستید.
+</h1>
+        <b>
+            کاربر ارجمند، به محیط آزمایشی سامانه مدیریت امور فرهنگی مهر، خوش‌آمدید. لطفاً پیش از آغاز استفاده به موارد زیر توجه فرمایید:
+        </b>
+        <ul>
+            <li>
+                پس از اولین بارگیری، بازدیدهای بعدی از سامانه با سرعت زیاد انجام می‌شود در نسخه نهایی سامانه سریع‌تر نیز بارگذاری می‌شود.
+            </li>
+            <li>در صورت نیاز به هرگونه راهنمایی لطفاً در ساعات اداری با شماره 02133027920 و در ساعات دیگر با شماره 02180803025 تماس بگیرید. کارشناسان شرکت برای پاسخگویی همیشه حاضر هستند.</li>
+            <li>برخی از امکانات سامانه به‌تازگی پیاده‌سازی شده است. در صورت مشاهده هرگونه خطا لطفاً موقعیت ایجاد خطا را به شرکت اطلاع دهید.</li>
+            <li>
+                برخی امکانات در نسخه نمایشی غیرفعال هستند.
+            </li>
+            <li>
+                توجه داشته باشید که این نرم‌افزار در مراجع قانونی ثبت‌شده است و هرگونه نمونه‌برداری غیرقانونی است و جرم محسوب می‌شود.
+            </li>
+        </ul>
+    </div>
+</div>
 </body>
 
 <script type="text/javascript">
@@ -48,7 +71,7 @@ $development = $this->config->stage == 'development';
 <script src='<?= $base ?>ahura/utility.js'></script>
 <script src='<?= $base ?>mehr/api?javascript'></script>
 <script src='<?= $base ?>mehr/js'></script>
-    <script src="<?= $base ?>vendor/tinymce/tinymce.min.js"></script>
+<script src="<?= $base ?>vendor/tinymce/tinymce.min.js"></script>
 
 <?php if ($development): ?>
 
