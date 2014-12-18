@@ -7,8 +7,7 @@ class UserApi extends BaseApi
     function read($params)
     {
         if (isset($params->id)) {
-            $u = new User();
-            $data = $u->findFirst("id=" . $params->id)->toArray();
+            $data =  User::findFirst($params->id)->toArray();
             unset($data['password']);
             $r = $this->pdo->prepare('SELECT resourceId FROM resource WHERE user=?');
             $r->execute([$params->id]);

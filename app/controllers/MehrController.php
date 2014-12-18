@@ -34,7 +34,7 @@ class MehrController extends ControllerBase
 
         $db = $this->getDI()->get('db');
 
-        $degrees = toJsArray($db->fetchAll('select id as value,name as text from degree where `level` is not null order by id',Phalcon\Db::FETCH_ASSOC));
+        $degrees = toJsArray($db->query('select `value`,text from constant where category="degree" and alpha="g"')->fetchAll());
         $this->view->degree = $degrees;
 
         $programType = toJsArray($db->query('select `value`,text from constant where category="programType"')->fetchAll());

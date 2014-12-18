@@ -1,6 +1,5 @@
 Ext.require(['Ahura.form.combo.Provinces', 'Ahura.form.combo.Nationality', 'Ahura.form.combo.MaritalStatus', 'Ahura.form.combo.EntityType', 'Ahura.form.Base', 'Ahura.form.combo.Religion']);
 Ext.define('Mehr.view.user.Edit',
-
     {
         extend: 'Ahura.window.Base',
         requires: 'Ahura.form.combo.SID',
@@ -101,8 +100,8 @@ Ext.define('Mehr.view.user.Edit',
                                     fieldLabel: 'شماره ملی',
                                     emptyText: "تنها شماره وارد نمایید.",
                                     name: 'nid',
-                                    xtype: 'textfield',
-                                    minLength: 10,
+                                    xtype: 'numberfield',
+                                    minLength: 8,
                                     maxLength: 10,
                                     enforceMaxLength: true
                                 },
@@ -252,15 +251,8 @@ Ext.define('Mehr.view.user.Edit',
                                     //                    maxLength:11,
                                     //                    minLength:7
                                 },
-//                                {
-//                                    xtype:'provinces'
-//                                },
-//                                    {xtype:'provinces'},
                                 {
-                                    xtype: 'combo',
-                                    store: Ahura.store.Provinces,
-                                    fieldLabel: 'استان',
-                                    name: "provinceId"
+                                    xtype: 'provinces-combo'
                                 },
                                 {
                                     fieldLabel: 'شماره پستی',
@@ -388,7 +380,7 @@ Ext.define('Mehr.view.user.Edit',
         initComponent: function(){
             this.callParent(arguments);
             if(typeof this.info != 'undefined'){
-                this.down('form').getForm().load({params: {id: this.info.id}});
+                this.down('form').getForm().load({params: {id: this.info.getId()}});
                 this.title = 'ویرایش کاربر ' + this.info.get('firstName') + ' ' + this.info.get('lastName');
             } else {
                 this.title = 'کاربر جدید';
