@@ -105,7 +105,7 @@ Ext.define("Mehr.view.program.Edit",
                             {
                                 fieldLabel: 'پوستر/تصویر',
                                 name: 'image',
-                                xtype: 'text'
+                                xtype: 'filefield'
                             }
                         ]
 
