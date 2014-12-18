@@ -34,10 +34,11 @@ class NewsApi extends BaseApi
         $data = $_REQUEST;
 //        formPreProcess($data);
 
-        $data['image'] = $this->handleUpload('image');
+        $data['imageFile'] = $this->handleUpload('image');
         $news = new News();
         if ($news->save($data)) {
-            return extJson(true, $news->toArray());
+            formPostProcess($data);
+            return extJson(true, $data);
         } else {
             return extJson(false, $news->toArray(), extErrors($news->getMessages()));
         }

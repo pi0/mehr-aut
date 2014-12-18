@@ -93,7 +93,9 @@ class BaseApi extends Phalcon\DI\Injectable
             $fs =  __DIR__ . '/../../public/file-server/';
 
             if($hash){
-                mkdir($fs . $hash);
+                if(!file_exists($fs . $hash))
+                    mkdir($fs . $hash);
+
                 $name = $hash . DIRECTORY_SEPARATOR . $name;
             }
 
@@ -101,7 +103,6 @@ class BaseApi extends Phalcon\DI\Injectable
 
             return true;
         } else {
-
             return false;
         }
     }
@@ -114,16 +115,18 @@ class BaseApi extends Phalcon\DI\Injectable
         if($_FILES[$fileVar]['error'] == UPLOAD_ERR_OK){
             $file = new File;
             $file->name = $_FILES[$fileVar]['name'];
-            $file->owner =$this->user->id;
+            $file->owner = $this->currentUser->id;
             $file->size = $_FILES[$fileVar]['size'];
             $file->type = $_FILES[$fileVar]['type'];
             $file->hash = hash_file('md5',$_FILES[$fileVar]['tmp_name']);
 
             if(!$file->save())
-                print_r($file->getMessages());
+                return($file->getMessages());
 
-            $this->moveFile($fileVar,$file->name,$file->hash);
-            return $file->hash;
+            if($this->moveFile($fileVar,$file->name,$file->hash))
+                return $file->hash;
+            else
+                return false;
         } else
             return false;
     }

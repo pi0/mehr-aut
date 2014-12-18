@@ -89,12 +89,17 @@ body, input, textarea, button, select {
   font-size: 12px; }
 
 body {
-  background: url("../../03.jpg");
+  background: url("../../file-server/background.jpg");
   background-size: 100%;
   background-attachment: fixed;
-  background-repeat: repeat-y; }
+  background-repeat: repeat-y;
+  padding-top: 45px; }
 
 body .top-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 90;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   background: rgba(0, 0, 0, 0.88);
   height: 30px !important;
@@ -133,16 +138,38 @@ footer p {
       text-align: center;
       font-weight: bold;
       font-size: larger; }
+  .component.post-container .header {
+    overflow: auto; }
+  .component.post-container .header .post-title {
+    float: right;
+    min-width: 100px; }
+  .component.post-container .header .post-date {
+    float: left; }
   .component.post-container .buttons {
     text-align: left; }
   .component.post-container .poster {
-    margin-left: 30px;
     display: block;
     cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;
     cursor: zoom-in;
-    height: 200px;
-    float: right; }
+    max-width: 300px;
+    float: right;
+    margin: 5px;
+    overflow: auto; }
+  .component.post-container .footer {
+    background: #5896FF;
+    font-size: 10px;
+    padding: 5px;
+    overflow: auto; }
+  .component.post-container .footer .poster {
+    max-height: 50px;
+    max-width: inherit; }
+  .component.post-container .footer-first-line {
+    margin-top: 12px;
+    margin-right: 10px; }
+  .component.post-container .footer-last-line {
+    margin-bottom: 12px;
+    margin-right: 10px; }
   .component .info table {
     margin: 30px;
     border-top: thin solid #3333FF;
@@ -165,6 +192,7 @@ button, .button {
   padding: 0 15px;
   background-color: #3333FF;
   color: white !important;
+  cursor: pointer;
   height: 30px;
   line-height: 28px; }
 
@@ -220,5 +248,9 @@ form.main-style div {
       width: 259px; }
     .posts-container .filters .filter-options button {
       height: 40px; }
+
+.tooltip {
+  background: #2a7a78;
+  opacity: 0.8; }
 
 /*# sourceMappingURL=main.css.map */

@@ -309,13 +309,6 @@
         <div class="header">برنامه</div>
 
         <div class="body">
-            {{#if image}}
-            <div class="poster">
-                <a data-lightbox data-title="{{name}}" href="assets/program-img/{{image}}.jpg">
-                    <img class="poster" src="assets/program-img/{{image}}.jpg" alt=""/>
-                </a>
-            </div>
-            {{/if}}
             <div class="info float-far">
                 <table>
                     <tr>
@@ -482,7 +475,24 @@
             {{/is}}
             {{userEnrollmentStatus}}
         </div>
+        <div class="footer">
+            {{#if image}}
+            <img class="poster" src="file-server/{{image}}" alt=""/>
+            {{/if}}
+            <div class="footer-content">
+                <div class="footer-first-line">
+                    <i style="font-size:14px" class="fa fa-calendar"></i>
 
+                    تاریخ ارسال:
+                    {{toJ cDate}}
+                </div>
+                <div class="footer-last-line">
+                    <i style="font-size:14px" class="fa fa-calendar-o"></i>
+                    تاریخ آخرین بروز رسانی:
+                    {{toJ uDate}}
+                </div>
+            </div>
+        </div>
     </div>
 </script>
 

@@ -75,6 +75,7 @@ class ProgramApi extends BaseApi
         $data = $_REQUEST;
         formPreProcess($data);
         $data['audience'] = serialize($data['audience']);
+        $data['imageFile'] = $this->handleUpload('image');
         $p = new Program();
         if ($p->save($data)) {
             return extJson(true, $p->toArray());

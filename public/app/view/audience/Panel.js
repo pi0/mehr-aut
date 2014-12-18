@@ -126,6 +126,16 @@ Ext.define('Mehr.view.audience.Panel', {
                     fieldLabel: 'مخصوص عضوهای',
                     multiSelect: true,
                     emptyText: 'عضوها و شورای مرکزی و نه مخاطبان'
+                },
+                {
+                    xtype: 'numberfield',
+                    name: 'audience[average]',
+                    fieldLabel: 'معدل های بالا تر از'
+                },
+                {
+                    xtype: 'numberfield',
+                    name: 'audience[passedUnits]',
+                    fieldLabel: 'افرادی که بیش از این تعداد واحد گذرانده اند'
                 }
                 //,
 //                'اعمال محدودیت روی رشته/دانشکده',

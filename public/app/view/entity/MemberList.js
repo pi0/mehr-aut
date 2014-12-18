@@ -145,15 +145,20 @@ Ext.define("Mehr.view.entity.MemberGrid", {
 Ext.define("Mehr.view.entity.MemberList", {
     extend: "Ahura.window.Grid",
     alias: "widget.member",
+    sorting: 'remote',
     items: [
         {xtype: 'memberGrid'}
     ],
     initComponent: function () {
-        this.title = (this.info) ? 'عضوها:' + this.info.get('name') : "عضوها";
+        this.title = (this.info) ? ('عضوها:' + this.info.typeText + ' ' + this.info.name) : "عضوها";
         this.callParent(arguments);
+        this.dblHandle = function(model) {
+            var panel = Ext.create('Mehr.view.user.Edit', {
+                'info': model
+            });
+        };
         var grid = this.down('grid');
-        grid.getStore().getProxy().setExtraParam('entity', this.info.get('id'));
+        grid.getStore().getProxy().setExtraParam('entity', this.info.id);
         grid.getStore().load();
     }
-
-})
+});

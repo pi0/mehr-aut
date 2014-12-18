@@ -64,14 +64,17 @@ function fromDB($data)
     return $data;
 }
 
-function formPostProcess(&$data)
-{
+function formPostProcess(&$data){
     foreach ($data as $k => $v) {
         if ($v && preg_match('#(.+)Date$#u', $k, $m)) {
             $date = new IntlDateTime($v, 'Asia/Tehran');
             $date->setCalendar('persian');
             $data[$k] = $date->format('y/MM/dd');
             $data[$m[1] . 'Time'] = $date->format('HH:mm');
+        }
+        if(endsWith($k,'File')){
+            $data[substr($k,0,strlen($k)-strlen('file'))] = File::getHashName($data[$k]);
+            unset($data[$k]);
         }
     }
 }
@@ -194,4 +197,19 @@ function applyAudience(&$query, $audience)
             }
         }
     }
+}
+function myImplode($glue,$pieces,$first,$last){
+    $res = '';
+    for($i=$first;$i<$last;$i++){
+        $res .= $pieces[$i];
+        if($i!=$last-1)
+            $res .= $glue;
+    }
+    return $res;
+}
+function endsWith($haystack, $needle) {
+    if(strlen($haystack)<strlen($needle))
+        return false;
+    // search forward starting from end minus needle length characters
+    return $needle === "" || strpos($haystack, $needle, strlen($haystack) - strlen($needle)) !== FALSE;
 }

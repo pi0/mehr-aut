@@ -83,8 +83,8 @@ class ApiController extends ControllerBase
             }
             $data = $query->getQuery()->execute()->toArray();
             foreach ($data as $k => $v) {
-                if (isset($v['image']))
-                    $data[$k]['image'] = ($data[$k]['image'] != null) ? ($data[$k]['image'] . '/' . File::getName($data[$k]['image'])) : 0;
+                if (isset($v['imageFile']))
+                    $data[$k]['image'] = ($data[$k]['imageFile'] != null) ? ($data[$k]['imageFile'] . '/' . File::getName($data[$k]['imageFile'])) : 0;
                 $data[$k]['details'] = ellipsis(strip_tags($v['details']));
                 $data[$k]['postType'] = 'news';
             }
@@ -93,7 +93,7 @@ class ApiController extends ControllerBase
         $app->get('/api/news/{id}', function ($id = null) {
             $news = News::findFirst($id);
             $news->postType = 'news';
-            $news->image = ($news->image != null) ? (File::getHashName($news->image)) : 0;
+            $news->image = ($news->imageFile != null) ? (File::getHashName($news->imageFile)) : 0;
             jsonResponse($news);
         });
         $app->notFound(function () use ($app) {

@@ -7,6 +7,7 @@ class ProgramController extends ControllerBase
         $program = ProgramList::findFirstById($this->dispatcher->getParam('id'));
         $uid = $this->di['session']['auth'];
         $programArray = $this->programEnrollmentStatus($program, $uid);
+        formPostProcess($programArray);
         jsonResponse($programArray);
     }
 

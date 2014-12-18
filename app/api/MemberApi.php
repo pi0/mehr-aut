@@ -12,9 +12,16 @@ class MemberApi extends BaseApi
 //            $data = $u->findFirst("id=" . $params->id)->toArray();
             return (['data' => $data, 'success' => true]);
         } else {
-            $data = $this->db->fetchAll("SELECT * FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_ASSOC, ['entity' => $params->entity]);
-            $total = $this->db->fetchOne("SELECT count(*) FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_NUM, ['entity' => $params->entity]);
-            return (['data' => $data, 'total' => $total[0]]);
+            $extraFilter = [];
+            $query = $this->queryBuilder('entitymemberlist');
+            if (!isset($params->filters)) $params->filters = [];
+            $query->where('entitymemberlist.entity=?0',[$params->entity]);
+            $response = $this->extFilter($query, $params, [], $extraFilter);
+            return $response;
+
+//            $data = $this->db->fetchAll("SELECT * FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_ASSOC, ['entity' => $params->entity]);
+//            $total = $this->db->fetchOne("SELECT count(*) FROM entitymemberlist WHERE entity=:entity", Phalcon\Db::FETCH_NUM, ['entity' => $params->entity]);
+//            return (['data' => $data, 'total' => $total[0]]);
         }
     }
 

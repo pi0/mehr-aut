@@ -384,5 +384,14 @@ Ext.define('Mehr.view.user.Edit',
 //                }
             ]
         },
-        fbar: [Ahura.button.CancelForm, Ahura.button.SaveForm]
+        fbar: [Ahura.button.CancelForm, Ahura.button.SaveForm],
+        initComponent: function(){
+            this.callParent(arguments);
+            if(typeof this.info != 'undefined'){
+                this.down('form').getForm().load({params: {id: this.info.id}});
+                this.title = 'ویرایش کاربر ' + this.info.get('firstName') + ' ' + this.info.get('lastName');
+            } else {
+                this.title = 'کاربر جدید';
+            }
+        }
     });

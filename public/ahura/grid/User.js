@@ -202,14 +202,13 @@
 //        me.down('searchfield').store=me.store;
         },
         dblHandle: function(record){
-            var id = record.get('id');
-            console.log(id);
-            openUserEditWindow(id);
+            openUserEditWindow(record);
         }
     });
 
-    var openUserEditWindow = function (id) {
-        var panel = Ext.create('Mehr.view.user.Edit');
-        panel.down('form').getForm().load({params: {id: id}});
+    var openUserEditWindow = function (model) {
+        var panel = Ext.create('Mehr.view.user.Edit',{
+            'info': model
+        });
     }
 })()

@@ -20,12 +20,10 @@ class UserApi extends BaseApi
             $query = $this->queryBuilder('UserList'); //->columns('id,firstName,lastName,sid,sex');
             if (!isset($params->filters)) $params->filters = [];
             if (isset($params->query)) {
-                $q = ['q' => ($params->query) . '%'];
                 $query
-                    ->where('firstName like :q: ', $q)
-                    ->orWhere('lastName like :q:', $q)
-                    ->orWhere('nid like :q:', $q)
-                    ->orWhere('sid like :q:', $q);
+                    ->where('fullName like :q: ', ['q' => '%'. ($params->query) . '%'])
+                    ->orWhere('nid like :q:', ['q' => ($params->query) . '%'])
+                    ->orWhere('sid like :q:', ['q' =>  ($params->query) . '%']);
             }
             if (isset($params->audience)) {
                 parse_str($params->audience, $formValues);
