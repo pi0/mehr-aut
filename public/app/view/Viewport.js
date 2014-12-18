@@ -19,8 +19,6 @@ var menu = Ext.create('Ext.menu.Menu', {
                 icon: icon('users.gif', 32),
                 handler: function () {
                     Ext.create("Mehr.view.user.List").show();
-//                    var w = Ext.widget("usersW");
-//                    w.show();
                 }
             },
             {
@@ -70,7 +68,6 @@ Ext.create("Ext.toolbar.Toolbar", {
     defaultType: 'button',
     items: [
         {
-//            hidden:true,
             text: 'کاربران',
             icon: icon('user'),
             menu: menu
@@ -340,9 +337,11 @@ Ext.create("Ext.toolbar.Toolbar", {
             icon: icon('help'),
             menu: [
                 {
-                    disabled: true,
                     icon: icon('help'),
-                    text: "راهنمای برنامه"
+                    text: "راهنمای برنامه",
+                    handler: function (b, e) {
+                        window.open('pdf/mehr-help.pdf', '_blank');
+                    }
                 },
                 {
                     text: "وبگاه شرکت",

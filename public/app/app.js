@@ -4,6 +4,7 @@ Ext.Loader.setConfig({
     enabled: true
 });
 
+
 Ext.application({
     name: 'Mehr',
     appFolder: BASE + 'app',
@@ -21,7 +22,7 @@ Ext.application({
     launch: function () {
         Ext.create('Ahura.window.Base', {
             title:'توجه',
-            width:400,
+            width:600,
             contentEl: 'welcomeMsg'
         });
     }

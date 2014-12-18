@@ -1,6 +1,7 @@
 Ext.define("Ahura.window.Base", {
     extend: "Ext.window.Window",
     maximizable: true,
+    collapsible: true,
     layout: 'fit',
     width: 450,
     closeAction: 'destroy',
