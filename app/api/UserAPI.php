@@ -86,4 +86,7 @@ class UserApi extends BaseApi
             return extJson(false, $user->toArray(), (array)$user->getMessages());
         }
     }
+    function import($params){
+        var_dump($params);
+    }
 }

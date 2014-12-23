@@ -120,14 +120,17 @@ class BaseApi extends Phalcon\DI\Injectable
             $file->type = $_FILES[$fileVar]['type'];
             $file->hash = hash_file('md5',$_FILES[$fileVar]['tmp_name']);
 
-            if(!$file->save())
-                return($file->getMessages());
+            if(!$file->save()) {
+                return ($file->getMessages());
+            }
 
-            if($this->moveFile($fileVar,$file->name,$file->hash))
+            if($this->moveFile($fileVar,$file->name,$file->hash)) {
                 return $file->hash;
-            else
+            } else {
                 return false;
-        } else
-            return false;
+            }
+        } else {
+                return false;
+        }
     }
 }

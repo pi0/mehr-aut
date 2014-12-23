@@ -1,4 +1,5 @@
 Ext.define('Ahura.grid.Base', {
+    require: ['Ext.ux.grid.Printer'],
     extend: 'Ext.grid.Panel',
     xtype: 'base-grid',
     frame: false,
@@ -47,19 +48,22 @@ Ext.define('Ahura.grid.Base', {
                 'tooltip': 'چاپ همه صفحات',
                 text: 'چاپ',
                 'icon': icon('printer'),
+                handler: function(){
+                    Ext.ux.grid.Printer.print(this);
+                },
                 menu: [
                     {
                         text: 'چاپ این صفحه',
                         'icon': icon('printer'),
                         handler: function () {
-                            Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
+
                         }
                     },
                     {
                         text: 'چاپ همه صفحات',
                         'icon': icon('printer'),
                         handler: function () {
-                            Ext.create('Mehr.view.council.Edit', {isNew: true, info: this.up('window').info});
+
                         }
                     }
                 ]
@@ -87,6 +91,7 @@ Ext.define('Ahura.grid.Base', {
     },
     dblClick: function (me, record, item, index, e, eOpts) {
         e.stopEvent();
+        console.log('double clicked');
         if (typeof this.dblHandle != 'undefined' && Ext.isFunction(this.dblHandle))
             this.dblHandle(record);
     }

@@ -35,6 +35,7 @@ class EntityController extends ControllerBase
         $entity = EntityList::findFirst(['id' => $id]);
         $entity = $this->entityMembershipStatus($entity, $this->uid);
         $entity['image'] = ($entity['image'] != null) ? File::getHashName($entity['image']) : false;
+        $entity['votingStatus'] = true;//TODO this is placed for testing and should be removed later
         jsonResponse($entity);
     }
 

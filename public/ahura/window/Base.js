@@ -13,4 +13,3 @@ Ext.define("Ahura.window.Base", {
         }
     }
 });
-

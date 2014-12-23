@@ -249,8 +249,8 @@ form.main-style div {
     .posts-container .filters .filter-options button {
       height: 40px; }
 
-.tooltip {
-  background: #2a7a78;
-  opacity: 0.8; }
+.voting-container.body.candidate {
+  float: left;
+  width: 35%; }
 
 /*# sourceMappingURL=main.css.map */

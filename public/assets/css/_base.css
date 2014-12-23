@@ -604,6 +604,33 @@ form.main-style div {
     .posts-container .filters .filter-options button {
       height: 40px; }
 
+.voting-container .body .candidate {
+  float: left;
+  margin-left: 10%;
+  margin-bottom: 15px;
+  width: 35%;
+  border-radius: 3px;
+  border: 1px solid #bce8f1;
+  background: #d9edf7;
+  padding: 5px;
+  height: 110px; }
+  .voting-container .body .candidate .candidate-avatar {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 5px;
+    border-radius: 100px;
+    box-shadow: 0px 0px 4px #9ac6d0;
+    float: right; }
+  .voting-container .body .candidate .candidate-info {
+    font-size: 12px;
+    margin-top: 5px;
+    text-shadow: 0px 0px 4px #9ac6d0;
+    float: right; }
+    .voting-container .body .candidate .candidate-info .candidate-name {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 5px; }
+
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)

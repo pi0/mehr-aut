@@ -60,6 +60,7 @@ Ext.require([
 
 Ext.onReady(function () {
     init();
+    Ext.create('Mehr.view.user.Import');
 });
 
 

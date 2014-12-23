@@ -45,6 +45,7 @@
     <script src="bb/view/news.js"></script>
     <script src="bb/view/entity.js"></script>
     <script src="bb/view/credit.js"></script>
+    <script src="bb/view/voting.js"></script>
 <?php else: ?>
     <script src='app.merged.min.js'></script>
 <?php endif; ?>

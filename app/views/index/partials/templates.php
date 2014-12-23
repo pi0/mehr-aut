@@ -190,6 +190,14 @@
                         <td>{{councilCount}}</td>
                     </tr>
                 </table>
+                <div class="vote centered" style="
+                    text-align: center;
+                    background: #3333FF;
+                    padding: 5px;
+                    color: #fff;
+                    text-shadow: 1px 1px 2px #000;
+                    margin-top: -15px;
+                ">شرکت در رای گیری</div>
             </div>
             {{#unless autoRender}}
             {{#is membership.status 'canJoin'}}
@@ -558,7 +566,26 @@
 
     </div>
 </script>
-
-
-
-
+<script type="text/html" id="voting-tpl">
+    <div class="component post-container voting-container">
+        <div class="header">
+            شرکت در رای گیری شورای صنفی دانشکده نفت
+        </div>
+        <div class="body candidates-place">
+        </div>
+    </div>
+</script>
+<script type="text/html" id="candidate-tpl">
+    <div class="candidate">
+        <img src="file-server/user-placeholder.jpg" class="candidate-avatar">
+        <div class="candidate-info">
+            <div class="candidate-name">
+                مسعود بنابی
+            </div>
+            دبیر شورا در دوره قبلی نهاد
+            <br/>
+            تعداد آراء مأخوذه تا این لحظه:
+            ۵
+        </div>
+    </div>
+</script>

@@ -11,7 +11,8 @@ app.MainRouter = Backbone.Router.extend({
         'login': 'login',
         'account/membership': 'membership',
         'news/:id': 'news',
-        'credit': 'credit'
+        'credit': 'credit',
+        'voting': 'voting'
     },
     home: function () {
         var p = new app.Posts();
@@ -78,6 +79,12 @@ app.MainRouter = Backbone.Router.extend({
                 app.layout.content.show(new app.CreditView({model: model}));
             }
         });
+    },
+    voting: function(){
+        var a = new Backbone.Collection;
+        a.reset([{'name':'masoud'},{'name':'masoud'},{'name':'masoud'},{'name':'masoud'},
+            {'name':'masoud'},{'name':'masoud'},{'name':'masoud'},{'name':'masoud'}]);
+        app.layout.content.show(new app.VotingView({collection: a}));
     }
 
 });

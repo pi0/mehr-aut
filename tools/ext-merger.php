@@ -51,8 +51,8 @@ function getAllFilesRecursively($root)
 }
 
 
-//$files = array_merge($indexFiles, $uxFiles, $ahuraFiles, $mehrFiles);
-$files = array_merge($indexFiles);
+$files = array_merge($indexFiles, $uxFiles, $ahuraFiles, $mehrFiles);
+//$files = array_merge($indexFiles);
 if (($key = array_search('D:\www\www\mehr-aut\public\app\app.js', $files)) !== false) {
     unset($files[$key]);
 }

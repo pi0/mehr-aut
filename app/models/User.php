@@ -12,8 +12,8 @@ class User extends BaseModel{
         'sex',                                                              // 2
         'fatherName',                                                       // 3
         'birthdayDate',                                                     // 4
-        ['ignore','nid'],                                                   // 5
-        'shenasname',                                                       // 6
+        'nid',                                                   // 5
+        ['ignore','shenasname'],                                                       // 6
         'birthdayPlace',                                                    // 7
         ['table'=>'department','column'=>'name','to'=>'department'],        // 8
         ['table'=>'degree','column'=>'name','to'=>'degree'],                // 9
@@ -29,16 +29,16 @@ class User extends BaseModel{
         'conditionalTerms'
     ];
 
-    static function getId($col,$f){
+    static function _getIdFromTable($col,$value){
         $model = ucfirst($col['table']);
         $colName = $col['column'];
         $functionName = 'findFirstBy' . $colName;
-        $m = $model::$functionName($f);
+        $m = $model::$functionName($value);
         if($m){
             return $m->id;
         } else {
             $m = new $model;
-            $m->$colName = $f;
+            $m->$colName = $value;
             $m->save();
             return $m->id;
         }
@@ -48,6 +48,7 @@ class User extends BaseModel{
         $file = @fopen($filePath, 'r');
         if (!$file)
             return false;
+
         $success = 0;
         while (($fileLine = fgets($file)) != false) {
             $fields = explode('	', $fileLine);
@@ -55,21 +56,16 @@ class User extends BaseModel{
             $user = (!$user)? new User:$user;
             foreach (User::$$system as $i => $column) {
                 if (gettype($column) == 'string') {
-                    $user->$column =
-                        $fields[$i];
+                    $user->$column = $fields[$i];
                 } else if (gettype($column) == 'array') {
                     if(isset($column[0]) && $column[0] == 'ignore')
                         continue;
                     $to = $column['to'];
-                    $user->$to = User::getId($column, $fields[$i]);
+                    $user->$to = User::_getIdFromTable($column, $fields[$i]);
                 }
             }
             $success += (int)$user->save();
-            var_dump($user->getMessages());
         }
         return $success;
     }
-
 }
-
-var_dump(User::import('D:\www\www\mehr-aut\B.txt'));

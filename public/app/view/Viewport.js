@@ -41,10 +41,12 @@ var menu = Ext.create('Ext.menu.Menu', {
             },
             {
                 colspan: 2,
-                disabled: true,
                 icon: icon('db-import'),
                 text: 'درون‌برد از فایل',
-                scale: 'small'
+                scale: 'small',
+                handler: function(){
+                    Ext.create('Mehr.view.user.Import').show();
+                }
             }
             //,
             //{
